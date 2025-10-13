@@ -119,6 +119,193 @@ function App() {
 
         </div>
       </section>
+      
+      <section class=" bg-slate-200 px-10 text-green-950">
+        <div class="container max-w-[1100px] mx-auto">
+          <h1 class="text-3xl font-bold text-center">Featured Products</h1>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8 pb-16">
+            <div class="bg-green-50 rounded-xl shadow hover:shadow-lg transition ">
+              <img
+                src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=500&q=60"
+                alt="Plant"
+                class="rounded-sm w-full h-56 object-cover mb-3"
+              />
+              <h3 class="text-lg font-semibold text-green-900 px-2">Philodendron</h3>
+              <p class="text-sm text-gray-600 mb-2 px-2">Tissue culture — 3 months old</p>
+              <span class="text-orange-800 font-light text-sm px-2">only 6 left</span>
+              <div class="flex justify-between items-center">
+                <span class="text-green-700 font-bold px-2">$15</span>
+                
+                <button class="bg-green-600 text-white px-2 py-1 rounded-md hover:bg-green-700 transition m-3">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+            <div class="bg-green-50 rounded-xl shadow hover:shadow-lg transition ">
+              <img
+                src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=500&q=60"
+                alt="Plant"
+                class="rounded-sm w-full h-56 object-cover mb-3"
+              />
+              <h3 class="text-lg font-semibold text-green-900 px-2">Philodendron</h3>
+              <p class="text-sm text-gray-600 mb-2 px-2">Tissue culture — 3 months old</p>
+              <span class="text-orange-800 font-light text-sm px-2">only 6 left</span>
+              <div class="flex justify-between items-center">
+                <span class="text-green-700 font-bold px-2">$15</span>
+                
+                <button class="bg-green-600 text-white px-2 py-1 rounded-md hover:bg-green-700 transition m-3">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+            <div class="bg-green-50 rounded-xl shadow hover:shadow-lg transition ">
+              <img
+                src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=500&q=60"
+                alt="Plant"
+                class="rounded-sm w-full h-56 object-cover mb-3"
+              />
+              <h3 class="text-lg font-semibold text-green-900 px-2">Philodendron</h3>
+              <p class="text-sm text-gray-600 mb-2 px-2">Tissue culture — 3 months old</p>
+              <span class="text-orange-800 font-light text-sm px-2">only 6 left</span>
+              <div class="flex justify-between items-center">
+                <span class="text-green-700 font-bold px-2">$15</span>
+                
+                <button class="bg-green-600 text-white px-2 py-1 rounded-md hover:bg-green-700 transition m-3">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+            <div class="bg-green-50 rounded-xl shadow hover:shadow-lg transition ">
+              <img
+                src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=500&q=60"
+                alt="Plant"
+                class="rounded-sm w-full h-56 object-cover mb-3"
+              />
+              <h3 class="text-lg font-semibold text-green-900 px-2">Philodendron</h3>
+              <p class="text-sm text-gray-600 mb-2 px-2">Tissue culture — 3 months old</p>
+              <span class="text-orange-800 font-light text-sm px-2">only 6 left</span>
+              <div class="flex justify-between items-center">
+                <span class="text-green-700 font-bold px-2">$15</span>
+                
+                <button class="bg-green-600 text-white px-2 py-1 rounded-md hover:bg-green-700 transition m-3">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+            <div class="bg-green-50 rounded-xl shadow hover:shadow-lg transition ">
+              <img
+                src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=500&q=60"
+                alt="Plant"
+                class="rounded-sm w-full h-56 object-cover mb-3"
+              />
+              <h3 class="text-lg font-semibold text-green-900 px-2">Philodendron</h3>
+              <p class="text-sm text-gray-600 mb-2 px-2">Tissue culture — 3 months old</p>
+              <span class="text-orange-800 font-light text-sm px-2">only 6 left</span>
+              <div class="flex justify-between items-center">
+                <span class="text-green-700 font-bold px-2">$15</span>
+                
+                <button class="bg-green-600 text-white px-2 py-1 rounded-md hover:bg-green-700 transition m-3">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+            <div class="bg-green-50 rounded-xl shadow hover:shadow-lg transition ">
+              <img
+                src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=500&q=60"
+                alt="Plant"
+                class="rounded-sm w-full h-56 object-cover mb-3"
+              />
+              <h3 class="text-lg font-semibold text-green-900 px-2">Philodendron</h3>
+              <p class="text-sm text-gray-600 mb-2 px-2">Tissue culture — 3 months old</p>
+              <span class="text-orange-800 font-light text-sm px-2">only 6 left</span>
+              <div class="flex justify-between items-center">
+                <span class="text-green-700 font-bold px-2">$15</span>
+                
+                <button class="bg-green-600 text-white px-2 py-1 rounded-md hover:bg-green-700 transition m-3">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+            <div class="bg-green-50 rounded-xl shadow hover:shadow-lg transition ">
+              <img
+                src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=500&q=60"
+                alt="Plant"
+                class="rounded-sm w-full h-56 object-cover mb-3"
+              />
+              <h3 class="text-lg font-semibold text-green-900 px-2">Philodendron</h3>
+              <p class="text-sm text-gray-600 mb-2 px-2">Tissue culture — 3 months old</p>
+              <span class="text-orange-800 font-light text-sm px-2">only 6 left</span>
+              <div class="flex justify-between items-center">
+                <span class="text-green-700 font-bold px-2">$15</span>
+                
+                <button class="bg-green-600 text-white px-2 py-1 rounded-md hover:bg-green-700 transition m-3">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+            <div class="bg-green-50 rounded-xl shadow hover:shadow-lg transition ">
+              <img
+                src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=500&q=60"
+                alt="Plant"
+                class="rounded-sm w-full h-56 object-cover mb-3"
+              />
+              <h3 class="text-lg font-semibold text-green-900 px-2">Philodendron</h3>
+              <p class="text-sm text-gray-600 mb-2 px-2">Tissue culture — 3 months old</p>
+              <span class="text-orange-800 font-light text-sm px-2">only 6 left</span>
+              <div class="flex justify-between items-center">
+                <span class="text-green-700 font-bold px-2">$15</span>
+                
+                <button class="bg-green-600 text-white px-2 py-1 rounded-md hover:bg-green-700 transition m-3">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="bg-gradient-to-br from-green-700 via-green-800 to-green-950 text-white ">
+        <div class="container max-w-[1100px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 px-8 pt-3 gap-6">
+            {/* Brand identity */}
+            <div>
+              <h2 class="text-xl font-bold mb-2">PlantCellia</h2>
+              <p class="text-sm text-gray-300">
+                Connecting tissue culture labs and plant lovers worldwide 🌱  
+                Explore, trade, and grow with verified suppliers.
+              </p>
+            </div>
+            {/* Quick links */}
+            <div>
+              <h3 class="text-lg font-semibold mb-2">Quick Links</h3>
+              <ul class="space-y-1 text-gray-300">
+                <li><a href="#" class="hover:text-green-400 transition">Home</a></li>
+                <li><a href="#" class="hover:text-green-400 transition">Shop</a></li>
+                <li><a href="#" class="hover:text-green-400 transition">About</a></li>
+                <li><a href="#" class="hover:text-green-400 transition">Contact</a></li>
+              </ul>
+            </div>
+            {/* Categories */}
+            <div>
+              <h3 class="text-lg font-semibold mb-2">Categories</h3>
+              <ul class="space-y-1 text-gray-300">
+                <li><a href="#" class="hover:text-green-400 transition">House Plants</a></li>
+                <li><a href="#" class="hover:text-green-400 transition">Commercial Plants</a></li>
+                <li><a href="#" class="hover:text-green-400 transition">Tissue Culture Labs</a></li>
+                <li><a href="#" class="hover:text-green-400 transition">Accessories</a></li>
+              </ul>
+            </div>
+            {/* Contact */}
+            <div>
+              <h3 class="text-lg font-semibold mb-3">Get in Touch</h3>
+              <p class="text-gray-300 text-sm mb-2">📍 Global supplier network</p>
+              <p class="text-gray-300 text-sm mb-2">✉️ info@PlantCellia.com</p>
+              <p class="text-gray-300 text-sm">🌐 www.plantcellia.com</p>
+            </div>
+        </div>
+        <div class="mt-10 border-t-1 border-gray-700/30 pt-3 pb-2 text-center text-gray-300 text-sm">
+          © 2025 PlantCellia All rights reserved.
+        </div>
+      </footer>
     </>
   )
 }
