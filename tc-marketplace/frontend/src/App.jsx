@@ -9,19 +9,19 @@ function App() {
 
   return (
     <>
-      <div class="bg-gradient-to-br from-green-600 via-green-800 to-green-950 text-white ">
+      <div class="bg-gradient-to-br from-green-600 via-green-800 to-green-950 text-green-50 ">
         <div class="container mx-auto max-w-[1100px] px-4">
           <nav class="flex justify-between items-center px-6 py-3  bg-opacity-25 ">
             <a class="text-2xl font-bold">PlantCellia</a>
             <div class="hidden sm:flex space-x-6 ">
-              <a class="hover:text-blue-600">Products</a>
-              <a class="hover:text-blue-600">About Us</a>
-              <a class="hover:text-blue-600">Blog</a>
-              <a class="hover:text-blue-600">Contact</a>
+              <a class="hover:text-lime-200">Products</a>
+              <a class="hover:text-lime-200">About Us</a>
+              <a class="hover:text-lime-200">Blog</a>
+              <a class="hover:text-lime-200">Contact</a>
             </div>
             <div class="space-x-4 items-center">
-                <a class="hover:text-blue-600">Login</a>
-                <a class="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700">Sign Up</a>
+                <a class="hover:text-lime-200">Login</a>
+                <a class="bg-amber-400 text-green-900 px-2 py-1 rounded-xl hover:bg-amber-300 duration-200 shadow-lg hover:shadow-xl">Sign Up</a>
               </div>
           </nav>
 
@@ -37,10 +37,10 @@ function App() {
                 </p>
               </div>
               <div class="space-x-6 ">
-                <a href="#shop" class="bg-white text-green-700 px-5 py-2 rounded-lg shadow hover:bg-green-50 transition">
+                <a href="#shop" class="bg-slate-200 text-green-700 px-5 py-2 rounded-lg  hover:bg-green-100 hover:scale-105 transition duration-200 shadow-lg hover:shadow-xl">
                   Shop Now
                 </a>
-                <a href="#learn" class="border border-white px-5 py-2 rounded-lg hover:bg-white hover:text-green-700 transition">
+                <a href="#learn" class="border border-white px-5 py-2 rounded-lg hover:bg-slate-300 hover:text-green-700 transition duration-200 shadow-lg hover:shadow-xl">
                   Learn More
                 </a>
               </div>
