@@ -2,7 +2,7 @@ import React from "react";
 
 const Banner = () => {
     return (
-        <section className="h-[70vh] flex px-8">
+        <section className="h-[70vh] flex px-8 ">
             <div className="flex flex-col justify-center items-center mr-4 sm:w-1/2">
               <div className="text-center ">
                 <h1 className="text-4xl font-bold mb-4">
