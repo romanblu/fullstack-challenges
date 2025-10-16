@@ -6,11 +6,11 @@ const Navbar = ({ theme = "green" }) => {
   return (
     <nav 
       className={`${
-        isLight ? "bg-slate-50 text-green-900" : "bg-green-900 text-green-50"
-      } transition-colors duration-300 shadow-md        
+        isLight ? "bg-slate-50 text-green-900 shadow-md" : ""
+      } transition-colors duration-300         
         `}
       >
-      <div className="flex justify-between items-center px-6 py-3 container max-w-[1100px] mx-auto ">  
+      <div className="flex justify-between items-center px-6 py-3  container max-w-[1100px] mx-auto ">
 
         {/* Logo */}
         <Link to='/' className={`text-2xl font-bold ${
