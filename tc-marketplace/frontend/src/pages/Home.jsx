@@ -12,12 +12,11 @@ const HomePage = () => {
   return (
     <>
         <div className="bg-gradient-to-br from-green-600 via-green-800 to-green-950 text-green-50 ">
-            <div className="container mx-auto max-w-[1100px] px-4">
             <Navbar />
+            <div className="container mx-auto max-w-[1100px] px-4">
             <Banner />
             </div>
         </div>
-        
         <Features />
         <PlantsCategories />
         <FeaturedPosts />
