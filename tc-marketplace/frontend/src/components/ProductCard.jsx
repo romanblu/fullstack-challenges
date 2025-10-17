@@ -1,6 +1,6 @@
 export default function ProductCard({ product}) {
     return (
-        <div className="bg-green-50 rounded-xl shadow hover:shadow-lg transition ">
+        <div className="bg-green-50 rounded-xl shadow hover:shadow-lg transition flex flex-col h-full justify-between">
             <img
                 src={product.image}
                 alt={product.name}
