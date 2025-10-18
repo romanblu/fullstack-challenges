@@ -6,7 +6,7 @@ const Navbar = ({ theme = "green" }) => {
   return (
     <nav 
       className={`${
-        isLight ? "bg-slate-50 text-green-900 shadow-md" : ""
+        isLight ? "bg-slate-50 text-green-900  " : ""
       } transition-colors duration-300         
         `}
       >
