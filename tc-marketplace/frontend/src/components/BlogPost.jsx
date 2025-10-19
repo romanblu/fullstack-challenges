@@ -26,7 +26,7 @@ export default function BlogPost({slug }) {
                 <p className="text-gray-600 mb-8">{post.attributes.date}</p>
                 <p className="text-gray-600 mb-8">{post.attributes.author}</p>
                 <img src={post.attributes.image}/>
-                <article className="prose prose-green dark:prose-invert ">
+                <article className="prose ">
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.body}</ReactMarkdown>
                 </article>
             </div>
