@@ -3,7 +3,6 @@ import ReactMarkdown from "react-markdown";
 import getPost from "../utils/getPost.js";
 import { useEffect, useState } from "react";
 import remarkGfm from "remark-gfm";
-import Navbar from "./Navbar.jsx";
 
 export default function BlogPost({slug }) {
     const [post, setPost] = useState(null);
