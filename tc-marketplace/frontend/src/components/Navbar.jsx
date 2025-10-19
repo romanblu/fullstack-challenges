@@ -26,7 +26,7 @@ const Navbar = ({ theme = "green" }) => {
         </div>
         <div className="space-x-4 items-center">
             <Link to="/login" className={`hover:${isLight ? 'text-green-600' : 'text-lime-200'}`}>Login</Link>
-            <Link to="/signup" className={`${isLight ? 'bg-lime-500 text-green-950' : 'bg-amber-400 text-green-900'} px-2.5 py-1.5 rounded-xl ${isLight ? 'hover:bg-lime-600' : 'hover:bg-lime-200 hover:text-green-950'} duration-200 shadow-lg hover:shadow-xl`}>
+            <Link to="/register" className={`${isLight ? 'bg-lime-500 text-green-950' : 'bg-amber-400 text-green-900'} px-2.5 py-1.5 rounded-xl ${isLight ? 'hover:bg-lime-600' : 'hover:bg-lime-200 hover:text-green-950'} duration-200 shadow-lg hover:shadow-xl`}>
               Sign Up
             </Link>
         </div>
