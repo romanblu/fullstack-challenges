@@ -4,7 +4,7 @@ import { blogPosts } from "../data/blogPosts";
 
 const Blog = () => {
     return (
-    <section className="bg-slate-50 py-6 px-6 text-green-950">
+    <section className="bg-slate-50 py-6 px-6 text-green-950 min-h-screen">
         <Navbar theme="light" />
         <div className="container max-w-[1100px] mx-auto pt-8">
             <h1 className="text-3xl font-bold text-center mb-2.5">Our Blog</h1>

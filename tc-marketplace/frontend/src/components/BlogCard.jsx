@@ -13,7 +13,7 @@ export default function BlogCard({ post }) {
                     <span>{new Date(post.date).toLocaleDateString()}</span>
                 </div>
                 <Link
-                to={`/blog/${post.id}`}
+                to={`/blog/${post.slug}`}
                 className="mt-4 inline-block text-green-700 hover:text-green-900 font-medium"
                 >
                 Read More →
