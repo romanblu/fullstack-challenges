@@ -1,10 +1,7 @@
-import React from "react";
-
 import Navbar from "../components/Navbar";
 import Banner from "../components/Banner";
 import Features from "../components/Features";
 import PlantsCategories from "../components/PlantsCategories";
-import Footer from "../components/Footer";
 import FeaturedPosts from "../components/FeaturedPosts";
 import FeaturedProducts from "../components/FeaturedProducts";
 
