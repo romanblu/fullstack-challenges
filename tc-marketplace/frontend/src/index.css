@@ -1,2 +1,17 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+@utility prose-blog-post {
+  --tw-prose-body: var(--color-slate-900);
+  --tw-prose-headings: var(--color-green-950);
+  --tw-prose-links: var(--color-green-800);
+  --tw-prose-bold: var(--color-green-950);
+  --tw-prose-quotes: var(--color-green-700);
+  --tw-prose-code: var(--color-green-800);
+  --tw-prose-hr: var(--color-slate-300);
+
+  background-color: var(--color-slate-100);
+  max-width: 100%;
+  
+  @apply p-8 leading-relaxed prose-headings:font-semibold prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl prose-p:mb-4 prose-img:rounded-xl;
+}
