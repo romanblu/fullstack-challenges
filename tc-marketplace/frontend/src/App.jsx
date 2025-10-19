@@ -13,20 +13,26 @@ import Contact from './pages/Contact'
 import Blog from './pages/Blog'
 import BlogPostPage from './pages/BlogPostPage'
 import { blogPosts } from './data/blogPosts'
+import FeaturedPosts from './components/FeaturedPosts'
+import { BrowserRouter as Router, Routes, Route, BrowserRouter } from "react-router-dom";
 
 function App() {
 
   return (
     <>
-      
-      {/* <HomePage /> */}
-        {/* <ProductPage /> */}
-      {/* { <Shop />} */}
-      
-      {/* { <About />} */}
-      {/* {<SignIn /> } */}
-      { <BlogPostPage /> }
-      { <Footer />}
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/blog/:slug" element={<BlogPostPage />} />        
+        </Routes>
+        { <Footer />}
+      </BrowserRouter>
     </>
   )
 }
