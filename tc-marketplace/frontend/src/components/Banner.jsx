@@ -46,14 +46,14 @@ const Banner = ({
             </div>
           </div>
             
-          <div className="hidden sm:flex sm:w-1/2 justify-center mt-8 h-full">
+          {imageSrc && (<div className="hidden sm:flex sm:w-1/2 justify-center mt-8 h-full">
             <img 
             src={imageSrc} 
             alt={imageAlt}
             className="rounded-t-full shadow-lg object-cover 
               transition-all duration-300"
           />
-          </div>
+          </div>)}
         </section>
     );
 }
