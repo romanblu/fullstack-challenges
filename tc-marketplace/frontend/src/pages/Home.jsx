@@ -21,7 +21,6 @@ const HomePage = () => {
         <PlantsCategories />
         <FeaturedPosts />
         <FeaturedProducts />
-        <Footer />
     </>
   );
 }
