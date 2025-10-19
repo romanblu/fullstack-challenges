@@ -15,30 +15,34 @@ const Banner = ({
       const sizeVariants = {
         lg: "h-[70vh] text-4xl sm:text-5xl p-8",
         md: "h-[50vh] text-3xl sm:text-4xl p-6",
-        sm: "h-[35vh] text-2xl sm:text-3xl p-4",
+        sm: "h-[30vh] text-1xl sm:text-3xl p-4 ",
       };
 
       const themeVariants = {
         green: "bg-gradient-to-br from-green-600 via-green-800 to-green-950 text-green-50 ",
-        light: "bg-white text-gray-800 ",
+        light: "bg-slate-50 text-gray-800 ",
       }
 
-    return (
+      return (
         <section className={` px-8 flex flex-col sm:flex-row justify-center items-center gap-6 ${sizeVariants[size]} ${themeVariants[theme]}`  } >
           <div className="text-center flex flex-col items-center justify-center sm:w-1/2 py-8">
-            <h1 className="text-4xl font-bold mb-4">
+            <h1 className=" font-bold mb-4">
               {title}
             </h1>
             <p className="text-lg mb-6">
               {description}
             </p>
             <div className="space-x-6 ">
+              {primaryCta && (
               <Link to={primaryCta.link}  className="bg-slate-200 text-green-700 px-5 py-2 rounded-lg  hover:bg-green-100 hover:scale-105 transition duration-200 shadow-lg hover:shadow-xl">
                 {primaryCta.text}
               </Link>
+              )}
+              { secondaryCta && (
               <Link to={secondaryCta.link} className="border border-white px-5 py-2 rounded-lg hover:bg-slate-300 hover:text-green-700 transition duration-200 shadow-lg hover:shadow-xl">
                 {secondaryCta.text}
               </Link>
+              )}
             </div>
           </div>
             
