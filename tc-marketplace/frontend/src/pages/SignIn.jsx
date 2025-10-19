@@ -62,7 +62,7 @@ const SignIn = () => {
                             <p>
                                 Don’t have an account?{" "}
                                 <a
-                                href="/signup"
+                                href="/register"
                                 className="text-green-700 font-semibold hover:underline"
                                 >
                                 Sign Up
