@@ -3,6 +3,7 @@ import BlogPost from "../components/BlogPost";
 import Navbar from "../components/Navbar";
 import { blogPosts } from "../data/blogPosts";
 import { useEffect } from "react";
+import PostsSelection from "../components/PostsSelection";
 
 export default function BlogPostPage() {
     const { slug } = useParams();
@@ -17,6 +18,11 @@ export default function BlogPostPage() {
         <div className="bg-slate-50">
             <Navbar theme="light" />
             <BlogPost slug={slug}/>
+            <PostsSelection
+                posts={blogPosts}
+                title="Similar Posts" 
+             />
+            
         </div>
     )
     
