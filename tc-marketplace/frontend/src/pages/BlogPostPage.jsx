@@ -21,8 +21,7 @@ export default function BlogPostPage() {
             <div className="text-green-900">
                 <PostsSelection
                     posts={blogPosts}
-                    title="Similar Posts" 
-                />
+                    title="Similar Posts"/>
             </div>
             
         </div>

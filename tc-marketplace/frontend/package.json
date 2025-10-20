@@ -16,6 +16,7 @@
     "clsx": "^2.1.1",
     "front-matter": "^4.0.2",
     "gray-matter": "^4.0.3",
+    "lucide-react": "^0.546.0",
     "postcss": "^8.5.6",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

@@ -1,4 +1,4 @@
-import React from "react";
+
 
 const PlantsCategories = () => {
     return (
@@ -14,7 +14,7 @@ const PlantsCategories = () => {
                     </p>
                 </div>
                 <img 
-                    src="https://images.unsplash.com/photo-1598966733531-772e3b4b1d4b" 
+                    src="https://images.unsplash.com/photo-1692896315703-f700fd67c921?auto=format&fit=crop&q=80&w=600" 
                     alt="House Plants" 
                     className="w-40 h-40 object-cover rounded-full shadow-lg"
                 />
@@ -29,7 +29,7 @@ const PlantsCategories = () => {
                     </p>
                 </div>
                 <img 
-                    src="https://images.unsplash.com/photo-1602881917390-48e51d43c9b3"
+                    src="https://plus.unsplash.com/premium_photo-1663051343940-95461c222638?auto=format&fit=crop&q=80&w=600"
                     alt="Commercial Plants" 
                     className="w-40 h-40 object-cover rounded-full shadow-lg"
                 />

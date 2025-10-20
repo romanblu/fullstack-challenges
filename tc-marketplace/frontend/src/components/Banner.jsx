@@ -19,14 +19,14 @@ const Banner = ({
       };
 
       const themeVariants = {
-        green: "bg-gradient-to-br from-green-600 via-green-800 to-green-950 text-green-50 ",
+        green: "",
         light: "bg-slate-50 text-gray-800 ",
       }
 
       return (
         <section className={` px-8 flex flex-col sm:flex-row justify-center items-center gap-6 ${sizeVariants[size]} ${themeVariants[theme]}`  } >
           <div className="text-center flex flex-col items-center justify-center sm:w-1/2 py-8">
-            <h1 className=" font-bold mb-4">
+            <h1 className="text-4xl font-bold mb-4">
               {title}
             </h1>
             <p className="text-lg mb-6">

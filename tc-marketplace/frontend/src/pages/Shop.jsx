@@ -97,7 +97,7 @@ const Shop = () => {
     });
 
   return (
-    <div className="bg-slate-200 min-h-screen ">
+    <div className="bg-slate-50 min-h-screen ">
         <Navbar theme="light" />
             <div className="container max-w-[1100px] mx-auto px-4 py-10">
                 <h1 className="text-3xl font-bold text-green-800 mb-6">All Products</h1>
@@ -111,7 +111,6 @@ const Shop = () => {
                 </div>
             </div>
 
-        <Footer />
     </div>
   );
 }
