@@ -18,10 +18,12 @@ export default function BlogPostPage() {
         <div className="bg-slate-50">
             <Navbar theme="light" />
             <BlogPost slug={slug}/>
-            <PostsSelection
-                posts={blogPosts}
-                title="Similar Posts" 
-             />
+            <div className="text-green-900">
+                <PostsSelection
+                    posts={blogPosts}
+                    title="Similar Posts" 
+                />
+            </div>
             
         </div>
     )
