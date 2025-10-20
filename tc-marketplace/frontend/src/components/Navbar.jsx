@@ -1,9 +1,24 @@
 import { Link } from "react-router-dom";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
 
 const Navbar = ({ theme = "green" }) => {
-  const isLight = theme === "light";
+  const [menuOpen, setMenuOpen] = useState(false);  
   
+  const toggleMenu = () => setMenuOpen(prev => !prev) 
+
+  const isLight = theme === "light";
+
+  const navItems = [
+    { name: "Home", to: "/" },
+    { name: "Shop", to: "/shop" },
+    { name: "Blog", to: "/blog" },
+    { name: "About", to: "/about" },
+    { name: "Contact", to: "/contact" },
+  ];
+
   return (
+<>
     <nav 
       className={`${
         isLight ? "bg-slate-50 text-green-900  " : ""
@@ -18,20 +33,46 @@ const Navbar = ({ theme = "green" }) => {
         }`}>PlantCellia</Link>
 
         {/* Nav links */}
-        <div className="hidden sm:flex space-x-6 ">
-            <Link to="/shop" className={`hover:${isLight ? 'text-green-600' : 'text-lime-200'}`}>Products</Link>
-            <Link to="/about" className={`hover:${isLight ? 'text-green-600' : 'text-lime-200'}`}>About Us</Link>
-            <Link to="/blog" className={`hover:${isLight ? 'text-green-600' : 'text-lime-200'}`}>Blog</Link>
-            <Link to="/contact" className={`hover:${isLight ? 'text-green-600' : 'text-lime-200'}`}>Contact</Link>
+        <div className="hidden sm:flex space-x-5 ">
+            { navItems.map((item) => (
+              <Link  className={`hover:${isLight ? 'text-green-600' : 'text-lime-200'}`} to={item.to} key={item.to}>{item.name} </Link>
+            ))}
+            
         </div>
-        <div className="space-x-4 items-center">
-            <Link to="/login" className={`hover:${isLight ? 'text-green-600' : 'text-lime-200'}`}>Login</Link>
-            <Link to="/register" className={`${isLight ? 'bg-lime-500 text-green-950' : 'bg-amber-400 text-green-900'} px-2.5 py-1.5 rounded-xl ${isLight ? 'hover:bg-lime-600' : 'hover:bg-lime-200 hover:text-green-950'} duration-200 shadow-lg hover:shadow-xl`}>
+        <div className="hidden sm:flex space-x-4 items-center">
+            <Link to="/login" className={` hover:${isLight ? 'text-green-600' : 'text-lime-200'}`}>Login</Link>
+            <Link to="/register" className={` ${isLight ? 'bg-lime-500 text-green-950' : 'bg-amber-400 text-green-900'} px-2.5 py-1.5 rounded-xl ${isLight ? 'hover:bg-lime-600' : 'hover:bg-lime-200 hover:text-green-950'} duration-200 shadow-lg hover:shadow-xl`}>
               Sign Up
             </Link>
         </div>
+        <button
+          className=" z-55 sm:hidden p-2 rounded-lg hover:bg-green-900/30 transition"
+          onClick={toggleMenu}
+        >
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
+        
+
     </nav>
+      {/* Mobile Dropdown Menu */}
+      {menuOpen && (
+        <div className="sm:hidden bg-green-900 text-white px-6 py-4 space-y-3 absolute  w-full z-50">
+          {navItems.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              onClick={() => setMenuOpen(false)}
+              className="block hover:text-green-300 transition"
+            >
+              {item.name}
+            </Link>
+        ))}
+        <Link to="/signin" className="block hover:text-green-300 transition">Login</Link>
+        <Link to="register" className="block hover:text-green-300 transition">Register</Link>
+        </div>
+      )}
+    </>
   );
 }
 
