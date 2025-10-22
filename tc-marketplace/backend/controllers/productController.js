@@ -7,7 +7,7 @@ export const listProducts = async (req, res) => {
 };
 export const getProduct = async (req, res) => {
   const p = await Product.findOne({ slug: req.params.slug }).populate('seller', 'name email');
-  if (!p) return res.status(404).json({ message: 'Not found' });
+  if (!p)  return res.status(404).json({ message: 'Not found' });
   res.json(p);
 };
 export const createProduct = async (req, res) => {

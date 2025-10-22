@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { faker } from "@faker-js/faker";
 import dotenv from "dotenv";
 import Product from "./models/Product.js";
-
+import slugify from "slugify";
 dotenv.config();
 
 const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/tc-marketplace";
@@ -18,8 +18,10 @@ async function seedProducts() {
     const products = [];
 
     for (let i = 0; i < 20; i++) {
+      const productName = faker.commerce.productName();
       products.push({
-        name: faker.commerce.productName(),
+        name: productName,
+        slug: slugify(productName, { lower: true, strict: true }),
         species: faker.lorem.word(),
         description: faker.commerce.productDescription(),
         price: faker.commerce.price({ min: 5, max: 100 }),
