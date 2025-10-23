@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+
 export const protect = (req, res, next) => {
   const auth = req.headers.authorization?.split(' ')[1];
   if (!auth) return res.status(401).json({ message: 'Unauthorized' });
