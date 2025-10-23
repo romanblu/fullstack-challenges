@@ -1,10 +1,11 @@
 import express from 'express';
+import { listUsers, findUserByEmail, updateUser, deleteUser } from '../controllers/userController.js';
+import { protect, requireRole } from '../middleware/auth.js';
 
 
 const router = express.Router();
-// router.get('/', listProducts);
-// router.get('/:slug', getProduct);
-// router.post('/', protect, requireRole('seller'), createProduct);
-// router.put('/:id', protect, requireRole('seller'), updateProduct);
-// router.delete('/:id', protect, requireRole('seller'), deleteProduct);
+router.post('/email/', findUserByEmail);
+router.get('/', listUsers);
+// router.put('/:id', protect, updateUser); // admin functionality
+
 export default router;

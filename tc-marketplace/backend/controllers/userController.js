@@ -5,10 +5,10 @@ export const listUsers = async (req, res) => {
     res.json(users);
 }
 
-export const getUserByEmail = async (req, res) => {
+export const findUserByEmail = async (req, res) => {
     try {
-    const { email } = req.params;
-        console.log("PARAMS ",req.params)
+    const { email } = req.body;
+    console.log(email)
     // Find user by email (case-insensitive)
     const user = await User.findOne({ email: new RegExp(`^${email}$`, 'i') }).select('-password');
 
@@ -23,12 +23,11 @@ export const getUserByEmail = async (req, res) => {
   }
 }
 
-export const registerUser = async (req, res) => {
-
-}
 
 export const updateUser = async (req, res) => {
-
+    console.log("body: ",req.body)
+    const updated = await User.findByIdAndUpdate(req.params._id, req.body, { new: true });
+    res.json(updated);
 }
 
 export const deleteUser = async (req, res) => {
