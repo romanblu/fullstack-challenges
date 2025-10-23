@@ -1,4 +1,5 @@
 import Product from '../models/Product.js';
+
 export const listProducts = async (req, res) => {
   const q = {};
   if (req.query.q) q.title = { $regex: req.query.q, $options: 'i' };
@@ -18,7 +19,6 @@ export const createProduct = async (req, res) => {
   res.json(product);
 };
 export const updateProduct = async (req, res) => {
-  console.log(req.body)
   const updated = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
   res.json(updated);
 };

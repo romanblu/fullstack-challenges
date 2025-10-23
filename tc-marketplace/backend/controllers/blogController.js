@@ -2,7 +2,6 @@ import BlogPost from '../models/BlogPost.js';
 
 export const listBlogPosts = async (req, res) => {
   const q = {};
-  console.log("Getting all posts")
   if (req.query.q) q.title = { $regex: req.query.q, $options: 'i' };
   const blogPosts = await BlogPost.find(q).limit(100);
   res.json(blogPosts);
@@ -22,7 +21,6 @@ export const createBlogPost = async (req, res) => {
 };
 
 export const updateBlogPost = async (req, res) => {
-  console.log("request body post:", req.body);
   const updated = await BlogPost.findOneAndUpdate({slug: req.params.slug}, req.body, { new: true });
   if (!updated) {
     return res.status(404).json({ message: 'Blog post not found' });
