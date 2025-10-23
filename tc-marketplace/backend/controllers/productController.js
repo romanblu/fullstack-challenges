@@ -6,10 +6,11 @@ export const listProducts = async (req, res) => {
   res.json(products);
 };
 export const getProduct = async (req, res) => {
-  const p = await Product.findOne({ slug: req.params.slug }).populate('seller', 'name email');
+  const p = await Product.findOne({ id: req.params._id }).populate('seller', 'name');
   if (!p)  return res.status(404).json({ message: 'Not found' });
   res.json(p);
 };
+
 export const createProduct = async (req, res) => {
   const data = req.body;
   data.seller = req.user.id; // from protect middleware
@@ -17,6 +18,7 @@ export const createProduct = async (req, res) => {
   res.json(product);
 };
 export const updateProduct = async (req, res) => {
+  console.log(req.body)
   const updated = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
   res.json(updated);
 };
