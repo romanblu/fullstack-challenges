@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "../api/auth";
 
 const SignIn = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
@@ -8,12 +9,17 @@ const SignIn = () => {
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const { email, password } = formData;   
+        const { email, password } = formData;
+        try{
+            const data = await loginUser(formData)   
+        }catch(err) {
+            console.log(err)
+        }
     }
 
     return (

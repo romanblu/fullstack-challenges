@@ -1,20 +1,26 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { registerUser } from "../api/auth";
 
 
 const Register = () => {
-    const [formData, setFormData] = useState({ email: "", password: "" });
+    const [formData, setFormData] = useState({ firstName: "", lastName:"", email: "", password: "", role:"buyer" });
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-
+        setFormData({...formData, [e.target.name]: e.target.value })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const { email, password } = formData;   
+        const { firstName, lastName, email, password, role } = formData;
+        try{
+            const data = await registerUser({name: `${firstName} ${lastName}`, email, password, role})
+        }catch(err){
+            console.log(err)
+        }
     }
 
 
