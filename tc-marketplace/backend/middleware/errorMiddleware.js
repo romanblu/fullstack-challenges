@@ -1,3 +1,4 @@
+import logger from "../utils/logger.js"
 
 export const notFound = (req, res, next) => {
     const error = new Error(`Not Found - ${req.originalUrl}`)

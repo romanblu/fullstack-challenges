@@ -9,6 +9,8 @@ import orderRoutes from "./routes/orders.js";
 import authRoutes from "./routes/auth.js";
 import blogRoutes from "./routes/blog.js";
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
+import morgan from "morgan";
+import logger from "./utils/logger.js";
 
 dotenv.config();
 connectDB();
@@ -16,6 +18,13 @@ connectDB();
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Connect Morgan to Winston
+const stream = {
+  write: (message) => logger.http(message.trim()),
+};
+
+app.use(morgan('combined', { stream }));
 
 // Routes
 app.use("/api/users", userRoutes);
