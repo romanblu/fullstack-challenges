@@ -2,10 +2,15 @@ import { useState } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../api/auth";
+import { AuthContext } from "../context/AuthContext";
 
 const SignIn = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
+
+    const { user, setUser, logout } = useContext(AuthContext)
+    
+
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -16,7 +21,11 @@ const SignIn = () => {
         e.preventDefault();
         const { email, password } = formData;
         try{
-            const data = await loginUser(formData)   
+            const data = await loginUser(formData)  
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data.user));
+            setUser(user)
+            navigate('/')
         }catch(err) {
             console.log(err)
         }

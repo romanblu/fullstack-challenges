@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 const Navbar = ({ theme = "green" }) => {
   const [menuOpen, setMenuOpen] = useState(false);  
+  
+  const { user, setUser, logout } = useContext(AuthContext)
   
   const toggleMenu = () => setMenuOpen(prev => !prev) 
 
@@ -16,7 +20,7 @@ const Navbar = ({ theme = "green" }) => {
     { name: "About", to: "/about" },
     { name: "Contact", to: "/contact" },
   ];
-
+  console.log("User: ", user)
   return (
 <>
     <nav 
@@ -40,10 +44,14 @@ const Navbar = ({ theme = "green" }) => {
             
         </div>
         <div className="hidden sm:flex space-x-4 items-center">
-            <Link to="/login" className={` hover:${isLight ? 'text-green-600' : 'text-lime-200'}`}>Login</Link>
-            <Link to="/register" className={` ${isLight ? 'bg-lime-500 text-green-950' : 'bg-amber-400 text-green-900'} px-2.5 py-1.5 rounded-xl ${isLight ? 'hover:bg-lime-600' : 'hover:bg-lime-200 hover:text-green-950'} duration-200 shadow-lg hover:shadow-xl`}>
+            {user ? <p> Hello {user.name}</p> 
+            : <Link to="/login" className={` hover:${isLight ? 'text-green-600' : 'text-lime-200'}`}>Login</Link>}
+            {user ? <Link to="/logout" className="text-lime-500 hover:underline">
+                      Logout
+                    </Link>
+            :<Link to="/register" className={` ${isLight ? 'bg-lime-500 text-green-950' : 'bg-amber-400 text-green-900'} px-2.5 py-1.5 rounded-xl ${isLight ? 'hover:bg-lime-600' : 'hover:bg-lime-200 hover:text-green-950'} duration-200 shadow-lg hover:shadow-xl`}>
               Sign Up
-            </Link>
+            </Link>}
         </div>
         <button
           className=" z-55 sm:hidden p-2 rounded-lg hover:bg-green-900/30 transition"
@@ -68,8 +76,9 @@ const Navbar = ({ theme = "green" }) => {
               {item.name}
             </Link>
         ))}
-        <Link to="/signin" className="block hover:text-green-300 transition">Login</Link>
-        <Link to="register" className="block hover:text-green-300 transition">Register</Link>
+        {user ?  <Link to="/logout" className="block hover:text-green-300 transition">Logout</Link>
+        :<Link to="/signin" className="block hover:text-green-300 transition">Login</Link>}
+        {user ? '' :<Link to="register" className="block hover:text-green-300 transition">Register</Link>}
         </div>
       )}
     </>
