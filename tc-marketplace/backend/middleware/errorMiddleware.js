@@ -6,10 +6,12 @@ export const notFound = (req, res, next) => {
 } 
 
 export const errorHandler = (err, req, res, next) => {
-    // Sometimes Express sets statusCode = 200 even on errors, fix it:
-    const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+  logger.error(`${req.method} ${req.originalUrl} - ${err.message}`);
+  
+  // Sometimes Express sets statusCode = 200 even on errors, fix it:
+  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
 
-    res.status(statusCode).json({
+  res.status(statusCode).json({
     message: err.message || 'Internal Server Error',
     // show stack trace only in development for security
     stack: process.env.NODE_ENV === 'production' ? null : err.stack,
