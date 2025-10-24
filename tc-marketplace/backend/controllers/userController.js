@@ -1,35 +1,74 @@
 import User from "../models/User.js";
 
+// @desc    Get all users
+// @route   GET /api/users
+// @access  Private - admin
 export const listUsers = async (req, res) => {
-    const users = await User.find({})
-    res.json(users);
+    const users = await User.find().select('-password')
+    res.status(200).json(users);
 }
 
+// @desc    Get user by email
+// @route   POST /api/users
+// @access  Private - user/admin
 export const findUserByEmail = async (req, res) => {
-    try {
-    const { email } = req.body;
-    console.log(email)
+    const { email } = req.body; 
+    if (!email) {
+        res.status(400)
+        throw new Error('Email is required')
+    }
     // Find user by email (case-insensitive)
     const user = await User.findOne({ email: new RegExp(`^${email}$`, 'i') }).select('-password');
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+        res.status(404)
+        throw new Error('User not found')
     }
 
     res.json(user);
-  } catch (error) {
-    console.error('Error fetching user by email:', error);
-    res.status(500).json({ message: 'Server error' });
-  }
 }
 
-
+// @desc    Update user
+// @route   PUT /api/users
+// @access  Private - user/admin
 export const updateUser = async (req, res) => {
-    console.log("body: ",req.body)
-    const updated = await User.findByIdAndUpdate(req.params._id, req.body, { new: true });
+    const { id } = req.body
+
+    const user = await User.findOne({ id })
+
+    if(!user) {
+        res.status(404)
+        throw new Error ('User not found')
+    }
+
+    if(user.id.toString() !== req.user.id.toString()){
+        res.status(403)
+        throw new Error('Not authorized to delete user')
+    }    
+     
+    Object.assign(user, req.body)
+    
+    const updated = user.save()
     res.json(updated);
 }
 
 export const deleteUser = async (req, res) => {
 
+    const { id } = req.params
+
+    const user = await User.findOne({ id })
+
+    if(!user) {
+        res.status(404)
+        throw new Error ('User not found')
+    }
+
+    if(user.id.toString() !== req.user.id.toString()){
+        res.status(403)
+        throw new Error('Not authorized to delete user')
+    }    
+     
+    await User.deleteOne(user)
+    
+    res.json({ message: "User deleted successfull" });
 }
