@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from 'axios';
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
@@ -9,80 +10,12 @@ const Shop = () => {
     const [search,setSearch] = useState("")
     const [sort, setSort] = useState("")
 
+    const apiUrl = import.meta.env.VITE_API_URL
+
     useEffect(() => {
-        setProducts([
-            {
-                id: 1,
-                name: "Philodendron",
-                description: "Tissue culture — 3 months old",
-                image:
-                "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=500&q=60",
-                price: 15,
-                stock: 6,
-            },
-            {
-                id: 2,
-                name: "Monstera Deliciosa",
-                description: "Tissue culture — 2 months old",
-                image:
-                "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=500&q=60",
-                price: 18,
-                stock: 10,
-            },
-            {
-                id: 3,
-                name: "Anthurium Crystallinum",
-                description: "Lab propagated — 4 months old",
-                image:
-                "https://images.unsplash.com/photo-1498855926480-d98e83099315?auto=format&fit=crop&w=500&q=60",
-                price: 25,
-                stock: 3,
-            },
-            {
-                id: 4,
-                name: "Snake Plant (Dracaena trifasciata) ",
-                description: "Lab propagated — 4 months old",
-                image:
-                "https://images.unsplash.com/photo-1593482892290-f54927ae1bb6?auto=format&fit=crop&w=500&q=60",
-                price: 25,
-                stock: 3,
-            },
-            {
-                id: 7,
-                name: "Spider Plant (Chlorophytum comosum)",
-                description: "Lab propagated — 4 months old",
-                image:
-                "https://images.unsplash.com/photo-1611527664689-d430dd2a6774?auto=format&fit=crop&q=60&w=500",
-                price: 25,
-                stock: 3,
-             },
-            {
-                id: 8   ,
-                name: "ZZ Plant (Zamioculcas zamiifolia)",
-                description: "Lab propagated — 4 months old",
-                image:
-                "https://images.unsplash.com/photo-1632900931937-f5ea0b69da81?auto=format&fit=crop&q=60&w=500",
-                price: 25,
-                stock: 3,
-            },
-            {
-                id: 9,
-                name: "Pothos (Epipremnum aureum)",
-                description: "Lab propagated — 4 months old",
-                image:
-                "https://images.unsplash.com/photo-1605966706128-927ad2c9e2c8?auto=format&fit=crop&q=60&w=500",
-                price: 25,
-                stock: 3,
-            },
-            {
-                id: 10,
-                name: "Peace Lily TC Plant",
-                price: 12.99,
-                description: "Healthy Peace Lily for rapid propagation.",
-                stock: 5,
-                image: "https://images.unsplash.com/photo-1593691509543-c55fb32d8de5?auto=format&fit=crop&q=60&w=500",
-            },
-        ])
+        axios.get(`${apiUrl}/api/products`)
+        .then(res => setProducts(res.data))
+        .catch(err => console.error(err));
     },[])
 
 
@@ -106,7 +39,7 @@ const Shop = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                     {filtered.map((product) => (
-                        <ProductCard key={product.id} product={product} />
+                        <ProductCard key={product._id} product={product} />
                     ))}
                 </div>
             </div>
