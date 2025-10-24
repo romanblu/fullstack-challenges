@@ -1,5 +1,6 @@
 import User from '../models/User.js';
 import { hash, compare, signToken } from '../utils/auth.js';
+import logger from '../utils/logger.js';
 
 // @desc    Register new user
 // @route   POST /api/auth/register
@@ -36,7 +37,9 @@ export const register = async (req, res) => {
 // @access  Public
 export const login = async (req, res) => {
   const { email, password } = req.body;
-
+  
+  logger.info(`Login attempt for ${email}`);
+  
   const user = await User.findOne({ email });
 
   if (!user) {
