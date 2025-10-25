@@ -5,7 +5,7 @@ import { registerUser } from "../api/auth";
 
 
 const Register = () => {
-    const [formData, setFormData] = useState({ firstName: "", lastName:"", email: "", password: "", role:"buyer" });
+    const [formData, setFormData] = useState({ firstName: "", lastName:"", email: "", password: "", role:"buyer", phone:"" });
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
@@ -15,9 +15,10 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { firstName, lastName, email, password, role } = formData;
+
+        const { firstName, lastName, email, password, role, phone } = formData;
         try{
-            const data = await registerUser({name: `${firstName} ${lastName}`, email, password, role})
+            const data = await registerUser({name: `${firstName} ${lastName}`, email, password, role, phone})
         }catch(err){
             console.log(err)
         }
@@ -83,14 +84,24 @@ const Register = () => {
                         <label className="block text-sm font-medium mb-1">Confirm Password</label>
                         <input
                         type="password"
-                        name="password"
+                        name="confirmPassword"
                         value={formData.confirmPassword}
                         onChange={handleChange}
                         required
                         className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-600"
                         />
                     </div>
-
+                    <div>
+                        <label className="block text-sm font-medium mb-1">Phone Number</label>
+                        <input
+                        type="text"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-600"
+                        />
+                    </div>
                     <button
                         type="submit"
                         className="w-full bg-green-700 text-white py-2 rounded-md hover:bg-green-800 transition"

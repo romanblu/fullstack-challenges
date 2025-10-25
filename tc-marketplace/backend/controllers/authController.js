@@ -6,7 +6,7 @@ import logger from '../utils/logger.js';
 // @route   POST /api/auth/register
 // @access  Public
 export const register = async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password, role, phone } = req.body;
 
   if (!email) {
     res.status(400)
@@ -18,6 +18,11 @@ export const register = async (req, res) => {
     throw new Error('Missing password')
   }
 
+  if (!name) {
+    res.status(400)
+    throw new Error('Missing name')
+  }
+
   const existing = await User.findOne({ email });
 
   if (existing) {
@@ -25,11 +30,12 @@ export const register = async (req, res) => {
     throw new Error('Email already exists')
   }
 
-  const hashedPw = await hash(password);
-  const user = await User.create({ name, email, password: hashedPw, role });
-  const token = signToken({ id: user._id, role: user.role });
 
-  res.json({ user: { id: user._id, email: user.email, name: user.name, role: user.role }, token });
+  const hashedPw = await hash(password);
+  const user = await User.create({ name, email, password: hashedPw, role, phone });
+  const token = signToken({ id: user._id, user: user });
+
+  res.json({ user: { id: user._id, email: user.email, name: user.name, role: user.role, phone: user.phone }, token });
 };
 
 // @desc    Login user
