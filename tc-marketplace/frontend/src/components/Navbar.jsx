@@ -26,7 +26,6 @@ const Navbar = ({ theme = "green" }) => {
     logout()
   }
 
-  console.log("User: ", user)
   return (
 <>
     <nav 
