@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../api/auth";
 import { AuthContext } from "../context/AuthContext";
+import { useContext } from "react";
 
 const SignIn = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
@@ -19,12 +20,12 @@ const SignIn = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { email, password } = formData;
+
         try{
             const data = await loginUser(formData)  
             localStorage.setItem("token", data.token);
             localStorage.setItem("user", JSON.stringify(data.user));
-            setUser(user)
+            setUser(data.user)
             navigate('/')
         }catch(err) {
             console.log(err)
