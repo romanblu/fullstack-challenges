@@ -110,7 +110,7 @@ const Register = () => {
                             </a>
                         </p>
                         <p className="mt-2">
-                            <a href="/forgot-password" className="text-green-600 hover:underline">
+                            <a href="/register-seller" className="text-green-600 hover:underline">
                             Register as a Lab Partner
                             </a>
                         </p>
