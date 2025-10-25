@@ -15,6 +15,7 @@ import BlogPostPage from './pages/BlogPostPage'
 import { blogPosts } from './data/blogPosts'
 import FeaturedPosts from './components/FeaturedPosts'
 import { BrowserRouter as Router, Routes, Route, BrowserRouter } from "react-router-dom";
+import RegisterSeller from './pages/RegisterSeller'
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<SignIn />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/register-seller" element={<RegisterSeller />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />        
         </Routes>
         { <Footer />}
