@@ -20,6 +20,12 @@ const Navbar = ({ theme = "green" }) => {
     { name: "About", to: "/about" },
     { name: "Contact", to: "/contact" },
   ];
+
+  const handleLogout = async (e) => {
+    e.preventDefault()
+    logout()
+  }
+
   console.log("User: ", user)
   return (
 <>
@@ -46,9 +52,9 @@ const Navbar = ({ theme = "green" }) => {
         <div className="hidden sm:flex space-x-4 items-center">
             {user ? <p> Hello {user.name}</p> 
             : <Link to="/login" className={` hover:${isLight ? 'text-green-600' : 'text-lime-200'}`}>Login</Link>}
-            {user ? <Link to="/logout" className="text-lime-500 hover:underline">
+            {user ? <button to="/" onClick={handleLogout} className={`${isLight ? 'text-green-800' : 'text-slate-300'} hover:${isLight ? '' : 'text-gray-400 font-medium transition-colors'} hover:underline`}>
                       Logout
-                    </Link>
+                    </button>
             :<Link to="/register" className={` ${isLight ? 'bg-lime-500 text-green-950' : 'bg-amber-400 text-green-900'} px-2.5 py-1.5 rounded-xl ${isLight ? 'hover:bg-lime-600' : 'hover:bg-lime-200 hover:text-green-950'} duration-200 shadow-lg hover:shadow-xl`}>
               Sign Up
             </Link>}
