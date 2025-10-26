@@ -8,6 +8,8 @@ import productRoutes from "./routes/products.js";
 import orderRoutes from "./routes/orders.js";
 import authRoutes from "./routes/auth.js";
 import blogRoutes from "./routes/blog.js";
+import sellerRoutes from "./routes/store.js";
+
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import morgan from "morgan";
 import logger from "./utils/logger.js";
@@ -37,6 +39,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/blog", blogRoutes);
 app.use("/api/auth", authRoutes)
+app.use("/api/store", sellerRoutes)
 
 app.use(notFound)
 
