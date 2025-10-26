@@ -10,6 +10,7 @@ const storeSchema = new mongoose.Schema({
     description: String,
     category: String,
     profilePicture: String,
+    tags: [String],
     verified: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now }
 
