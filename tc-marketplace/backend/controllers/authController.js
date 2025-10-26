@@ -1,6 +1,8 @@
+import Store from '../models/Store.js';
 import User from '../models/User.js';
 import { hash, compare, signToken } from '../utils/auth.js';
 import logger from '../utils/logger.js';
+import slugify from 'slugify';
 
 // @desc    Register new user
 // @route   POST /api/auth/register
@@ -33,6 +35,32 @@ export const register = async (req, res) => {
 
   const hashedPw = await hash(password);
   const user = await User.create({ name, email, password: hashedPw, role, phone });
+
+  if( role === 'seller' ){
+    const { storeName, contactEmail, contactPhone, location, description, category, profilePicture } = req.body;
+    
+    try{
+      const store = await Store.create({
+        name: storeName,
+        slug: slugify(storeName),
+        owner: user._id,
+        contactEmail: contactEmail,
+        contactPhone: contactPhone,
+        location: location,
+        description: description,
+        category: category,
+        profilePicture: profilePicture
+      })
+      
+      user.store = store._id;
+    
+    }catch (err){
+      throw new Error('Error creating store for seller ', err)
+    }
+  }
+
+  await user.save()
+
   const token = signToken({ id: user._id, user: user });
 
   res.json({ user: { id: user._id, email: user.email, name: user.name, role: user.role, phone: user.phone }, token });

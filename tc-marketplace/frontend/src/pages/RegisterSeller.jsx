@@ -1,12 +1,11 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar"
 import { useNavigate } from "react-router-dom";
+import { registerUser } from "../api/auth";
 
 const RegisterSeller = () => {
     const [formData, setFormData] = useState({ 
-        email: "", 
-        password: "" 
-        
+        role: "seller"
     });
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -15,9 +14,14 @@ const RegisterSeller = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData)
+        try{
+            const data = await registerUser(formData)
+        }catch(err){
+            console.log(err)
+        }
+
     }
 
 return (
@@ -91,10 +95,10 @@ return (
                                 <option value="option3">Option 3</option>
                             </select> */}
                             <label className="block">
-                                <span className="text-gray-700">Add Profile Picture (optional)</span>
+                                <span className="text-gray-700">Add Profile Picture (optional)</span> 
                                 <input
                                     type="file"
-                                    name="attachment"
+                                    name="profile"
                                     className="mt-2 block  text-sm text-gray-700
                                             file:mr-4 file:py-2 file:px-4
                                             file:rounded-md file:border-0
