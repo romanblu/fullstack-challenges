@@ -6,7 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 
 const Navbar = ({ theme = "green" }) => {
   const [menuOpen, setMenuOpen] = useState(false);  
-  
+    
   const { user, setUser, logout } = useContext(AuthContext)
   
   const toggleMenu = () => setMenuOpen(prev => !prev) 
@@ -24,6 +24,36 @@ const Navbar = ({ theme = "green" }) => {
   const handleLogout = async (e) => {
     e.preventDefault()
     logout()
+  }
+
+  const Logout = () =>{
+    return (
+        <Link to="/" onClick={handleLogout} className={`${isLight ? 'text-green-800' : 'text-slate-300'} hover:${isLight ? '' : 'text-gray-400 font-medium transition-colors'} hover:underline`}>
+          Logout
+        </Link>
+    )
+  }
+
+  const Login = () =>{
+    return (
+        <Link to="/login" className={` hover:${isLight ? 'text-green-600' : 'text-lime-200'}`}>Login</Link>
+    )
+  }
+
+  const Signup = () =>{
+    return (
+        <Link to="/register" className={` ${isLight ? 'bg-lime-500 text-green-950' : 'bg-amber-400 text-green-900'} px-2.5 py-1.5 rounded-xl ${isLight ? 'hover:bg-lime-600' : 'hover:bg-lime-200 hover:text-green-950'} duration-200 shadow-lg hover:shadow-xl`}>
+          Sign Up
+        </Link>
+    )
+  }
+
+  const DashboardButton = () =>{
+    return (
+        <Link to="/dashboard" className={` ${isLight ? 'bg-lime-500 text-green-950' : 'bg-amber-400 text-green-900'} px-2.5 py-1.5 rounded-xl ${isLight ? 'hover:bg-lime-600' : 'hover:bg-lime-200 hover:text-green-950'} duration-200 shadow-lg hover:shadow-xl`}>
+          Dashboard
+        </Link>
+    )
   }
 
   return (
@@ -49,14 +79,12 @@ const Navbar = ({ theme = "green" }) => {
             
         </div>
         <div className="hidden sm:flex space-x-4 items-center">
-            {user ? <p> Hello {user.name}</p> 
-            : <Link to="/login" className={` hover:${isLight ? 'text-green-600' : 'text-lime-200'}`}>Login</Link>}
-            {user ? <button to="/" onClick={handleLogout} className={`${isLight ? 'text-green-800' : 'text-slate-300'} hover:${isLight ? '' : 'text-gray-400 font-medium transition-colors'} hover:underline`}>
-                      Logout
-                    </button>
-            :<Link to="/register" className={` ${isLight ? 'bg-lime-500 text-green-950' : 'bg-amber-400 text-green-900'} px-2.5 py-1.5 rounded-xl ${isLight ? 'hover:bg-lime-600' : 'hover:bg-lime-200 hover:text-green-950'} duration-200 shadow-lg hover:shadow-xl`}>
-              Sign Up
-            </Link>}
+            {
+              user ? user.role === 'seller' ? <DashboardButton /> :  <p> Hello {user.name}</p> :   <Login />
+            }
+            {
+              user ? <Logout /> : <Signup />
+            }
         </div>
         <button
           className=" z-55 sm:hidden p-2 rounded-lg hover:bg-green-900/30 transition"
