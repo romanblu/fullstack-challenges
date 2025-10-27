@@ -1,7 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { getMyStore, updateStoreInfo } from "../api/store";
-
+import slugify from "slugify";
 const SellerInfoDashboard = () => {
 
     const [form, setForm] = useState({
@@ -40,7 +39,6 @@ const SellerInfoDashboard = () => {
 
     const handleEditToggle = () => {
         setIsEditting(prev => !prev);
-        console.log("isEditting:", isEditting);
     }
 
     const handleDiscard = () => {   
@@ -57,6 +55,12 @@ const SellerInfoDashboard = () => {
         } catch (error) {
             console.error("Error saving store data:", error);
         }
+    }
+
+    const handleNameChange = (e) => {
+
+        setForm({ ...form, name: e.target.value, slug: slugify(e.target.value, {lower:true}) });
+        
     }
 
     const FormButton = () => {
@@ -88,7 +92,7 @@ const SellerInfoDashboard = () => {
                             name="name"
                             placeholder="Store Name"
                             value={form.name}
-                            onChange={handleChange}
+                            onChange={handleNameChange}
                             className="border rounded p-2 w-full"
                             />
 

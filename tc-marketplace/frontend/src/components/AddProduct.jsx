@@ -2,7 +2,7 @@ import { useState } from "react";
 import slugify from "slugify";
 import { createProduct } from "../api/product";
 
-const AddProduct = () => {
+const AddProduct = ({ setActiveTab }) => {
     const [form, setForm] = useState({
         name: "",
         slug: "",
@@ -17,7 +17,13 @@ const AddProduct = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        createProduct(form).then(data => console.log(data)).catch(err => setMessage("Error creating product: " + err.message))
+        createProduct(form).then(res => {
+            if(res.status === 201) {
+                setMessage("Product created successfully!")
+                setActiveTab("products");
+            }
+        }            
+        ).catch(err => setMessage("Error creating product: " + err.message))
     }
 
     const handleChange = (e) => {

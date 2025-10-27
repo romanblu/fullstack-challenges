@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { updateProduct } from "../api/product";
+import slugify from "slugify";
 
 const EditProduct = ({ setActiveTab, setSelectedProduct, selectedProduct }) => {
     useEffect(() => {
@@ -21,7 +22,7 @@ const EditProduct = ({ setActiveTab, setSelectedProduct, selectedProduct }) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         updateProduct(selectedProduct._id, form).then(res => {
-            if(res.status === 200) {
+            if(res.status === 201) {
                 setMessage("Product updated successfully!")
                 setSelectedProduct(res.data);
                 setActiveTab("products");
