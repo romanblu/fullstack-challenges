@@ -16,6 +16,7 @@ import { blogPosts } from './data/blogPosts'
 import FeaturedPosts from './components/FeaturedPosts'
 import { BrowserRouter as Router, Routes, Route, BrowserRouter } from "react-router-dom";
 import RegisterSeller from './pages/RegisterSeller'
+import SellerDashboardPage from './pages/SellerDashboardPage'
 
 function App() {
 
@@ -31,7 +32,9 @@ function App() {
           <Route path="/login" element={<SignIn />} />
           <Route path="/register" element={<Register />} />
           <Route path="/register-seller" element={<RegisterSeller />} />
-          <Route path="/blog/:slug" element={<BlogPostPage />} />        
+          <Route path="/blog/:slug" element={<BlogPostPage />} />   
+          <Route path="/dashboard" element={<SellerDashboardPage />} />
+          {/* <Route path="/admin/dashboard" element={<AdminDashboardPage />} />      */}
         </Routes>
         { <Footer />}
       </BrowserRouter>
