@@ -1,5 +1,5 @@
 import Store from '../models/Store.js';
-
+import Product from '../models/Product.js';
 export const getMyStore = async (req, res) => {
     try{
         const store = await Store.findOne({ owner: req.user.id });
@@ -21,13 +21,18 @@ export const updateMyStore = async (req, res) => {
 
 export const getMyProducts = async (req, res) => {
     try{
-        const store = await Store.findOne({ owner: req.user.id });
-        const products = await Product.find({ store: store._id.toString() });
+
+        const products = await Product.find({ seller: req.user.id });
+        
+        if( !products || products.length === 0 ) {
+            return res.status(404).json({message: 'No products found for this seller.'});
+        }
         res.json(products);
 
     } catch (error) {
-        res.status(500);
-        throw new Error('Could not retrieve products. Error: ', error.message);
+        console.error("Error fetching products for seller:", error.message);
+        return res.status(500).json({ message: 'Could not retrieve products. Error: ', error: error.message });
+    
     }
 }
 

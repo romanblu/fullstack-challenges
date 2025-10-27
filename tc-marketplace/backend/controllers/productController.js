@@ -42,7 +42,7 @@ export const getProduct = async (req, res) => {
 export const createProduct = async (req, res) => {
   const data = req.body;
 
-  if(!data.price || !data.title){
+  if(!data.price || !data.name){
     res.status(400)
     throw new Error('Title and price required')
   }
