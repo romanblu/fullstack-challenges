@@ -23,3 +23,15 @@ export const updateStoreInfo = async (data) => {
     });
     return res.data
 }
+
+export const getMyProducts = async () => {
+    const token = localStorage.getItem("token");
+
+    const res = await axios.get(`${API}/api/store/products`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+
+    return res.data;
+}
