@@ -13,3 +13,16 @@ export const createProduct = async (data) => {
 
     return res.data;
 }
+
+
+export const updateProduct = async (id, data) => {
+    const token = localStorage.getItem("token");
+
+    const res = await axios.put(`${API}/api/products/${id}`, data, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+    console.log("Update Product Response:", res);
+    return res;
+}
