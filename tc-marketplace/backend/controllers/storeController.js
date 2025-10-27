@@ -19,9 +19,24 @@ export const updateMyStore = async (req, res) => {
     }
 }
 
-export const getMyProducts = (req, res) => {}
+export const getMyProducts = async (req, res) => {
+    try{
+        const store = await Store.findOne({ owner: req.user.id });
+        const products = await Product.find({ store: store._id.toString() });
+        res.json(products);
 
-export const addProduct = (req, res) => {}
+    } catch (error) {
+        res.status(500);
+        throw new Error('Could not retrieve products. Error: ', error.message);
+    }
+}
+
+// @desc    Create product
+// @route   POST /api/store/products
+// @access  Private - seller/admin
+export const addProduct = (req, res) => {
+    
+}
 
 export const updateProduct = (req, res) => {}
 
