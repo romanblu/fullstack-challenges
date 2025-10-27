@@ -82,7 +82,7 @@ export const deleteProduct = async (req, res) => {
       res.status(404)
       throw new Error('Could not find product')
     }
-
+    res.status(204)
     res.json({ "message": "deleted successfully" });
   }catch(err){
     res.status(500)

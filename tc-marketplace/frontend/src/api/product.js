@@ -26,3 +26,15 @@ export const updateProduct = async (id, data) => {
     console.log("Update Product Response:", res);
     return res;
 }
+
+export const deleteProduct = async (id) => {
+  const token = localStorage.getItem("token");
+
+  const res = await axios.delete(`${API}/api/products/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.data;
+};

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { updateProduct } from "../api/product";
+import { deleteProduct, updateProduct } from "../api/product";
 import slugify from "slugify";
 
 const EditProduct = ({ setActiveTab, setSelectedProduct, selectedProduct }) => {
@@ -39,6 +39,18 @@ const EditProduct = ({ setActiveTab, setSelectedProduct, selectedProduct }) => {
 
         setForm({ ...form, name: e.target.value, slug: slugify(e.target.value, {lower:true}) });
         
+    }
+
+    const handleDiscard = () => {
+        setForm(selectedProduct);
+        setActiveTab("products");
+    }
+
+    const handleDelete = () => {
+        deleteProduct(selectedProduct._id).then(() => {
+            setMessage("Product deleted successfully!");
+            setActiveTab("products");
+        }).catch(err => setMessage("Error deleting product: " + err.message))
     }
 
     return (
@@ -118,6 +130,22 @@ const EditProduct = ({ setActiveTab, setSelectedProduct, selectedProduct }) => {
                 >
                 Update Product
                 </button>
+                <div className="flex justify-between gap-4">
+                    <button
+                        onClick={handleDiscard}
+                        type="submit"
+                        className="px-4 bg-gray-300 hover:bg-gray-500 text-green-950 font-semibold py-2 rounded-md shadow-md"
+                        >
+                        Discard
+                    </button>
+                    <button
+                        onClick={handleDelete}
+                        type="submit"
+                        className="px-4 bg-red-500 hover:bg-red-800 text-white font-semibold py-2 rounded-md shadow-md"
+                        >
+                        Delete
+                    </button>
+                </div>
             </form>
 
             {message && <p className="text-center mt-3">{message}</p>}
