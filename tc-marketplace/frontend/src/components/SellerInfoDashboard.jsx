@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { getMyStore, updateStoreInfo } from "../api/store";
 
-const StoreForm = () => {
+const SellerInfoDashboard = () => {
 
     const [form, setForm] = useState({
         name: '',
@@ -76,7 +76,7 @@ const StoreForm = () => {
 
     return(
         <div>
-            <form className={`max-w-lg mx-auto bg-gray-100 p-6 rounded-lg shadow-md  flex flex-col gap-4 `}>
+            <form className={`max-w-lg mx-auto bg-gray-50 p-6 rounded-lg shadow-md  flex flex-col gap-4 `}>
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-2xl font-bold mb-4 ">Edit Seller Profile</h2>
                     <FormButton />
@@ -177,4 +177,4 @@ const StoreForm = () => {
         </div>
     )
 }
-export default StoreForm
+export default SellerInfoDashboard
