@@ -11,7 +11,7 @@ export const createProduct = async (data) => {
         }
     });
 
-    return res.data;
+    return res;
 }
 
 
