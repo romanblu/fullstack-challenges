@@ -32,10 +32,10 @@ const AddProduct = ({ setActiveTab }) => {
     }
 
     const handleNameChange = (e) => {
-        console.log("Name changed:", form.slug);
         setForm({ ...form, name: e.target.value, slug: slugify(e.target.value, {lower:true}) });
-        
     }
+
+    const handleDiscard = () => { setActiveTab("products"); }
     
     return (
     <div className="max-w-lg mx-auto bg-gray-50 p-6 rounded-2xl shadow-md">
@@ -113,6 +113,13 @@ const AddProduct = ({ setActiveTab }) => {
           className="w-full bg-lime-500 hover:bg-lime-600 text-green-950 font-semibold py-2 rounded-md shadow-md"
         >
           Add Product
+        </button>
+        <button
+            onClick={handleDiscard}
+            type="submit"
+            className="px-4 bg-gray-300 hover:bg-gray-500 text-green-950 font-semibold py-2 rounded-md shadow-md"
+            >
+            Discard
         </button>
         </form>
 
