@@ -19,6 +19,7 @@ const Register = () => {
         const { firstName, lastName, email, password, role, phone } = formData;
         try{
             const data = await registerUser({name: `${firstName} ${lastName}`, email, password, role, phone})
+            navigate('/login')
         }catch(err){
             console.log(err)
         }

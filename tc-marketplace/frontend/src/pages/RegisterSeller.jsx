@@ -18,6 +18,7 @@ const RegisterSeller = () => {
         e.preventDefault();
         try{
             const data = await registerUser(formData)
+            navigate("/login")
         }catch(err){
             console.log(err)
         }
