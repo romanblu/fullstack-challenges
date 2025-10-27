@@ -1,4 +1,17 @@
-export default function ProductCard({ product}) {
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { Link } from "react-router-dom";
+
+export default function ProductCard({ product, setSelectedProduct, setActiveTab }) {
+    const { user } = useContext(AuthContext);
+
+    const isSeller = user && product.seller === user.id; // check if this product belongs to logged user
+
+    const handleEditProduct = () => {
+        setSelectedProduct(product);
+        setActiveTab("editProduct");
+    }
+
     return (
         <div className="bg-green-50 rounded-xl shadow hover:shadow-lg transition flex flex-col h-full justify-between">
             <img
@@ -12,9 +25,14 @@ export default function ProductCard({ product}) {
             <div className="flex justify-between items-center">
                 <span className="text-green-700 font-bold px-2">{`$ ${product.price}`}</span>
                 
+                {isSeller ? setSelectedProduct ? 
+                <button onClick={handleEditProduct} to={`/${product.slug}`} className="bg-green-600 text-white px-2 py-1 rounded-md hover:bg-green-700 transition m-3">
+                    Edit Product
+                </button>
+                :  '' : // setSelectedProduct check to avoid showing Add To Cart button for the sellers' items in marketplace and also update item outside of dashboard
                 <button className="bg-green-600 text-white px-2 py-1 rounded-md hover:bg-green-700 transition m-3">
                 Add to Cart
-                </button>
+                </button> }
             </div>
         </div>
     );

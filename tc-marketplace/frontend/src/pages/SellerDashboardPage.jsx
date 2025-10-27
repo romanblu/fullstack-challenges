@@ -9,10 +9,12 @@ import StatisticsDashboard from "../components/StatisticsDashboard";
 import BlogDashboard from "../components/BlogDashboard";
 import AddBlogPost from "../components/AddBlogPost";
 import AddProduct from "../components/AddProduct";
+import EditProduct from "../components/EditProduct";
 
 const SellerDashboardPage = () => {  
     
     const [activeTab, setActiveTab] = useState("profile");
+    const [selectedProduct, setSelectedProduct] = useState(null);
 
     const tabs = [
         { id: "profile" ,label: 'Store Settings', current: true },
@@ -21,25 +23,27 @@ const SellerDashboardPage = () => {
         { id: "statistics" ,label: 'Statistics', current: false },
         { id: "blog" ,label: 'Blog Posts', current: false }
     ];
-    console.log("Active Tab:", activeTab);
+    console.log("Selected Product:", selectedProduct);
     const renderContent = () => {
         switch(activeTab) {
             case "profile":
                 return <SellerInfoDashboard />;
             case "products":
-                return <ProductsDashboard setActiveTab={setActiveTab} />
+                return <ProductsDashboard setActiveTab={setActiveTab} setSelectedProduct={setSelectedProduct}/>
+            case "editProduct":
+                return <EditProduct setActiveTab={setActiveTab} setSelectedProduct={setSelectedProduct} selectedProduct={selectedProduct}/>
             case "orders":
                 return <OrdersDashboard />
             case "statistics":
                 return <StatisticsDashboard />
             case "blog":
-                return <BlogDashboard setActiveTab/>
+                return <BlogDashboard setActiveTab={setActiveTab} />
             case "newProduct":
-                return <AddProduct setActiveTab />
+                return <AddProduct setActiveTab={setActiveTab} />
             case "newBlogPost":
-                return <AddBlogPost setActiveTab/>
+                return <AddBlogPost setActiveTab={setActiveTab} />
             default:
-                return <StoreSettings />;
+                return <SellerInfoDashboard />;
         }
     }
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getMyProducts } from "../api/store";
 import ProductCard from "./ProductCard";
 
-const ProductsDashboard = ({ setActiveTab }) => {
+const ProductsDashboard = ({ setActiveTab, setSelectedProduct }) => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
@@ -15,7 +15,6 @@ const ProductsDashboard = ({ setActiveTab }) => {
         setActiveTab("newProduct");
     }
 
-    console.log("Products:", products);
 
     return (
         <div>
@@ -29,7 +28,7 @@ const ProductsDashboard = ({ setActiveTab }) => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                     {products.map((product) => (
-                        <ProductCard key={product._id} product={product} />
+                        <ProductCard key={product._id} product={product} setSelectedProduct={setSelectedProduct} setActiveTab={setActiveTab}/>
                     ))}
                 </div>
             </div>
