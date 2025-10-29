@@ -7,7 +7,7 @@ import { useState } from "react";
 import OrdersDashboard from "../components/OrdersDashboard";
 import StatisticsDashboard from "../components/StatisticsDashboard";
 import BlogDashboard from "../components/BlogDashboard";
-import AddBlogPost from "../components/AddBlogPost";
+import CreateBlogPost from "../components/CreateBlogPost";
 import AddProduct from "../components/AddProduct";
 import EditProduct from "../components/EditProduct";
 
@@ -41,7 +41,7 @@ const SellerDashboardPage = () => {
             case "newProduct":
                 return <AddProduct setActiveTab={setActiveTab} />
             case "newBlogPost":
-                return <AddBlogPost setActiveTab={setActiveTab} />
+                return <CreateBlogPost setActiveTab={setActiveTab} />
             default:
                 return <SellerInfoDashboard />;
         }
@@ -52,7 +52,7 @@ const SellerDashboardPage = () => {
             <Navbar theme="light"/>
             
             <div className="p-6 bg-slate-100  text-green-950 min-h-screen  mx-auto">
-                <div className="container max-w-[1100px] mx-auto">
+                <div className=" mx-auto">
                     {/* <h1 className="text-3xl font-bold mb-4 text-center ">Seller Dashboard</h1> */}
                     <ActiveBar tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} header="Seller Dashboard"/>
 

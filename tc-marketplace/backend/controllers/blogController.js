@@ -7,9 +7,27 @@ import BlogPost from '../models/BlogPost.js';
 export const listBlogPosts = async (req, res) => {
   const q = {};
   if (req.query.q) q.title = { $regex: req.query.q, $options: 'i' };
-  const blogPosts = await BlogPost.find(q).limit(100).sort({ createdAt: -1 }).populate('author', 'name email');
-  res.json(blogPosts);
+  try{
+    const blogPosts = await BlogPost.find(q).limit(100).sort({ createdAt: -1 }).populate('author', 'name email');
+    res.json(blogPosts);
+  } catch (err){
+    res.status(500).json({ message: "Failed to fetch blog posts", error: err.message });
+  }
 };
+
+// @desc    Get authors blog posts
+// @route   GET /api/blog/my-posts
+// @access  Private - author
+export const listMyBlogPosts = async (req, res) => {
+  try{
+    const blogPosts = await BlogPost.find({ author: req.user.id}).sort({ createdAt: -1 }).populate('author', 'name email');
+    res.json(blogPosts);
+  }catch (err){
+    res.status(500).json({ message: "Failed to fetch blog posts", error: err.message });
+  }
+};
+
+
 
 // @desc    Get single blog post by slug
 // @route   GET /api/blog/:slug
@@ -28,18 +46,20 @@ export const getBlogPost = async (req, res) => {
 // @route   POST /api/blog
 // @access  Private - author/admin
 export const createBlogPost = async (req, res) => {
-  const { title, content, imageUrl} = req.body;
+  const { title, content, image,excerpt, published} = req.body;
   if(!content || !title){
     res.status(400)
     throw new Error('Title and content are required')
   }
-  
+
   const post = await BlogPost.create({
     title,
     content,
-    imageUrl,
+    image,
+    excerpt,
     slug: slugify(title),
-    author: req.user._id
+    author: req.user.id,
+    published
   });
 
   res.json(post);

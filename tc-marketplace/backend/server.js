@@ -31,7 +31,7 @@ const stream = {
   write: (message) => logger.http(message.trim()),
 };
 
-app.use(morgan('combined', { stream }));
+// app.use(morgan('combined', { stream }));
 
 // Routes
 app.use("/api/users", userRoutes);
