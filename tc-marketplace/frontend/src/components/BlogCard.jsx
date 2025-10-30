@@ -23,7 +23,7 @@ export default function BlogCard({ post, isAuthorDashboard = false, setActiveTab
                 <p className="text-gray-700 text-sm flex-grow">{post.excerpt}</p>
                 <div className="mt-4 flex justify-between text-sm text-gray-500">
                     <span>{post.author.name}</span>
-                    <span>{new Date(post.date).toLocaleDateString()}</span>
+                    <span>{post.date}</span>
                 </div>
                 <Link
                 to={`/blog/${post.slug}`}
