@@ -24,3 +24,14 @@ export const createPost = async (data) => {
 
     return res;
 }
+
+export const updatePost = async (data) => {
+    const token = localStorage.getItem("token");
+    console.log("Updating blog post with data:", data);
+    const res = await axios.put(`${API}/api/blog/${data.id}`, data, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+    return res;
+}

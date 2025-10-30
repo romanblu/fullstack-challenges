@@ -1,6 +1,19 @@
 import { Link } from "react-router-dom";
 
-export default function BlogCard({ post }) {
+export default function BlogCard({ post, isAuthorDashboard = false, setActiveTab, setCurrentPost }) {
+
+    const handleEditPost = () => {
+        setCurrentPost(post);
+        setActiveTab("editBlogPost");
+    }
+
+    const ManagementButtons = () => (
+        <>
+            <button onClick={handleEditPost} className="mt-4 inline-block text-green-700 hover:text-green-900 font-medium">
+                Edit Post
+            </button>
+        </>
+    );
 
     return (
         <div className="bg-white rounded-xl shadow hover:shadow-lg transition flex flex-col h-full">
@@ -18,6 +31,7 @@ export default function BlogCard({ post }) {
                 >
                 Read More →
                 </Link>
+                {isAuthorDashboard && <ManagementButtons />}
             </div>
         </div>
     );

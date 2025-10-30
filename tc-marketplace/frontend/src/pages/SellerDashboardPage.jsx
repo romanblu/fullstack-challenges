@@ -7,7 +7,7 @@ import { useState } from "react";
 import OrdersDashboard from "../components/OrdersDashboard";
 import StatisticsDashboard from "../components/StatisticsDashboard";
 import BlogDashboard from "../components/BlogDashboard";
-import CreateBlogPost from "../components/CreateBlogPost";
+import BlogPostEditor from "../components/BlogPostEditor";
 import AddProduct from "../components/AddProduct";
 import EditProduct from "../components/EditProduct";
 
@@ -15,6 +15,7 @@ const SellerDashboardPage = () => {
     
     const [activeTab, setActiveTab] = useState("profile");
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const [currentPost, setCurrentPost] = useState(null);
 
     const tabs = [
         { id: "profile" ,label: 'Store Settings', current: true },
@@ -37,11 +38,13 @@ const SellerDashboardPage = () => {
             case "statistics":
                 return <StatisticsDashboard />
             case "blog":
-                return <BlogDashboard setActiveTab={setActiveTab} />
+                return <BlogDashboard setActiveTab={setActiveTab} setCurrentPost={setCurrentPost}/>
             case "newProduct":
                 return <AddProduct setActiveTab={setActiveTab} />
             case "newBlogPost":
-                return <CreateBlogPost setActiveTab={setActiveTab} />
+                return <BlogPostEditor setActiveTab={setActiveTab} />
+            case "editBlogPost":
+                return <BlogPostEditor setActiveTab={setActiveTab} currentPost={currentPost}/>
             default:
                 return <SellerInfoDashboard />;
         }

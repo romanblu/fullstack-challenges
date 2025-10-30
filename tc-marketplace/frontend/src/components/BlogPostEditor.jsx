@@ -2,32 +2,53 @@ import { useEffect, useState } from "react";
 import MarkdownPreview from "./MarkdownPreview";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import {  createPost } from "../api/blog";
+import {  createPost, updatePost } from "../api/blog";
+import matter from "front-matter";
 
-const AddBlogPost = () => {
+const BlogPostEditor = ({ currentPost, setActiveTab }) => {
+
     const [meta, setMeta] = useState({
         title: '',
         date: '',
         author: '',
+        slug: '',
         image: '',
         tags: [],
         excerpt : ''
     });
     const [content, setContent] = useState('');
 
+    const isEditing = !!currentPost
+
     useEffect(() => {
         const today = new Date();
         const formattedDate = `${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}`;
-        
         const user = JSON.parse(localStorage.getItem("user"));
         const authorName = user?.name || "Anonymous";
-    
-        setMeta((prev) => ({
-            ...prev,
-            date: formattedDate,
-            author: authorName,
-        }));
-    }, []);
+        
+        
+        if(!isEditing){
+            setMeta((prev) => ({
+                ...prev,
+                date: formattedDate,
+                author: authorName,
+            }));
+        }else {
+            setMeta((prev) => ({...prev,
+                title: currentPost.title || '',
+                tags: currentPost.tags || [],
+                image: currentPost.image || '',
+                slug: currentPost.slug || '',
+                
+                excerpt: currentPost.excerpt || '',
+                author: currentPost.author?.name || 'Anonymous',
+                date: currentPost.date || '',
+            }))
+
+            const { attributes , body } = matter(currentPost.content || '');
+            setContent( body || '',)
+        }          
+    }, [currentPost]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -42,22 +63,38 @@ title: ${meta.title}
 tags: [${meta.tags.join(", ")}]
 author: ${meta.author}
 image: ${meta.image}
+excerpt: ${meta.excerpt}
 date: ${new Date().toISOString()}
 ---
 
 ${content}`;
         
-    createPost({title:meta.title, content: frontmatter, image: meta.image,excerpt: meta.excerpt, published: false}).then(res => {
+    if(isEditing){
+        updatePost({id: currentPost._id, title:meta.title, content: frontmatter, image: meta.image,excerpt: meta.excerpt, slug: meta.slug , published: false}).then(res => {       
+        }).catch(err => console.log("Error updating blog post:", err));
+    } else{
 
-    }).catch(err => console.log("Error creating blog post:", err));
-        
+        createPost({title:meta.title, content: frontmatter, image: meta.image,excerpt: meta.excerpt,slug: meta.slug, published: false}).then(res => {  
+            console.log("Blog post created:", res);     
+        }).catch(err => console.log("Error creating blog post:", err));
+    }
 
     }
     // check if there is a saved blog post, then update it with the new content and publish
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+     
+        if(isEditing){
+            updatePost({title:meta.title, content: frontmatter, image: meta.image,excerpt: meta.excerpt, slug:meta.slug, published: true}).then(res => {       
+        }).catch(err => console.log("Error updating blog post:", err));
+        }
+            createPost({title:meta.title, content: frontmatter, image: meta.image,excerpt: meta.excerpt,slug: meta.slug, published: true}).then(res => {       
+        }).catch(err => console.log("Error creating blog post:", err));
+
     }
+
+
+    
 
     return (
         <div className="mx-auto bg-slate-100  p-6">
@@ -125,18 +162,6 @@ ${content}`;
                                 onChange={handleChange}
                                 className="border rounded p-2 w-full"
                             />
-                            {/* <span className="text-gray-700">Attach File (optional)</span>
-                            <input
-                                type="file"
-                                name="attachment"
-                                className="mt-2 block  text-sm text-gray-700
-                                        file:mr-4 file:py-2 file:px-4
-                                        file:rounded-md file:border-0
-                                        file:text-sm file:font-semibold
-                                        file:bg-green-600 file:text-white
-                                        hover:file:bg-green-700
-                                        cursor-pointer"
-                            /> */}
                         </div>
                         <div>
                             <label className="block text-sm font-medium mb-1">Excerpt</label>
@@ -189,4 +214,4 @@ ${content}`;
     )
 }
 
-export default AddBlogPost;
+export default BlogPostEditor;

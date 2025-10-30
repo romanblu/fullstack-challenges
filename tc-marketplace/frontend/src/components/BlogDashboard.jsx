@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchMyPosts } from "../api/blog";
 import BlogCard from "./BlogCard";
 
-const BlogDashboard = ({ setActiveTab }) => {
+const BlogDashboard = ({ setActiveTab, setCurrentPost }) => {
     const [blogPosts, setBlogPosts] =  useState([]);
     
     useEffect(() => {
@@ -17,7 +17,7 @@ const BlogDashboard = ({ setActiveTab }) => {
     const handleCreateBlogPost = () => {
         setActiveTab("newBlogPost");
     }
-    console.log("Blog posts:", blogPosts);
+
     return (
         <div className="mx-auto   bg-slate-100 text-center p-6 container max-w-[1100px]">
             <div className="mb-4">
@@ -34,7 +34,7 @@ const BlogDashboard = ({ setActiveTab }) => {
                     {
                         blogPosts.length !== 0 && blogPosts.map((post) => (
                             <div className="w-full max-w-sm">
-                                <BlogCard post={post} />
+                                <BlogCard post={post} date={post.createdAt} setActiveTab={setActiveTab} isAuthorDashboard={true} setCurrentPost={setCurrentPost}/>
                             </div>  
                         ))
                     }
