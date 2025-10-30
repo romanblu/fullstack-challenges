@@ -72,11 +72,11 @@ export const createBlogPost = async (req, res) => {
 };
 
 // @desc    Update blog post
-// @route   PUT /api/blog/:slug
+// @route   PUT /api/blog/:id
 // @access  Private - author/admin
 export const updateBlogPost = async (req, res) => {
-  const { slug } = req.params
-  const post = await BlogPost.findOne({ slug })
+  const { id } = req.params
+  const post = await BlogPost.findOne({ id })
 
   if(!post){
     res.status(404)
