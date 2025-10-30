@@ -52,6 +52,11 @@ export const createBlogPost = async (req, res) => {
     throw new Error('Title and content are required')
   }
 
+  const now = new Date();
+  const date = `${now.getDate().toString().padStart(2, '0')}/${(now.getMonth()+1)
+    .toString()
+    .padStart(2, '0')}/${now.getFullYear()}`;
+
   const post = await BlogPost.create({
     title,
     content,
@@ -59,7 +64,8 @@ export const createBlogPost = async (req, res) => {
     excerpt,
     slug: slugify(title),
     author: req.user.id,
-    published
+    published,
+    date: date
   });
 
   res.json(post);
