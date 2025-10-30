@@ -1,6 +1,8 @@
 const StatisticsDashboard = () => {
     return (
-        <h1>Statistics Dashboard</h1>
+        <div className="mx-auto text-center">
+            <h2 className="text-xl">Nothing to show yet...</h2>
+        </div>
     )
 }
 
