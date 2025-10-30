@@ -30,10 +30,12 @@ const BlogDashboard = ({ setActiveTab }) => {
             <h1 className="text-xl py-3" >Nothing to show yet...</h1> 
             :
             <div className="mt-6 ">
-                <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+                <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center ">
                     {
                         blogPosts.length !== 0 && blogPosts.map((post) => (
-                            <BlogCard post={post} />
+                            <div className="w-full max-w-sm">
+                                <BlogCard post={post} />
+                            </div>  
                         ))
                     }
                 </div>
