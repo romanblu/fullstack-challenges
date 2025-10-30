@@ -1,8 +1,19 @@
+import { useEffect, useState } from "react";
 import BlogCard from "../components/BlogCard";
 import Navbar from "../components/Navbar";
-import { blogPosts } from "../data/blogPosts";
+import { fetchTopPosts } from "../api/blog";
 
 const Blog = () => {
+    const [blogPosts, setBlogPosts] =  useState([]);
+
+    useEffect(() => {
+        fetchTopPosts().then(res => {
+            setBlogPosts(res.data);
+        }).catch(err => {
+            console.log("Error fetching top blog posts:", err);
+        }   );
+    }, [])
+
     return (
     <section className="bg-slate-50  px-6 text-green-950 min-h-screen">
         <Navbar theme="light" />

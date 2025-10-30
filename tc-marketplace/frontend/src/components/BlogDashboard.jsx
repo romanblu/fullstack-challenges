@@ -34,7 +34,7 @@ const BlogDashboard = ({ setActiveTab, setCurrentPost }) => {
                     {
                         blogPosts.length !== 0 && blogPosts.map((post) => (
                             <div className="w-full max-w-sm">
-                                <BlogCard post={post} date={post.createdAt} setActiveTab={setActiveTab} isAuthorDashboard={true} setCurrentPost={setCurrentPost}/>
+                                <BlogCard key={post.id} post={post} date={post.createdAt} setActiveTab={setActiveTab} isAuthorDashboard={true} setCurrentPost={setCurrentPost}/>
                             </div>  
                         ))
                     }

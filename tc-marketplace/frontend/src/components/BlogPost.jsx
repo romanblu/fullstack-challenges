@@ -1,22 +1,22 @@
 import matter from "front-matter";
 import ReactMarkdown from "react-markdown";
-import getPost from "../utils/getPost.js";
 import { useEffect, useState } from "react";
 import remarkGfm from "remark-gfm";
 import Banner from "./Banner.jsx";
+import { getPost } from "../api/blog.js";
 
 export default function BlogPost({slug }) {
     const [post, setPost] = useState(null);
+
     useEffect(() => {
-        getPost(slug).then((data) => {
-            const {attributes, body} = matter(data.text)
+        getPost(slug).then((res) => {
+            const {attributes, body} = matter(res.data.content)
             setPost({ attributes, body });
             
         });
-    }, [slug]);
-    
+    }, []);
     if (!post) return <p>Loading...</p>;
-    console.log(post);
+
     return (
         <div>
             
@@ -31,7 +31,7 @@ export default function BlogPost({slug }) {
                 />
                 {/* <h1 className="text-4xl font-bold mb-4 text-green-900">{post.attributes.title}</h1> */}
                 {/* <p className="text-gray-600 mb-8">{post.attributes.excerpt}</p> */}
-                <p className="text-gray-600 mb-8">{post.attributes.date}</p>
+                <p className="text-gray-600 mb-8">{post.attributes.date.toISOString().slice(0, 10)}</p>
                 <p className="text-gray-600 mb-8">{post.attributes.author}</p>
                 {/* <img src={post.attributes.image}/> */}
                 <article className="prose prose-blog-post">
