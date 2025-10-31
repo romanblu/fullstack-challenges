@@ -5,7 +5,7 @@ import remarkGfm from "remark-gfm";
 import {  createPost, updatePost } from "../../api/blog";
 import matter from "front-matter";
 
-const BlogPostEditor = ({ currentPost, setActiveTab }) => {
+const BlogPostEditor = ({ currentPost, setActiveTab, setCurrentPost }) => {
 
     const [meta, setMeta] = useState({
         title: '',
@@ -13,7 +13,7 @@ const BlogPostEditor = ({ currentPost, setActiveTab }) => {
         author: '',
         slug: '',
         image: '',
-        tags: [],
+        tags: "",
         excerpt : ''
     });
     const [content, setContent] = useState('');
@@ -39,7 +39,6 @@ const BlogPostEditor = ({ currentPost, setActiveTab }) => {
                 tags: currentPost.tags || [],
                 image: currentPost.image || '',
                 slug: currentPost.slug || '',
-                
                 excerpt: currentPost.excerpt || '',
                 author: currentPost.author?.name || 'Anonymous',
                 date: currentPost.date || '',
@@ -50,17 +49,11 @@ const BlogPostEditor = ({ currentPost, setActiveTab }) => {
         }          
     }, [currentPost]);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setMeta({...meta, [name]: value});
-    }
 
-    const handleSave = (e) => {
-        e.preventDefault();
-        const frontmatter = 
-`---
+    const buildFrontmatter = () => {
+        return `---
 title: ${meta.title}
-tags: [${meta.tags.join(", ")}]
+tags: ${meta.tags}
 author: ${meta.author}
 image: ${meta.image}
 excerpt: ${meta.excerpt}
@@ -68,29 +61,60 @@ date: ${new Date().toISOString()}
 ---
 
 ${content}`;
-        
-    if(isEditing){
-        updatePost({id: currentPost._id, title:meta.title, content: frontmatter, image: meta.image,excerpt: meta.excerpt, slug: meta.slug , published: false}).then(res => {       
-        }).catch(err => console.log("Error updating blog post:", err));
-    } else{
-
-        createPost({title:meta.title, content: frontmatter, image: meta.image,excerpt: meta.excerpt,slug: meta.slug, published: false}).then(res => {  
-            console.log("Blog post created:", res);     
-        }).catch(err => console.log("Error creating blog post:", err));
     }
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setMeta({...meta, [name]: value});
+    }
+
+    const handleSaveDraft = async (e) => {
+        e.preventDefault();
+
+        const markdown = buildFrontmatter()
+
+        const updatedData = {
+            id: currentPost._id, 
+            title:meta.title, 
+            content: markdown, 
+            image: meta.image,
+            excerpt: meta.excerpt, 
+            published: false
+        }
+            
+        if(isEditing){
+            await updatePost({ id: currentPost._id, ...updatedData })
+        } else{
+            await createPost(updatedData)
+        }
+        alert('Draft saved')
 
     }
     // check if there is a saved blog post, then update it with the new content and publish
-    const handleSubmit = (e) => {
+    const handlePublish = async (e) => {
         e.preventDefault();
-     
-        if(isEditing){
-            updatePost({title:meta.title, content: frontmatter, image: meta.image,excerpt: meta.excerpt, slug:meta.slug, published: true}).then(res => {       
-        }).catch(err => console.log("Error updating blog post:", err));
-        }
-            createPost({title:meta.title, content: frontmatter, image: meta.image,excerpt: meta.excerpt,slug: meta.slug, published: true}).then(res => {       
-        }).catch(err => console.log("Error creating blog post:", err));
 
+        const markdown = buildFrontmatter()
+
+        const updatedData = {
+            title:meta.title, 
+            content: markdown, 
+            image: meta.image,
+            slug: meta.slug,
+            tags: meta.tags,
+            excerpt: meta.excerpt, 
+            published: true
+        }
+
+        if (isEditing) {
+            await updatePost({ id: currentPost._id, ...updatedData });
+        } else {
+            await createPost(updatedData);
+        }
+
+        alert("Post published!");
+        setCurrentPost(null);
+        setActiveTab("blogDashboard");
     }
 
 
@@ -115,7 +139,7 @@ ${content}`;
                             <input
                                 name="slug"
                                 placeholder="Slug"
-                                value={meta.title}
+                                value={meta.slug}
                                 onChange={handleChange}
                                 className="border rounded p-2 w-full"
                                 />
@@ -177,10 +201,10 @@ ${content}`;
                     </div>
 
                     <div className="mt-6 container max-w-[1600px] mx-auto">  
-                        <button onClick={handleSave} className="bg-gray-300 hover:bg-gray-400 py-1 px-2 rounded-lg">
+                        <button onClick={handleSaveDraft} className="bg-gray-300 hover:bg-gray-400 py-1 px-2 rounded-lg">
                             Save Draft
                         </button>
-                        <button onClick={handleSubmit} className="ml-4 bg-lime-500 hover:bg-lime-600 py-1 px-2 rounded-lg">
+                        <button onClick={handlePublish} className="ml-4 bg-lime-500 hover:bg-lime-600 py-1 px-2 rounded-lg">
                             Publish
                         </button> 
                         <div className="mt-4  flex flex-row  ">
