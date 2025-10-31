@@ -1,6 +1,6 @@
 import { useState } from "react";
 import slugify from "slugify";
-import { createProduct } from "../api/product";
+import { createProduct } from "../../api/product";
 
 const AddProduct = ({ setActiveTab }) => {
     const [form, setForm] = useState({

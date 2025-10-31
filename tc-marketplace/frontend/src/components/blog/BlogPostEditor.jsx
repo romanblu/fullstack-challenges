@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import MarkdownPreview from "./MarkdownPreview";
+import MarkdownPreview from "../shared/MarkdownPreview";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import {  createPost, updatePost } from "../api/blog";
+import {  createPost, updatePost } from "../../api/blog";
 import matter from "front-matter";
 
 const BlogPostEditor = ({ currentPost, setActiveTab }) => {

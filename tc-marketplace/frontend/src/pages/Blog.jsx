@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import BlogCard from "../components/BlogCard";
-import Navbar from "../components/Navbar";
+import BlogCard from "../components/blog/BlogCard";
+import Navbar from "../components/layout/Navbar";
 import { fetchTopPosts } from "../api/blog";
 
 const Blog = () => {

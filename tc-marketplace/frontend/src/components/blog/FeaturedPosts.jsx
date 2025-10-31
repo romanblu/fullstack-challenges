@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import BlogCard from "./BlogCard";
-import {blogPosts} from "../data/blogPosts.js";
+import {blogPosts} from "../../data/blogPosts.js";
 import PostsSelection from "./PostsSelection.jsx";
 
 

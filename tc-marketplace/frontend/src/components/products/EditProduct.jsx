@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { deleteProduct, updateProduct } from "../api/product";
+import { deleteProduct, updateProduct } from "../../api/product";
 import slugify from "slugify";
 
 const EditProduct = ({ setActiveTab, setSelectedProduct, selectedProduct }) => {

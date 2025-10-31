@@ -2,8 +2,8 @@ import matter from "front-matter";
 import ReactMarkdown from "react-markdown";
 import { useEffect, useState } from "react";
 import remarkGfm from "remark-gfm";
-import Banner from "./Banner.jsx";
-import { getPost } from "../api/blog.js";
+import Banner from "../shared/Banner.jsx";
+import { getPost } from "../../api/blog.js";
 
 export default function BlogPost({slug }) {
     const [post, setPost] = useState(null);

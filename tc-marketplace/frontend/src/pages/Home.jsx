@@ -1,9 +1,9 @@
-import Navbar from "../components/Navbar";
-import Banner from "../components/Banner";
-import Features from "../components/Features";
-import PlantsCategories from "../components/PlantsCategories";
-import FeaturedPosts from "../components/FeaturedPosts";
-import FeaturedProducts from "../components/FeaturedProducts";
+import Navbar from "../components/layout/Navbar";
+import Banner from "../components/shared/Banner";
+import Features from "../components/shared/Features";
+import PlantsCategories from "../components/shared/PlantsCategories";
+import FeaturedPosts from "../components/blog/FeaturedPosts";
+import FeaturedProducts from "../components/products/FeaturedProducts";
 
 const HomePage = () => {
   return (

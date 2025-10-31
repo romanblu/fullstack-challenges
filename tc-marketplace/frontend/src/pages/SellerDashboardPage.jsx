@@ -1,15 +1,15 @@
 import { Store } from "lucide-react";
-import ActiveBar from "../components/ActiveBar";
-import Navbar from "../components/Navbar";
-import SellerInfoDashboard from "../components/SellerInfoDashboard";
-import ProductsDashboard from "../components/ProductsDashboard";
+import ActiveBar from "../components/shared/ActiveBar";
+import Navbar from "../components/layout/Navbar";
+import SellerInfoDashboard from "../components/dashboard/SellerInfoDashboard";
+import ProductsDashboard from "../components/products/ProductsDashboard";
 import { useState } from "react";
-import OrdersDashboard from "../components/OrdersDashboard";
-import StatisticsDashboard from "../components/StatisticsDashboard";
-import BlogDashboard from "../components/BlogDashboard";
-import BlogPostEditor from "../components/BlogPostEditor";
-import AddProduct from "../components/AddProduct";
-import EditProduct from "../components/EditProduct";
+import OrdersDashboard from "../components/dashboard/OrdersDashboard";
+import StatisticsDashboard from "../components/dashboard/StatisticsDashboard";
+import BlogDashboard from "../components/blog/BlogDashboard";
+import BlogPostEditor from "../components/blog/BlogPostEditor";
+import AddProduct from "../components/products/AddProduct";
+import EditProduct from "../components/products/EditProduct";
 
 const SellerDashboardPage = () => {  
     

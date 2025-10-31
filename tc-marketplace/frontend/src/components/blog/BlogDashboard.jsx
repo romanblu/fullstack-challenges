@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchMyPosts } from "../api/blog";
+import { fetchMyPosts } from "../../api/blog";
 import BlogCard from "./BlogCard";
 
 const BlogDashboard = ({ setActiveTab, setCurrentPost }) => {
