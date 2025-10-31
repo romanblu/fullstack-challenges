@@ -1,5 +1,6 @@
 import slugify from 'slugify';
 import BlogPost from '../models/BlogPost.js';
+import generateAutoSlug from '../utils/slugGenHelper.js';
 
 // @desc    Get all blog posts
 // @route   GET /api/blog
@@ -42,6 +43,29 @@ export const getBlogPost = async (req, res) => {
   res.json(p);
 };
 
+// @desc    Get featured blog posts
+// @route   GET /api/blog/featured
+// @access  Public
+export const getFeaturedPosts = async (req, res) => {
+  
+  const posts = await BlogPost.find({ 
+    published: true,
+    featured: true
+  }).sort({ createdAt: -1})
+  .limit(3)
+  .select("title slug image excerpt author createdAt")
+  .populate('author', 'name');
+  
+  if (!posts) { 
+    res.status(404)
+    throw new Error('Blog post not found')
+  }
+
+  res.json(p);
+};
+
+
+
 // @desc    Create blog post
 // @route   POST /api/blog
 // @access  Private - author/admin
@@ -62,7 +86,7 @@ export const createBlogPost = async (req, res) => {
     content,
     image,
     excerpt,
-    slug: slugify(title),
+    slug: slugify(title, {lower: true}),
     author: req.user.id,
     published,
     date: date
@@ -75,23 +99,48 @@ export const createBlogPost = async (req, res) => {
 // @route   PUT /api/blog/:id
 // @access  Private - author/admin
 export const updateBlogPost = async (req, res) => {
-  const { id } = req.params
-  const post = await BlogPost.findOne({ id })
+  
+  try{
+    const {id, slug, title} = req.body
+    const post = await BlogPost.findById( id )
 
-  if(!post){
-    res.status(404)
-    throw new Error('Blog post was not found')
+    if(!post){
+      res.status(404).json({ error: 'Blog post was not found'})
+    }
+
+    if(post.author.toString() !== req.user.id.toString()){
+      res.status(403).json({ error: 'Only the author can edit this post'})
+    }
+    
+    let newSlug = slug
+
+    // check for duplicates only if slug changed
+    if(slug && slug !== post.slug){
+      const conflict = BlogPost.findOne({ slug: slug, _id: { $ne: post._id }})
+
+      if(conflict){
+        newSlug = generateAutoSlug(slug || title)
+      }
+    }
+
+    post.title = req.body.title ?? post.title;
+    post.content = req.body.content ?? post.content;
+    post.image = req.body.image ?? post.image;
+    post.excerpt = req.body.excerpt ?? post.excerpt;
+    post.tags = req.body.tags ?? post.tags;
+    post.published = req.body.published ?? post.published;
+    post.slug = newSlug ?? post.slug;
+
+    const updated = await post.save()
+    
+    res.json(updated);
+    
+  } catch (err){
+    console.error("Blog update error: ",err)
+    res.status(500).json({ error: "Server error updating blog post" });
   }
-  console.log(req.user)
-  if(post.author.toString() !== req.user.id.toString()){
-    res.status(403)
-    throw new Error('Only the author can edit this post')
-  }
 
-  Object.assign(post, req.body)
-  const updated = await post.save()
 
-  res.json(updated);
 };
 
 // @desc    delete a blog post
