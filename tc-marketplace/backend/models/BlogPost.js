@@ -7,6 +7,7 @@ const blogSchema = new mongoose.Schema({
   image: String,
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   tags: [String],
+  featured: { type: Boolean, default: false },
   published: { type: Boolean, default: true },
   date: String,
   createdAt: { type: Date, default: Date.now }
