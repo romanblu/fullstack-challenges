@@ -7,6 +7,11 @@ export const fetchTopPosts = async () => {
     return res;
 }
 
+export const getFeaturedPosts = async () => {
+    const res = await axios.get(`${API}/api/blog/featured`)
+    return res
+}
+
 export const getPost = async ( slug ) => {
     try{
         const res = await axios.get(`${API}/api/blog/${slug}`)

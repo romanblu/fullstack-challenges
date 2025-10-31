@@ -4,8 +4,39 @@ import Features from "../components/shared/Features";
 import PlantsCategories from "../components/shared/PlantsCategories";
 import FeaturedPosts from "../components/blog/FeaturedPosts";
 import FeaturedProducts from "../components/products/FeaturedProducts";
+import { useEffect, useState } from "react";
+import { getFeaturedPosts } from "../api/blog";
+import { getFeaturedProducts } from "../api/product";
 
 const HomePage = () => {
+  const [posts, setPosts] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchHomeData = async () => {
+      try {
+        const [postRes, productRes] = await Promise.all([
+          getFeaturedPosts(),
+          getFeaturedProducts(),
+        ]);
+
+        setPosts(postRes.data);
+        setProducts(productRes.data);
+      } catch (err) {
+        console.error("Error loading homepage data:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHomeData();
+  }, [])
+
+  if (loading) {
+    return <div className="text-center py-20">Loading...</div>;
+  }
+
   return (
     <>
         <div className="bg-gradient-to-br from-green-600 via-green-800 to-green-950 text-green-50 ">
@@ -23,8 +54,8 @@ const HomePage = () => {
         </div>
         <Features />
         <PlantsCategories />
-        <FeaturedPosts />
-        <FeaturedProducts />
+        <FeaturedPosts featuredPosts={posts}/>
+        <FeaturedProducts FeaturedProducts={products}/>
     </>
   );
 }

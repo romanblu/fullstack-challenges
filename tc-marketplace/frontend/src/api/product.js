@@ -2,6 +2,12 @@ import axios from "axios";
 
 const API = import.meta.env.VITE_API_URL;
 
+export const getFeaturedProducts = async () => {
+    const res = await axios.get(`${API}/api/products/featured`)
+    return res
+}
+
+
 export const createProduct = async (data) => {
     const token = localStorage.getItem("token");
 
