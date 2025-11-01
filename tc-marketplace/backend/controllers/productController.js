@@ -36,6 +36,30 @@ export const getProduct = async (req, res) => {
 };
 
 
+// @desc    Get featured products
+// @route   GET /api/product/featured
+// @access  Public
+export const getFeaturedProducts = async (req, res) => {
+  try{
+    const products = await Product.find({ 
+      featured: true
+    }).sort({ createdAt: -1})
+    .limit(8)
+    .select("name price slug image description seller")
+    .populate('seller', 'name');
+    
+    if (!products) { 
+      res.status(404)
+      throw new Error('Product not found')
+    }
+    
+    res.json(products);
+  } catch (err){
+    res.status(500).json({ message: "Failed getting featured products", error: err.message})
+  }
+};
+
+
 // @desc    Create product
 // @route   POST /api/products
 // @access  Private - seller/admin

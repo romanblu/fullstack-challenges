@@ -55,7 +55,7 @@ const HomePage = () => {
         <Features />
         <PlantsCategories />
         <FeaturedPosts featuredPosts={posts}/>
-        <FeaturedProducts FeaturedProducts={products}/>
+        <FeaturedProducts featuredProducts={products}/>
     </>
   );
 }

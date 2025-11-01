@@ -47,21 +47,24 @@ export const getBlogPost = async (req, res) => {
 // @route   GET /api/blog/featured
 // @access  Public
 export const getFeaturedPosts = async (req, res) => {
-  
-  const posts = await BlogPost.find({ 
-    published: true,
-    featured: true
-  }).sort({ createdAt: -1})
-  .limit(3)
-  .select("title slug image excerpt author createdAt")
-  .populate('author', 'name');
-  
-  if (!posts) { 
-    res.status(404)
-    throw new Error('Blog post not found')
+  try{
+    const posts = await BlogPost.find({ 
+      published: true,
+      featured: true
+    }).sort({ createdAt: -1})
+    .limit(3)
+    .select("title slug image excerpt author createdAt")
+    .populate('author', 'name');
+    
+    if (!posts) { 
+      res.status(404)
+      throw new Error('Blog post not found')
+    }
+    
+    res.json(posts);
+  } catch (err){
+    res.status(500).json({ message: "Failed getting featured posts", error: err.message})
   }
-
-  res.json(p);
 };
 
 
