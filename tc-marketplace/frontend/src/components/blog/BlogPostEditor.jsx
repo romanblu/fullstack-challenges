@@ -58,14 +58,19 @@ const BlogPostEditor = ({ blogPostDraft, setActiveTab }) => {
               
     },[blogPostDraft, post]);
 
+    const yamlSafe = (value) => {
+        if (!value) return '""';
+        return `"${String(value).replace(/"/g, '\\"')}"`;
+    };
+
     const buildFrontmatter = () => {
         return `---
-title: ${meta.title}
-tags: ${meta.tags}
-author: ${meta.author}
-image: ${meta.image}
-excerpt: ${meta.excerpt}
-date: ${new Date().toISOString()}
+title: ${yamlSafe(meta.title)}
+tags: ${yamlSafe(meta.tags)}
+author: ${yamlSafe(meta.author)}
+image: ${yamlSafe(meta.image)}
+excerpt: ${yamlSafe(meta.excerpt)}
+date: ${yamlSafe(new Date().toISOString())}
 ---
 
 ${content}`;
