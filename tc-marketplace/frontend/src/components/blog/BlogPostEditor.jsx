@@ -108,8 +108,9 @@ ${content}`;
     // check if there is a saved blog post, then update it with the new content and publish
     const handlePublish = async (e) => {
         e.preventDefault();
-        const isEditing = Boolean(post && post._id)
-
+        const source = post || blogPostDraft
+        const isEditing = Boolean(source && source._id)
+        console.log("publishing post state", source)
         const markdown = buildFrontmatter()
 
         const updatedData = {
@@ -123,7 +124,7 @@ ${content}`;
         }
 
         if (isEditing) {
-            await updatePost({ id: post._id, ...updatedData });
+            await updatePost({ id: source._id, ...updatedData });
         } else {
             await createPost(updatedData);
         }
