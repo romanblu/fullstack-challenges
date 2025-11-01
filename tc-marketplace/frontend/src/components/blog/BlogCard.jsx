@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-
+import { parseDate } from "../../utils/parseDate";
 export default function BlogCard({ post, isAuthorDashboard = false, setActiveTab, setCurrentPost }) {
 
     const handleEditPost = () => {
@@ -15,7 +15,7 @@ export default function BlogCard({ post, isAuthorDashboard = false, setActiveTab
                 <p className="text-gray-700 text-sm flex-grow">{post.excerpt}</p>
                 <div className="mt-4 flex justify-between text-sm text-gray-500">
                     <span>{post.author.name}</span>
-                    <span>{post.date}</span>
+                    <span>{parseDate(post.date)}</span>
                 </div>
                 <Link
                 to={`/blog/${post.slug}`}

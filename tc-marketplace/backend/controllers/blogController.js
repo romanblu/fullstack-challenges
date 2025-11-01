@@ -48,12 +48,13 @@ export const getBlogPost = async (req, res) => {
 // @access  Public
 export const getFeaturedPosts = async (req, res) => {
   try{
+
     const posts = await BlogPost.find({ 
       published: true,
       featured: true
     }).sort({ createdAt: -1})
     .limit(3)
-    .select("title slug image excerpt author createdAt")
+    .select("title slug image excerpt author date createdAt")
     .populate('author', 'name');
     
     if (!posts) { 
@@ -97,7 +98,7 @@ export const createBlogPost = async (req, res) => {
       slug,
       author: req.user.id,
       published: published ?? false,
-      date: new Date()
+      date: new Date().toISOString()
       });
       
       res.status(201).json(post);
