@@ -42,9 +42,9 @@ const SellerDashboardPage = () => {
             case "newProduct":
                 return <AddProduct setActiveTab={setActiveTab} />
             case "newBlogPost":
-                return <BlogPostEditor setActiveTab={setActiveTab} />
+                return <BlogPostEditor setActiveTab={setActiveTab}  />
             case "editBlogPost":
-                return <BlogPostEditor setActiveTab={setActiveTab} currentPost={currentPost}/>
+                return <BlogPostEditor setActiveTab={setActiveTab}  blogPostDraft={currentPost}/>
             default:
                 return <SellerInfoDashboard />;
         }

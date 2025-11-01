@@ -1,6 +1,7 @@
 import BlogCard from "./BlogCard"
 
 const PostsSelection = ({ posts, title, subtitle }) => {
+
     return (
         <div className="px-10 py-16">
             <div className="container max-w-[1100px] mx-auto text-center mb-10 ">
@@ -9,7 +10,7 @@ const PostsSelection = ({ posts, title, subtitle }) => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-green-900 container max-w-[1100px] mx-auto">
                 {posts.map(post => (
-                    <BlogCard key={post.slug} post={post} />
+                    <BlogCard key={post._id} post={post} />
                 ))}
                 
             </div>

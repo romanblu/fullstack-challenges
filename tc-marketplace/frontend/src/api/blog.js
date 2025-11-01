@@ -8,8 +8,13 @@ export const fetchTopPosts = async () => {
 }
 
 export const getFeaturedPosts = async () => {
-    const res = await axios.get(`${API}/api/blog/featured`)
-    return res
+    try{
+
+        const res = await axios.get(`${API}/api/blog/featured`)
+        return res
+    } catch (err){
+        console.log("Could not get featured posts", err)
+    }
 }
 
 export const getPost = async ( slug ) => {
