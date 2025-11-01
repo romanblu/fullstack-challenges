@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import MarkdownPreview from "../shared/MarkdownPreview";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {  createPost, updatePost } from "../../api/blog";
 import matter from "front-matter";
 
-const BlogPostEditor = ({ currentPost, setActiveTab, setCurrentPost }) => {
+const BlogPostEditor = ({ blogPostDraft, setActiveTab }) => {
 
     const [meta, setMeta] = useState({
         title: '',
@@ -17,38 +17,48 @@ const BlogPostEditor = ({ currentPost, setActiveTab, setCurrentPost }) => {
         excerpt : ''
     });
     const [content, setContent] = useState('');
+    const [post, setPost] = useState()
 
-    const isEditing = !!currentPost
+    const isEditing = useMemo(() => Boolean(post && post._id), [post]);
 
-    useEffect(() => {
+    console.log("Draft data", blogPostDraft)
+    useEffect(() => {      
         const today = new Date();
         const formattedDate = `${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}`;
         const user = JSON.parse(localStorage.getItem("user"));
         const authorName = user?.name || "Anonymous";
         
+        const source = post || blogPostDraft
         
-        if(!isEditing){
+        // new post
+        if(!source){
             setMeta((prev) => ({
                 ...prev,
-                date: formattedDate,
+                date: today,
                 author: authorName,
             }));
-        }else {
-            setMeta((prev) => ({...prev,
-                title: currentPost.title || '',
-                tags: currentPost.tags || [],
-                image: currentPost.image || '',
-                slug: currentPost.slug || '',
-                excerpt: currentPost.excerpt || '',
-                author: currentPost.author?.name || 'Anonymous',
-                date: currentPost.date || '',
-            }))
+            return
+        }
 
-            const { attributes , body } = matter(currentPost.content || '');
+        // loading current post for edit
+        setMeta((prev) => ({
+            ...prev,
+            title: source.title || '',
+            tags: source.tags || [],
+            image: source.image || '',
+            slug: source.slug || '',
+            excerpt: source.excerpt || '',
+            author: source.author?.name || 'Anonymous',
+            date: source.date || '',
+        }))
+        try{
+            const { attributes , body } = matter(source.content || '');
             setContent( body || '',)
-        }          
-    }, [currentPost]);
-
+        }catch (err){
+            console.error("Error", err)
+        }
+              
+    },[blogPostDraft, post]);
 
     const buildFrontmatter = () => {
         return `---
@@ -71,28 +81,34 @@ ${content}`;
     const handleSaveDraft = async (e) => {
         e.preventDefault();
 
+        const source = post || blogPostDraft
+        const isEditing = Boolean(source && source._id) 
         const markdown = buildFrontmatter()
 
         const updatedData = {
-            id: currentPost._id, 
             title:meta.title, 
             content: markdown, 
             image: meta.image,
             excerpt: meta.excerpt, 
             published: false
         }
-            
+        console.log("existing post ", isEditing)
         if(isEditing){
-            await updatePost({ id: currentPost._id, ...updatedData })
+            // update existing
+            await updatePost({ id: source._id, ...updatedData })
+            alert("Draft updated")
         } else{
-            await createPost(updatedData)
+            // create new post
+            const res = await createPost(updatedData)
+            console.log("data to create new post with ", res.data)
+            setPost(res.data) // state now has _id
+            alert('Draft created')
         }
-        alert('Draft saved')
-
     }
     // check if there is a saved blog post, then update it with the new content and publish
     const handlePublish = async (e) => {
         e.preventDefault();
+        const isEditing = Boolean(post && post._id)
 
         const markdown = buildFrontmatter()
 
@@ -107,13 +123,13 @@ ${content}`;
         }
 
         if (isEditing) {
-            await updatePost({ id: currentPost._id, ...updatedData });
+            await updatePost({ id: post._id, ...updatedData });
         } else {
             await createPost(updatedData);
         }
 
         alert("Post published!");
-        setCurrentPost(null);
+        setPost(null);
         setActiveTab("blogDashboard");
     }
 
