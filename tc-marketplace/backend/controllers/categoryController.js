@@ -1,6 +1,8 @@
 import Category from "../models/Category.js";
 
-// CREATE
+// @desc    Create category
+// @route   POST /api/category
+// @access  Private - admin
 export const createCategory = async (req, res) => {
   try {
     const category = await Category.create(req.body);
@@ -10,13 +12,30 @@ export const createCategory = async (req, res) => {
   }
 };
 
-// READ ALL
+// @desc    Get all categories
+// @route   GET /api/category
+// @access  Public
 export const getCategories = async (req, res) => {
   const categories = await Category.find().populate("parent");
   res.json(categories);
 };
 
-// UPDATE
+// @desc    Get category by ID
+// @route   GET /api/category/:id
+// @access  Public
+export const getCategoryById = async (req, res) => {
+    try{
+        const category = await Category.findById(res.params.id).populate("parent");
+        res.json(category);
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+};
+
+
+// @desc    Update category
+// @route   PUT /api/category
+// @access  Private - admin
 export const updateCategory = async (req, res) => {
   try {
     const updated = await Category.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -26,7 +45,9 @@ export const updateCategory = async (req, res) => {
   }
 };
 
-// DELETE
+// @desc    Delete category
+// @route   GET /api/category/:id
+// @access  Private - admin
 export const deleteCategory = async (req, res) => {
   try {
     await Category.findByIdAndDelete(req.params.id);
