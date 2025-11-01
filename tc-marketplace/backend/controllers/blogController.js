@@ -70,29 +70,38 @@ export const getFeaturedPosts = async (req, res) => {
 // @route   POST /api/blog
 // @access  Private - author/admin
 export const createBlogPost = async (req, res) => {
-  const { title, content, image,excerpt, published} = req.body;
-  if(!content || !title){
-    res.status(400)
-    throw new Error('Title and content are required')
-  }
+  try{
 
-  const now = new Date();
-  const date = `${now.getDate().toString().padStart(2, '0')}/${(now.getMonth()+1)
-    .toString()
-    .padStart(2, '0')}/${now.getFullYear()}`;
+    const { title, content, image,excerpt, published} = req.body;
+    
+    if(!content || !title){
+      return res.status(400).json({ error: "Title and content are required" });
+    }
+    
+    let slug = slugify(title, { lower: true, strict: true });
 
-  const post = await BlogPost.create({
-    title,
-    content,
-    image,
-    excerpt,
-    slug: slugify(title, {lower: true}),
-    author: req.user.id,
-    published,
-    date: date
-  });
-
-  res.json(post);
+    const existing = await BlogPost.findOne({ slug });
+    if (existing) {
+      slug = generateAutoSlug(title);
+    }
+    
+    
+    const post = await BlogPost.create({
+      title,
+      content,
+      image,
+      excerpt,
+      slug,
+      author: req.user.id,
+      published: published ?? false,
+      date: new Date()
+      });
+      
+      res.status(201).json(post);
+    } catch (err) {
+      console.error("Create blog error:", err);
+      res.status(500).json({ error: 'Server error creating a new post'})
+    }
 };
 
 // @desc    Update blog post
