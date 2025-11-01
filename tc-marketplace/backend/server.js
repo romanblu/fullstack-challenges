@@ -43,6 +43,7 @@ app.use("/api/blog", blogRoutes);
 app.use("/api/auth", authRoutes)
 app.use("/api/store", sellerRoutes)
 app.use("/api/categories", categoryRoutes);
+app.use("/api/variants", variantRoutes);
 
 app.use(notFound)
 
