@@ -1,21 +1,14 @@
-import matter from "front-matter";
 import ReactMarkdown from "react-markdown";
-import { useEffect, useState } from "react";
 import remarkGfm from "remark-gfm";
 import Banner from "../shared/Banner.jsx";
-import { getPost } from "../../api/blog.js";
+import { parseDate } from "../../utils/parseDate.js";
 
-export default function BlogPost({slug }) {
-    const [post, setPost] = useState(null);
+export default function BlogPost({post }) {
 
-    useEffect(() => {
-        getPost(slug).then((res) => {
-            const {attributes, body} = matter(res.data.content)
-            setPost({ attributes, body });
-            
-        });
-    }, []);
+    
     if (!post) return <p>Loading...</p>;
+
+    
 
     return (
         <div>
@@ -31,12 +24,13 @@ export default function BlogPost({slug }) {
                 />
                 {/* <h1 className="text-4xl font-bold mb-4 text-green-900">{post.attributes.title}</h1> */}
                 {/* <p className="text-gray-600 mb-8">{post.attributes.excerpt}</p> */}
-                <p className="text-gray-600 mb-8">{post.attributes.date.toISOString().slice(0, 10)}</p>
+                <p className="text-gray-600 mb-8">{parseDate(post.attributes.date)}</p>
                 <p className="text-gray-600 mb-8">{post.attributes.author}</p>
                 {/* <img src={post.attributes.image}/> */}
                 <article className="prose prose-blog-post">
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.body}</ReactMarkdown>
                 </article>
+                {/* Move similar-posts section here and recieve the data with the post content */}
             </div>
         </div>
   );
