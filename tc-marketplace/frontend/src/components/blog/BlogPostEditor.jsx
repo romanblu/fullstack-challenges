@@ -19,8 +19,6 @@ const BlogPostEditor = ({ blogPostDraft, setActiveTab }) => {
     const [content, setContent] = useState('');
     const [post, setPost] = useState()
 
-    const isEditing = useMemo(() => Boolean(post && post._id), [post]);
-
     console.log("Draft data", blogPostDraft)
     useEffect(() => {      
         const today = new Date();
@@ -92,7 +90,7 @@ ${content}`;
             excerpt: meta.excerpt, 
             published: false
         }
-        console.log("existing post ", isEditing)
+
         if(isEditing){
             // update existing
             await updatePost({ id: source._id, ...updatedData })
@@ -100,7 +98,6 @@ ${content}`;
         } else{
             // create new post
             const res = await createPost(updatedData)
-            console.log("data to create new post with ", res.data)
             setPost(res.data) // state now has _id
             alert('Draft created')
         }
@@ -110,7 +107,6 @@ ${content}`;
         e.preventDefault();
         const source = post || blogPostDraft
         const isEditing = Boolean(source && source._id)
-        console.log("publishing post state", source)
         const markdown = buildFrontmatter()
 
         const updatedData = {
