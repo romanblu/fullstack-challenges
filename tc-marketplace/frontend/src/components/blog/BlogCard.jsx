@@ -7,16 +7,6 @@ export default function BlogCard({ post, isAuthorDashboard = false, setActiveTab
         setActiveTab("editBlogPost");
     }
 
-    const ManagementButtons = () => (
-        <>
-            <button onClick={handleEditPost} className="mt-4 inline-block text-green-700 hover:text-green-900 font-medium">
-                Edit Post
-            </button>
-        </>
-    );
-
-    
-
     return (
         <div className="bg-white rounded-xl shadow hover:shadow-lg transition flex flex-col h-full">
             <img src={post.image} alt={post.title} className="h-48 w-full object-cover rounded-t-xl" />
@@ -33,7 +23,16 @@ export default function BlogCard({ post, isAuthorDashboard = false, setActiveTab
                 >
                 Read More →
                 </Link>
-                {isAuthorDashboard && <ManagementButtons />}
+                {isAuthorDashboard && (
+                    <>
+                        <button onClick={handleEditPost} className="mt-4 inline-block text-green-700 hover:text-green-900 font-medium">
+                            Edit Post
+                        </button>
+                        {
+                            !post.published ? <p>The post has not been published yet</p> : ''
+                        }
+                    </>
+                )}
             </div>
         </div>
     );
