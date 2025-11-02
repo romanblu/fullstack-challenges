@@ -1,15 +1,39 @@
 
 import mongoose from 'mongoose';
 const productSchema = new mongoose.Schema({
-  name: {type: String, required: true, require: true},
+  name: {type: String, required: true},
   slug: {type: String, required: true, unique: true},
-  // store: { type: mongoose.Schema.Types.ObjectId, ref: 'Store', required: true },
   species: {type: String, required: true},
   description: String,
   price: {type: Number, required: true},
   quantity: {type: Number},
-  image: String,
-  seller: String,
+  categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category"}],
+  mainImage: String,
+  images: [String],
+  seller: String, // TODO: create SuperUser model for seller and admin 
+  
+  productType: {
+    type: String,
+    enum: ["plant", "consumable", "equipment", "kit", "digital"],
+    required: true
+  },
+  // dynamic attributes
+  attributes: {
+    species: String,
+    difficulty: String,
+    mediaType: String,
+    containerType: String,
+    growthStage: String,
+    shelfLife: String,
+    certification: String
+  },
+
+  variants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Variant" }],
+
+  // out of stock, sale...
+  status: { type: String, default: "available" },
+
+  
   featured: { type: Boolean, default: false },
   createdAt: {type: Date, default: Date.now},
 });

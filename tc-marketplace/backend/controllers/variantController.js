@@ -1,7 +1,7 @@
 import Variant from "../models/Variant.js";
 
 // @desc    Create variant
-// @route   POST /api/variant
+// @route   POST /api/variants
 // @access  Private - admin
 export const createVariant = async (req, res) => {
   try {
@@ -13,7 +13,7 @@ export const createVariant = async (req, res) => {
 };
 
 // @desc    Get all variants
-// @route   GET /api/variant
+// @route   GET /api/variants
 // @access  Public
 export const getVariants = async (req, res) => {
   const variants = await Variant.find().populate("parent");
@@ -21,7 +21,7 @@ export const getVariants = async (req, res) => {
 };
 
 // @desc    Get variant by ID
-// @route   GET /api/variant/:id
+// @route   GET /api/variants/:id
 // @access  Public
 export const getVariantById = async (req, res) => {
     try{
@@ -33,7 +33,7 @@ export const getVariantById = async (req, res) => {
 };
 
 // @desc    Update variant
-// @route   PUT /api/variant/:id
+// @route   PUT /api/variants/:id
 // @access  Private - admin
 export const updateVariant = async (req, res) => {
   try {
@@ -45,7 +45,7 @@ export const updateVariant = async (req, res) => {
 };
 
 // @desc    Get featured products
-// @route   DELETE /api/variant/:id
+// @route   DELETE /api/variants/:id
 // @access  Private - admin
 export const deleteVariant = async (req, res) => {
   try {
