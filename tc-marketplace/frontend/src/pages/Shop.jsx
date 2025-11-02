@@ -4,7 +4,7 @@ import axios from 'axios';
 import Navbar from "../components/layout/Navbar";
 import ProductCard from "../components/products/ProductCard";
 import FilterBar from "../components/shared/FilterBar";
-import { getCategories } from "../api/category"
+import { getCategoryTree } from "../api/category"
 
 const Shop = () => {
     const [products, setProducts] = useState([])
@@ -17,7 +17,7 @@ const Shop = () => {
     const { data: categories } = useQuery({
         queryKey: ["categories"],
         queryFn: () =>
-        getCategories().then((res) =>  res.data),
+        getCategoryTree().then((res) =>  res.data),
     });
 
 
@@ -38,7 +38,7 @@ const Shop = () => {
         return 0;
     });
 
-  return (
+    return (
     <div className="bg-slate-50 min-h-screen ">
         <Navbar theme="light" />
             <div className="container max-w-[1100px] mx-auto px-4 py-10">
