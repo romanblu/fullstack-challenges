@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {  createPost, updatePost } from "../../api/blog";
 import matter from "front-matter";
+import remarkBreaks from "remark-breaks";
 
 const BlogPostEditor = ({ blogPostDraft, setActiveTab }) => {
 
@@ -19,7 +20,6 @@ const BlogPostEditor = ({ blogPostDraft, setActiveTab }) => {
     const [content, setContent] = useState('');
     const [post, setPost] = useState()
 
-    console.log("Draft data", blogPostDraft)
     useEffect(() => {      
         const today = new Date();
         const formattedDate = `${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}`;
@@ -87,7 +87,6 @@ ${content}`;
         const source = post || blogPostDraft
         const isEditing = Boolean(source && source._id) 
         const markdown = buildFrontmatter()
-
         const updatedData = {
             title:meta.title, 
             content: markdown, 
@@ -239,7 +238,7 @@ ${content}`;
                             {/* blog post preview */}
                             <div className="w-full ml-4 bg-slate-50 border rounded prose prose-blog-post ">
                                 {content ? (
-                                    <ReactMarkdown 
+                                    <ReactMarkdown  remarkPlugins={[remarkBreaks]}
                                         children={content} >
                                     </ReactMarkdown>
                                 ) : (
