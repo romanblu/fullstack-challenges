@@ -1,0 +1,314 @@
+
+[
+    {
+        "name": "Plants",
+        "slug": "plants",
+        "parent": null
+    },
+    {
+        "name": "Ornamentals",
+        "slug": "ornamentals",
+        "parent": "plants"
+    },
+    {
+        "name": "Aroids",
+        "slug": "aroids",
+        "parent": "ornamentals"
+    },
+    {
+        "name": "Ferns",
+        "slug": "ferns",
+        "parent": "ornamentals"
+    },
+    {
+        "name": "Succulents",
+        "slug": "succulents",
+        "parent": "ornamentals"
+    },
+    {
+        "name": "Ornamental Foliage",
+        "slug": "ornamental-foliage",
+        "parent": "ornamentals"
+    },
+
+    {
+        "name": "Fruit & Edible Crops",
+        "slug": "fruit-edible-crops",
+        "parent": "plants"
+    },
+    {
+        "name": "Banana",
+        "slug": "banana",
+        "parent": "fruit-edible-crops"
+    },
+    {
+        "name": "Strawberry",
+        "slug": "strawberry",
+        "parent": "fruit-edible-crops"
+    },
+    {
+        "name": "Pineapple",
+        "slug": "pineapple",
+        "parent": "fruit-edible-crops"
+    },
+    {
+        "name": "Vanilla",
+        "slug": "vanilla",
+        "parent": "fruit-edible-crops"
+    },
+
+    {
+        "name": "Medicinal & Herbal",
+        "slug": "medicinal-herbal",
+        "parent": "plants"
+    },
+    {
+        "name": "Aloe Vera",
+        "slug": "aloe-vera",
+        "parent": "medicinal-herbal"
+    },
+    {
+        "name": "Bacopa",
+        "slug": "bacopa",
+        "parent": "medicinal-herbal"
+    },
+    {
+        "name": "Stevia",
+        "slug": "stevia",
+        "parent": "medicinal-herbal"
+    },
+
+    {
+        "name": "Carnivorous Plants",
+        "slug": "carnivorous-plants",
+        "parent": "plants"
+    },
+    {
+        "name": "Nepenthes",
+        "slug": "nepenthes",
+        "parent": "carnivorous-plants"
+    },
+    {
+        "name": "Drosera",
+        "slug": "drosera",
+        "parent": "carnivorous-plants"
+    },
+
+    {
+        "name": "Forestry & Agriculture",
+        "slug": "forestry-agriculture",
+        "parent": "plants"
+    },
+    {
+        "name": "Bamboo",
+        "slug": "bamboo",
+        "parent": "forestry-agriculture"
+    },
+    {
+        "name": "Taro",
+        "slug": "taro",
+        "parent": "forestry-agriculture"
+    },
+    {
+        "name": "Eucalyptus",
+        "slug": "eucalyptus",
+        "parent": "forestry-agriculture"
+    },
+    {
+        "name": "Potato (In-Vitro)",
+        "slug": "potato-in-vitro",
+        "parent": "forestry-agriculture"
+    },
+
+    {
+        "name": "Lab Consumables",
+        "slug": "lab-consumables",
+        "parent": null
+    },
+    {
+        "name": "Media & Chemicals",
+        "slug": "media-chemicals",
+        "parent": "lab-consumables"
+    },
+    {
+        "name": "MS Salts & Basal Media",
+        "slug": "ms-salts-basal-media",
+        "parent": "media-chemicals"
+    },
+    {
+        "name": "Agar & Gelling Agents",
+        "slug": "agar-gelling-agents",
+        "parent": "media-chemicals"
+    },
+    {
+        "name": "Plant Growth Regulators",
+        "slug": "plant-growth-regulators",
+        "parent": "media-chemicals"
+    },
+    {
+        "name": "Sucrose & Additives",
+        "slug": "sucrose-additives",
+        "parent": "media-chemicals"
+    },
+    {
+        "name": "Activated Charcoal",
+        "slug": "activated-charcoal",
+        "parent": "media-chemicals"
+    },
+
+    {
+        "name": "Culture Vessels",
+        "slug": "culture-vessels",
+        "parent": "lab-consumables"
+    },
+    {
+        "name": "Plastic PP Containers",
+        "slug": "plastic-pp-containers",
+        "parent": "culture-vessels"
+    },
+    {
+        "name": "Autoclavable Jars",
+        "slug": "autoclavable-jars",
+        "parent": "culture-vessels"
+    },
+    {
+        "name": "Petri Dishes",
+        "slug": "petri-dishes",
+        "parent": "culture-vessels"
+    },
+
+    {
+        "name": "Instruments & Tools",
+        "slug": "instruments-tools",
+        "parent": "lab-consumables"
+    },
+    {
+        "name": "Scalpels & Blades",
+        "slug": "scalpels-blades",
+        "parent": "instruments-tools"
+    },
+    {
+        "name": "Forceps & Tweezers",
+        "slug": "forceps-tweezers",
+        "parent": "instruments-tools"
+    },
+    {
+        "name": "pH Meters",
+        "slug": "ph-meters",
+        "parent": "instruments-tools"
+    },
+    {
+        "name": "Magnetic Stirrers",
+        "slug": "magnetic-stirrers",
+        "parent": "instruments-tools"
+    },
+    {
+        "name": "Pipettes & Syringes",
+        "slug": "pipettes-syringes",
+        "parent": "instruments-tools"
+    },
+
+    {
+        "name": "Premixed Media",
+        "slug": "premixed-media",
+        "parent": null
+    },
+    {
+        "name": "Seed Germination Media",
+        "slug": "seed-germination-media",
+        "parent": "premixed-media"
+    },
+    {
+        "name": "Multiplication Media",
+        "slug": "multiplication-media",
+        "parent": "premixed-media"
+    },
+    {
+        "name": "Rooting Media",
+        "slug": "rooting-media",
+        "parent": "premixed-media"
+    },
+    {
+        "name": "Orchid-Specific Media",
+        "slug": "orchid-specific-media",
+        "parent": "premixed-media"
+    },
+
+    {
+        "name": "Equipment",
+        "slug": "equipment",
+        "parent": null
+    },
+    {
+        "name": "Laminar Flow Hoods",
+        "slug": "laminar-flow-hoods",
+        "parent": "equipment"
+    },
+    {
+        "name": "Autoclaves",
+        "slug": "autoclaves",
+        "parent": "equipment"
+    },
+    {
+        "name": "LED Grow Lights",
+        "slug": "led-grow-lights",
+        "parent": "equipment"
+    },
+    {
+        "name": "Heat Mats",
+        "slug": "heat-mats",
+        "parent": "equipment"
+    },
+    {
+        "name": "Mini Greenhouse Kits",
+        "slug": "mini-greenhouse-kits",
+        "parent": "equipment"
+    },
+
+    {
+        "name": "Kits & Bundles",
+        "slug": "kits-bundles",
+        "parent": null
+    },
+    {
+        "name": "Tissue Culture Starter Kits",
+        "slug": "tc-starter-kits",
+        "parent": "kits-bundles"
+    },
+    {
+        "name": "Propagation Kits",
+        "slug": "propagation-kits",
+        "parent": "kits-bundles"
+    },
+    {
+        "name": "Media Refill Kits",
+        "slug": "media-refill-kits",
+        "parent": "kits-bundles"
+    },
+    {
+        "name": "School Lab Kits",
+        "slug": "school-lab-kits",
+        "parent": "kits-bundles"
+    },
+
+    {
+        "name": "Digital Guides",
+        "slug": "digital-guides",
+        "parent": null
+    },
+    {
+        "name": "TC Beginner Protocols",
+        "slug": "tc-beginner-protocols",
+        "parent": "digital-guides"
+    },
+    {
+        "name": "Media Preparation Guide",
+        "slug": "media-preparation-guide",
+        "parent": "digital-guides"
+    },
+    {
+        "name": "Plant-Specific TC Guides",
+        "slug": "plant-specific-tc-guides",
+        "parent": "digital-guides"
+    }
+]
