@@ -16,7 +16,7 @@ const DropdownCategory = ({ categoryTree , selectedCategory, setSelectedCategory
         {/* Category name */}
         <button
           className={`text-left py-1 px-2 w-full hover:bg-gray-100 rounded ${
-            selectedCategory.slug === category.slug ? "bg-gray-200" : ""
+            selectedCategory?.slug === category.slug ? "bg-gray-200" : ""
           }`}
           onClick={() => setSelectedCategory(category)}
         >
@@ -63,7 +63,7 @@ const DropdownCategory = ({ categoryTree , selectedCategory, setSelectedCategory
     >
       {/* Trigger button */}
       <button className="border border-gray-300 text-left w-full rounded-lg px-4 py-2 bg-white shadow-sm hover:shadow-md transition">
-        {selectedCategory.name || "Select Category"}
+        {selectedCategory?.name || "Select Category"}
       </button>
 
       {/* Dropdown panel */}
@@ -81,7 +81,7 @@ const DropdownCategory = ({ categoryTree , selectedCategory, setSelectedCategory
             </button>
           </div>
           {/* Category list */}
-          {categoryTree.map((parent) => renderCategory(parent))}
+          {categoryTree?.map((parent) => renderCategory(parent))}
         </div>
       )}
     </div>

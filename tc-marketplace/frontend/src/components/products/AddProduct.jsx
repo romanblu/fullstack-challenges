@@ -1,8 +1,10 @@
 import { useState } from "react";
 import slugify from "slugify";
 import { createProduct } from "../../api/product";
+import DropdownCategory from '../shared/DropdownCategory'
+import CategoryUI from "../ui/CategoryUI";
 
-const AddProduct = ({ setActiveTab }) => {
+const AddProduct = ({ setActiveTab, categories }) => {
     const [form, setForm] = useState({
         name: "",
         slug: "",
@@ -10,10 +12,17 @@ const AddProduct = ({ setActiveTab }) => {
         description: "",
         price: "",
         quantity: "",
-        image: "",
+        mainImage: "",
+        images: [],
+        productType: "",
+        categories: [],
+        status: "",
+        featured: false
+
     })
 
     const [message, setMessage] = useState("")
+    const [categoriesUI, setCategoriesUI] = useState([])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -30,6 +39,27 @@ const AddProduct = ({ setActiveTab }) => {
         const { name, value } = e.target;
         setForm((prev) => ({ ...prev, [name]: value }));
     }
+
+    const handleSetCategories = (SelectedCat) => {
+      const selectedId = SelectedCat._id
+
+      setForm((prev) => {
+        const alreadySelected = prev.categories.includes(selectedId);
+        return {
+          ...prev,
+          categories: alreadySelected
+            ? prev.categories.filter((id) => id !== selectedId) // uncheck
+            : [...prev.categories, selectedId] // check
+        };
+      });      
+      setCategoriesUI((prev) => {
+        const exists = prev.some(cat => cat._id === SelectedCat._id);
+
+        return exists
+          ? prev.filter(cat => cat._id !== SelectedCat._id)   // remove
+          : [...prev, SelectedCat];                           // add
+      });
+    };
 
     const handleNameChange = (e) => {
         setForm({ ...form, name: e.target.value, slug: slugify(e.target.value, {lower:true}) });
@@ -101,12 +131,33 @@ const AddProduct = ({ setActiveTab }) => {
 
         <input
           type="text"
-          name="image"
-          placeholder="Image URL"
+          name="mainImage"
+          placeholder="Main Image URL"
           value={form.image}
           onChange={handleChange}
           className="w-full border rounded-md p-2"
         />
+
+        {/* Product Type */}
+          <select
+            name="productType"
+            value={form.productType}
+            onChange={handleChange}
+            required
+            className="w-full border rounded-md p-2"
+          >
+            <option value="">Select Product Type</option>
+            <option value="plant">Plant</option>
+            <option value="consumable">Consumable</option>
+            <option value="equipment">Equipment</option>
+            <option value="kit">Kit</option>
+            <option value="digital">Digital</option>
+          </select>
+        <CategoryUI categories={categoriesUI} handleSetCategories={handleSetCategories}/>
+        <DropdownCategory 
+          selectedCategory={categories[-1]} 
+          setSelectedCategory={handleSetCategories} 
+          categoryTree={categories}/>
 
         <button
           type="submit"

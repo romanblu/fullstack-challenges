@@ -1,4 +1,4 @@
-import { Store } from "lucide-react";
+import { useQuery } from '@tanstack/react-query';
 import ActiveBar from "../components/shared/ActiveBar";
 import Navbar from "../components/layout/Navbar";
 import SellerInfoDashboard from "../components/dashboard/SellerInfoDashboard";
@@ -10,12 +10,20 @@ import BlogDashboard from "../components/blog/BlogDashboard";
 import BlogPostEditor from "../components/blog/BlogPostEditor";
 import AddProduct from "../components/products/AddProduct";
 import EditProduct from "../components/products/EditProduct";
+import { getCategoryTree } from '../api/category'
 
 const SellerDashboardPage = () => {  
     
     const [activeTab, setActiveTab] = useState("profile");
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [currentPost, setCurrentPost] = useState(null);
+
+    const { data: categories } = useQuery({
+        queryKey: ["categories"],
+        queryFn: () =>
+        getCategoryTree().then((res) =>  res.data),
+    });
+
 
     const tabs = [
         { id: "profile" ,label: 'Store Settings', current: true },
@@ -24,7 +32,7 @@ const SellerDashboardPage = () => {
         { id: "statistics" ,label: 'Statistics', current: false },
         { id: "blog" ,label: 'Blog Posts', current: false }
     ];
-    console.log("Selected Product:", selectedProduct);
+
     const renderContent = () => {
         switch(activeTab) {
             case "profile":
@@ -40,7 +48,7 @@ const SellerDashboardPage = () => {
             case "blog":
                 return <BlogDashboard setActiveTab={setActiveTab} setCurrentPost={setCurrentPost}/>
             case "newProduct":
-                return <AddProduct setActiveTab={setActiveTab} />
+                return <AddProduct setActiveTab={setActiveTab} categories={categories}/>
             case "newBlogPost":
                 return <BlogPostEditor setActiveTab={setActiveTab}  />
             case "editBlogPost":
