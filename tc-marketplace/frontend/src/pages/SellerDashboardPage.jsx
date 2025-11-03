@@ -24,7 +24,6 @@ const SellerDashboardPage = () => {
         getCategoryTree().then((res) =>  res.data),
     });
 
-
     const tabs = [
         { id: "profile" ,label: 'Store Settings', current: true },
         { id: "products" ,label: 'Products', current: false },
@@ -40,7 +39,7 @@ const SellerDashboardPage = () => {
             case "products":
                 return <ProductsDashboard setActiveTab={setActiveTab} setSelectedProduct={setSelectedProduct}/>
             case "editProduct":
-                return <EditProduct setActiveTab={setActiveTab} setSelectedProduct={setSelectedProduct} selectedProduct={selectedProduct}/>
+                return <EditProduct categories={categories} setActiveTab={setActiveTab} setSelectedProduct={setSelectedProduct} selectedProduct={selectedProduct}/>
             case "orders":
                 return <OrdersDashboard />
             case "statistics":

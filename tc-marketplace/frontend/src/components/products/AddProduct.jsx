@@ -1,179 +1,33 @@
 import { useState } from "react";
-import slugify from "slugify";
 import { createProduct } from "../../api/product";
-import DropdownCategory from '../shared/DropdownCategory'
-import CategoryUI from "../ui/CategoryUI";
+import ProductForm from "./ProductForm";
 
 const AddProduct = ({ setActiveTab, categories }) => {
-    const [form, setForm] = useState({
-        name: "",
-        slug: "",
-        species: "",
-        description: "",
-        price: "",
-        quantity: "",
-        mainImage: "",
-        images: [],
-        productType: "",
-        categories: [],
-        status: "",
-        featured: false
-
-    })
-
     const [message, setMessage] = useState("")
-    const [categoriesUI, setCategoriesUI] = useState([])
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        createProduct(form).then(res => {
+    const handleCreate = (formData) => {
+        console.log(" CREATING PRODUCT WITHR FOLLOWING DATA", formData)
+        createProduct(formData).then(res => {
             if(res.status === 201) {
                 setMessage("Product created successfully!")
                 setActiveTab("products");
             }
         }            
         ).catch(err => setMessage("Error creating product: " + err.message))
-    }
+    } 
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setForm((prev) => ({ ...prev, [name]: value }));
-    }
-
-    const handleSetCategories = (SelectedCat) => {
-      const selectedId = SelectedCat._id
-
-      setForm((prev) => {
-        const alreadySelected = prev.categories.includes(selectedId);
-        return {
-          ...prev,
-          categories: alreadySelected
-            ? prev.categories.filter((id) => id !== selectedId) // uncheck
-            : [...prev.categories, selectedId] // check
-        };
-      });      
-      setCategoriesUI((prev) => {
-        const exists = prev.some(cat => cat._id === SelectedCat._id);
-
-        return exists
-          ? prev.filter(cat => cat._id !== SelectedCat._id)   // remove
-          : [...prev, SelectedCat];                           // add
-      });
-    };
-
-    const handleNameChange = (e) => {
-        setForm({ ...form, name: e.target.value, slug: slugify(e.target.value, {lower:true}) });
-    }
-
-    const handleDiscard = () => { setActiveTab("products"); }
+    const onDiscard = () => { setActiveTab("products"); }
     
     return (
     <div className="max-w-lg mx-auto bg-gray-50 p-6 rounded-2xl shadow-md">
       <h2 className="text-2xl font-semibold mb-4 text-center">Add New Product</h2>
-      
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="name"
-          placeholder="Product Name"
-          value={form.name}
-          onChange={handleNameChange}
-          required
-          className="w-full border rounded-md p-2"
-        />
-
-        <input
-          type="text"
-          name="slug"
-          placeholder="Slug (unique identifier)"
-          value={form.slug}
-          onChange={handleChange}
-          required
-          className="w-full border rounded-md p-2"
-        />
-
-        <input
-          type="text"
-          name="species"
-          placeholder="Species"
-          value={form.species}
-          onChange={handleChange}
-          required
-          className="w-full border rounded-md p-2"
-        />
-
-        <textarea
-          name="description"
-          placeholder="Description"
-          value={form.description}
-          onChange={handleChange}
-          className="w-full border rounded-md p-2"
-        />
-
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          value={form.price}
-          onChange={handleChange}
-          required
-          className="w-full border rounded-md p-2"
-        />
-
-        <input
-          type="number"
-          name="quantity"
-          placeholder="Quantity"
-          value={form.quantity}
-          onChange={handleChange}
-          className="w-full border rounded-md p-2"
-        />
-
-        <input
-          type="text"
-          name="mainImage"
-          placeholder="Main Image URL"
-          value={form.image}
-          onChange={handleChange}
-          className="w-full border rounded-md p-2"
-        />
-
-        {/* Product Type */}
-          <select
-            name="productType"
-            value={form.productType}
-            onChange={handleChange}
-            required
-            className="w-full border rounded-md p-2"
-          >
-            <option value="">Select Product Type</option>
-            <option value="plant">Plant</option>
-            <option value="consumable">Consumable</option>
-            <option value="equipment">Equipment</option>
-            <option value="kit">Kit</option>
-            <option value="digital">Digital</option>
-          </select>
-        <CategoryUI categories={categoriesUI} handleSetCategories={handleSetCategories}/>
-        <DropdownCategory 
-          selectedCategory={categories[-1]} 
-          setSelectedCategory={handleSetCategories} 
-          categoryTree={categories}/>
-
-        <button
-          type="submit"
-          className="w-full bg-lime-500 hover:bg-lime-600 text-green-950 font-semibold py-2 rounded-md shadow-md"
-        >
-          Add Product
-        </button>
-        <button
-            onClick={handleDiscard}
-            type="submit"
-            className="px-4 bg-gray-300 hover:bg-gray-500 text-green-950 font-semibold py-2 rounded-md shadow-md"
-            >
-            Discard
-        </button>
-        </form>
-
+      <ProductForm 
+        initialData = {{}}
+        onSubmit={handleCreate}
+        onDiscard={onDiscard}
+        categories={categories}
+        onDelete={{}}
+      />
         {message && <p className="text-center mt-3">{message}</p>}
     </div>
     )
