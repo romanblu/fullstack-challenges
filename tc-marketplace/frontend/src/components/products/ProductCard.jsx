@@ -15,7 +15,7 @@ export default function ProductCard({ product, setSelectedProduct, setActiveTab 
     return (
         <div className="bg-green-50 rounded-xl shadow hover:shadow-lg transition flex flex-col h-full justify-between">
             <img
-                src={product.image}
+                src={product.mainImage}
                 alt={product.name}
                 className="rounded-sm w-full h-56 object-cover mb-3"
             />
