@@ -14,7 +14,7 @@ const DropdownCategory = ({ categoryTree , selectedCategory, setSelectedCategory
     <div key={category._id} className={`pl-${level * 4}`}>
       <div className="flex items-center justify-between">
         {/* Category name */}
-        <button
+        <button type="button"
           className={`text-left py-1 px-2 w-full hover:bg-gray-100 rounded ${
             selectedCategory?.slug === category.slug ? "bg-gray-200" : ""
           }`}
@@ -25,7 +25,7 @@ const DropdownCategory = ({ categoryTree , selectedCategory, setSelectedCategory
 
         {/* Expand icon */}
         {category.children?.length > 0 && (
-          <button
+          <button type="button"
             onClick={() => toggleExpand(category._id)}
             className="ml-2 text-gray-500 hover:text-gray-700"
           >
@@ -71,7 +71,7 @@ const DropdownCategory = ({ categoryTree , selectedCategory, setSelectedCategory
         <div className="absolute left-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-96 overflow-auto">
             {/* Show All Products button */}
           <div className="border-b border-gray-200">
-            <button
+            <button type="button"
               className={`text-left w-full px-2 py-1 hover:bg-gray-100 rounded ${
                 selectedCategory === "" ? "bg-gray-200" : ""
               }`}
