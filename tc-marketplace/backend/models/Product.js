@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const productSchema = new mongoose.Schema({
   name: {type: String, required: true},
   slug: {type: String, required: true, unique: true},
-  species: {type: String, required: true},
+  species: {type: String},
   description: String,
   price: {type: Number, required: true},
   quantity: {type: Number},
@@ -27,7 +27,7 @@ const productSchema = new mongoose.Schema({
     shelfLife: String,
     certification: String
   },
-
+  
   variants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Variant" }],
 
   // out of stock, sale...
