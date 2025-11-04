@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createProduct } from "../../api/product";
 import ProductForm from "./ProductForm";
 
-const AddProduct = ({ setActiveTab, categories }) => {
+const AddProduct = ({ setActiveTab, CategoryTree }) => {
     const [message, setMessage] = useState("")
 
     const handleCreate = (formData) => {
@@ -25,7 +25,7 @@ const AddProduct = ({ setActiveTab, categories }) => {
         initialData = {{}}
         onSubmit={handleCreate}
         onDiscard={onDiscard}
-        categories={categories}
+        CategoryTree={CategoryTree}
         onDelete={{}}
       />
         {message && <p className="text-center mt-3">{message}</p>}

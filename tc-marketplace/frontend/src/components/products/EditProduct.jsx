@@ -3,7 +3,7 @@ import { deleteProduct, updateProduct } from "../../api/product";
 import slugify from "slugify";
 import ProductForm from "./ProductForm";
 
-const EditProduct = ({ setActiveTab, setSelectedProduct, selectedProduct, categories }) => {
+const EditProduct = ({ setActiveTab, setSelectedProduct, selectedProduct, CategoryTree }) => {
 
     const [message, setMessage] = useState("")
 
@@ -37,7 +37,7 @@ const EditProduct = ({ setActiveTab, setSelectedProduct, selectedProduct, catego
                 initialData = {selectedProduct}
                 onSubmit={handleUpdate}
                 onDiscard={handleDiscard}
-                categories={categories}
+                CategoryTree={CategoryTree}
                 onDelete={handleDelete}
             />
 

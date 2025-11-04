@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import slugify from "slugify";
 import CategoryUI from "../ui/CategoryUI";
-import DropdownCategory from "../shared/DropdownCategory";
+import {DropdownCategory} from "../shared/DropdownCategory";
 import { flatTree } from "../../utils/flatTree.js"
-
+import {idsToObjects } from "../../utils/CategoriesHandler.js" 
+import CategorySelector from "../ui/CategorySelector.jsx";
 const ProductForm = ({
     initialData = {},
     onSubmit,
     onDiscard,
-    categories,
+    CategoryTree,
     }) => {
-    const [categoriesUI, setCategoriesUI] = useState([])
 
-    const [form, setForm] = useState({
+        const [form, setForm] = useState({
         name: "",
         slug: "",
         species: "",
@@ -25,16 +25,7 @@ const ProductForm = ({
         ...initialData    // populate for edit mode
     });
 
-    useEffect(() => {
-        if (!initialData.categories || !categories) return;
-
-        // map IDs → full category objects
-        const fullCats = flatTree(categories) // convert tree → flat list
-            .filter(cat => initialData.categories.includes(cat._id));
-
-        setCategoriesUI(fullCats);
-    }, [initialData, categories])
-
+  
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm((prev) => ({ ...prev, [name]: value }));
@@ -44,26 +35,6 @@ const ProductForm = ({
         setForm({ ...form, name: e.target.value, slug: slugify(e.target.value, {lower:true}) });
     }
 
-    const handleSetCategories = (SelectedCat) => {
-      const selectedId = SelectedCat._id
-
-      setForm((prev) => {
-        const alreadySelected = prev.categories.includes(selectedId);
-        return {
-          ...prev,
-          categories: alreadySelected
-            ? prev.categories.filter((id) => id !== selectedId) // uncheck
-            : [...prev.categories, selectedId] // check
-        };
-      });      
-      setCategoriesUI((prev) => {
-        const exists = prev.some(cat => cat._id === SelectedCat._id);
-
-        return exists
-          ? prev.filter(cat => cat._id !== SelectedCat._id)   // remove
-          : [...prev, SelectedCat];                           // add
-      });
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -153,12 +124,12 @@ const ProductForm = ({
                 <option value="kit">Kit</option>
                 <option value="digital">Digital</option>
             </select>
-            <CategoryUI categories={categoriesUI} handleSetCategories={handleSetCategories}/>
-            <DropdownCategory 
-            selectedCategory={categories[-1]} 
-            setSelectedCategory={handleSetCategories} 
-            categoryTree={categories}/>
-
+            <CategorySelector 
+                categoryTree={CategoryTree}
+                selectedIds={form.categories}
+                onChange={(newIds) => setForm(prev => ({ ...prev, categories: newIds }))}
+            />
+        
             <button
             type="submit"
             className="w-full bg-lime-500 hover:bg-lime-600 text-green-950 font-semibold py-2 rounded-md shadow-md"
