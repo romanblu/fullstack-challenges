@@ -18,7 +18,7 @@ const SellerDashboardPage = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [currentPost, setCurrentPost] = useState(null);
 
-    const { data: categories } = useQuery({
+    const { data: CategoryTree } = useQuery({
         queryKey: ["categories"],
         queryFn: () =>
         getCategoryTree().then((res) =>  res.data),
@@ -39,7 +39,7 @@ const SellerDashboardPage = () => {
             case "products":
                 return <ProductsDashboard setActiveTab={setActiveTab} setSelectedProduct={setSelectedProduct}/>
             case "editProduct":
-                return <EditProduct categories={categories} setActiveTab={setActiveTab} setSelectedProduct={setSelectedProduct} selectedProduct={selectedProduct}/>
+                return <EditProduct CategoryTree={CategoryTree} setActiveTab={setActiveTab} setSelectedProduct={setSelectedProduct} selectedProduct={selectedProduct}/>
             case "orders":
                 return <OrdersDashboard />
             case "statistics":
@@ -47,7 +47,7 @@ const SellerDashboardPage = () => {
             case "blog":
                 return <BlogDashboard setActiveTab={setActiveTab} setCurrentPost={setCurrentPost}/>
             case "newProduct":
-                return <AddProduct setActiveTab={setActiveTab} categories={categories}/>
+                return <AddProduct setActiveTab={setActiveTab} CategoryTree={CategoryTree}/>
             case "newBlogPost":
                 return <BlogPostEditor setActiveTab={setActiveTab}  />
             case "editBlogPost":

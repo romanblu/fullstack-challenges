@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getMyProducts } from "../../api/store";
+import { getMyProducts } from "../../api/product";
 import ProductCard from "./ProductCard";
 
 const ProductsDashboard = ({ setActiveTab, setSelectedProduct }) => {
@@ -15,7 +15,7 @@ const ProductsDashboard = ({ setActiveTab, setSelectedProduct }) => {
         setActiveTab("newProduct");
     }
 
-
+    
     return (
         <div>
              <div className="container max-w-[1100px] mx-auto px-4 py-10">
