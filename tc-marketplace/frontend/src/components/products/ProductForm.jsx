@@ -1,9 +1,5 @@
 import { useState, useEffect } from "react";
 import slugify from "slugify";
-import CategoryUI from "../ui/CategoryUI";
-import {DropdownCategory} from "../shared/DropdownCategory";
-import { flatTree } from "../../utils/flatTree.js"
-import {idsToObjects } from "../../utils/CategoriesHandler.js" 
 import CategorySelector from "../ui/CategorySelector.jsx";
 const ProductForm = ({
     initialData = {},
