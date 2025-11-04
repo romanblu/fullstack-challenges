@@ -14,7 +14,7 @@ export const listProducts = async (req, res) => {
 };
 
 // @desc    Get single product
-// @route   GET /api/products/(:id || :slug)
+// @route   GET /api/products (:id || :slug)
 // @access  Public
 export const getProduct = async (req, res) => {
   const { id } = req.params
@@ -35,6 +35,29 @@ export const getProduct = async (req, res) => {
   res.json(p);
 };
 
+// @desc    Get all products by seller
+// @route   GET /api/products/seller/:id 
+// @access  Public
+export const getSellerProducts = async (req, res) => {
+  
+  try{
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid seller ID" });
+    }
+  
+    const products = await Product.find({ seller: id })
+      .populate("seller", "name email")   // adjust fields as needed
+      .populate("categories", "_id").lean();
+
+    res.status(200).json(products);
+  
+  }catch (err) {
+    console.error("Error fetching seller products:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+  
+};
 
 // @desc    Get featured products
 // @route   GET /api/product/featured
