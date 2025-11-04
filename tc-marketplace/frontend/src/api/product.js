@@ -2,6 +2,11 @@ import axios from "axios";
 
 const API = import.meta.env.VITE_API_URL;
 
+export const getProductBySlug = async (slug) => {
+    const res = await axios.get(`${API}/api/products/${slug}`)
+    return res
+}
+
 export const getFeaturedProducts = async () => {
     const res = await axios.get(`${API}/api/products/featured`)
     return res
@@ -44,3 +49,18 @@ export const deleteProduct = async (id) => {
 
   return res.data;
 };
+
+export const getMyProducts = async () => {
+
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user"))    
+   
+    const res = await axios.get(`${API}/api/products/seller/${user.id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+
+
+    return res.data;
+}
