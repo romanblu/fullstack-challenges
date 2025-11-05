@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { createProduct } from "../../api/product";
 import ProductForm from "./ProductForm";
+import { useQuery } from '@tanstack/react-query';
 
-const AddProduct = ({ setActiveTab, CategoryTree }) => {
+const AddProduct = ({ setActiveTab, categoryTree }) => {
     const [message, setMessage] = useState("")
+    const storeId = JSON.parse(localStorage.getItem("user")).store
 
     const handleCreate = (formData) => {
-        console.log(" CREATING PRODUCT WITHR FOLLOWING DATA", formData)
+        console.log(formData)
         createProduct(formData).then(res => {
             if(res.status === 201) {
                 setMessage("Product created successfully!")
@@ -22,10 +24,10 @@ const AddProduct = ({ setActiveTab, CategoryTree }) => {
     <div className="max-w-lg mx-auto bg-gray-50 p-6 rounded-2xl shadow-md">
       <h2 className="text-2xl font-semibold mb-4 text-center">Add New Product</h2>
       <ProductForm 
-        initialData = {{}}
+        initialData = {{store: storeId}}
         onSubmit={handleCreate}
         onDiscard={onDiscard}
-        CategoryTree={CategoryTree}
+        categoryTree={categoryTree}
         onDelete={{}}
       />
         {message && <p className="text-center mt-3">{message}</p>}

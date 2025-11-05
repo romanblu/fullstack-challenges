@@ -1,5 +1,16 @@
 import Store from '../models/Store.js';
 import Product from '../models/Product.js';
+
+
+export const getStore = async (req, res) => {
+    try{
+        const store = await Store.findById(req.params.id)
+        res.json(store)
+    }catch (err){
+        res.status(500).json({ error: "Error fetching the store data: " + err.message})
+    }
+}
+
 export const getMyStore = async (req, res) => {
     try{
         const store = await Store.findOne({ owner: req.user.id });
@@ -35,6 +46,8 @@ export const getMyProducts = async (req, res) => {
     
     }
 }
+
+
 
 // @desc    Create product
 // @route   POST /api/store/products

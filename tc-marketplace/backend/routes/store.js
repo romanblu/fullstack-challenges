@@ -7,12 +7,14 @@ import {
   addProduct,
   updateProduct,
   deleteProduct,
+  getStore,
 } from '../controllers/storeController.js';
 
 const router = express.Router();
 
 // Seller info & store
 router.get('/', protect, requireRole('seller'), getMyStore);
+router.get('/:id',  getStore);
 router.put('/', protect, requireRole('seller'), updateMyStore);
 
 // Product management

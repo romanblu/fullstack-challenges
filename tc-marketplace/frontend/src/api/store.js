@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API = import.meta.env.VITE_API_URL;
 
-export const getMyStore = async (data) => { 
+export const getMyStore = async () => { 
     const token = localStorage.getItem("token");
 
     const res = await axios.get(`${API}/api/store`, {

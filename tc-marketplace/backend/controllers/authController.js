@@ -87,7 +87,8 @@ export const login = async (req, res) => {
     res.status(401)
     throw new Error('Invalid email or password')
   }
-
-  const token = signToken({ id: user._id, role: user.role });
-  res.status(200).json({ token, user: { id: user._id, email: user.email, name: user.name, role: user.role } });
+ 
+  const token = signToken({ id: user._id, role: user.role, store: user.store || null});
+  
+  res.status(200).json({ token, user: { id: user._id, email: user.email, name: user.name, role: user.role, store: user.store || null } });
 };

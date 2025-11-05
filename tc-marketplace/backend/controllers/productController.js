@@ -21,10 +21,10 @@ export const getProduct = async (req, res) => {
   let p = {}
 
   // find by ID or slug
-  p = await Product.findOne({ slug: id }).populate('seller', 'name').populate("categories", "_id name slug");
+  p = await Product.findOne({ slug: id }).populate('seller', 'name').populate("categories", "_id name slug").populate("store", "name contactEmail contactPhone location");
 
   if(!p && mongoose.Types.ObjectId.isValid(id)){
-    p = await Product.findById(id).populate('seller', 'name').populate("categories", "_id name slug");
+    p = await Product.findById(id).populate('seller', 'name').populate("categories", "_id name slug").populate("store", "name contactEmail contactPhone location");
   }
 
   if (!p)  {
