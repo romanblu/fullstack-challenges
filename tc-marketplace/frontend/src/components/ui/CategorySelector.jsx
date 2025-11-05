@@ -37,7 +37,7 @@ import { useEffect, useRef, useState } from "react";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/20/solid"; 
 import SelectedCategories from "./SelectedCategories";
 
-const CategorySelector = ({ categoryTree, selectedIds, onChange }) => {
+const CategorySelector = ({ categoryTree=[], selectedIds=[], onChange }) => {
 
 /**
  * Converts a recursive category tree into a flat list while keeping depth level.
@@ -111,9 +111,9 @@ const CategorySelector = ({ categoryTree, selectedIds, onChange }) => {
      * @param {Object[]} tree
      * @returns JSX.Element
      */
-    const renderTree = (tree) =>
+    const renderTree = (tree, level = 0) =>
         tree.map((cat) => (
-        <div key={cat._id} className={`pl-${cat.level * 4}`}>
+        <div key={cat._id} className={`pl-${level * 4}`}>
             <div className="flex items-center justify-between">
             <button type="button"
                 onClick={() => toggleCategory(cat)}
@@ -121,7 +121,7 @@ const CategorySelector = ({ categoryTree, selectedIds, onChange }) => {
                 selectedIds.some(item => item._id === cat._id) ? "bg-gray-200" : ""
                 }`}
             >
-                {"\u00A0\u00A0".repeat(cat.level)} {cat.name}
+                {"\u00A0\u00A0\u00A0".repeat(level) + cat.name} 
             </button>
 
             {cat.children?.length > 0 && (
@@ -138,7 +138,7 @@ const CategorySelector = ({ categoryTree, selectedIds, onChange }) => {
             )}
             </div>
 
-            {expanded[cat._id] && cat.children && renderTree(cat.children)}
+            {expanded[cat._id] && cat.children && renderTree(cat.children, level + 1)}
         </div>
     ));
 
