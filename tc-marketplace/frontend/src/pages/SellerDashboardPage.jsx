@@ -18,10 +18,10 @@ const SellerDashboardPage = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [currentPost, setCurrentPost] = useState(null);
 
-    const { data: CategoryTree } = useQuery({
+    const { data: categoryTree, isLoading } = useQuery({
         queryKey: ["categories"],
         queryFn: () =>
-        getCategoryTree().then((res) =>  res.data),
+        getCategoryTree().then((res) => res.data),
     });
 
     const tabs = [
@@ -39,7 +39,7 @@ const SellerDashboardPage = () => {
             case "products":
                 return <ProductsDashboard setActiveTab={setActiveTab} setSelectedProduct={setSelectedProduct}/>
             case "editProduct":
-                return <EditProduct CategoryTree={CategoryTree} setActiveTab={setActiveTab} setSelectedProduct={setSelectedProduct} selectedProduct={selectedProduct}/>
+                return <EditProduct categoryTree={categoryTree} setActiveTab={setActiveTab} setSelectedProduct={setSelectedProduct} selectedProduct={selectedProduct}/>
             case "orders":
                 return <OrdersDashboard />
             case "statistics":
@@ -47,7 +47,7 @@ const SellerDashboardPage = () => {
             case "blog":
                 return <BlogDashboard setActiveTab={setActiveTab} setCurrentPost={setCurrentPost}/>
             case "newProduct":
-                return <AddProduct setActiveTab={setActiveTab} CategoryTree={CategoryTree}/>
+                return <AddProduct setActiveTab={setActiveTab} categoryTree={categoryTree}/>
             case "newBlogPost":
                 return <BlogPostEditor setActiveTab={setActiveTab}  />
             case "editBlogPost":
@@ -57,17 +57,18 @@ const SellerDashboardPage = () => {
         }
     }
 
+    if(isLoading) {
+        return <div>Loading...</div>
+    }
+
     return (
         <div >
             <Navbar theme="light"/>
             
             <div className="p-6 bg-slate-100  text-green-950 min-h-screen  mx-auto">
                 <div className=" mx-auto">
-                    {/* <h1 className="text-3xl font-bold mb-4 text-center ">Seller Dashboard</h1> */}
                     <ActiveBar tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} header="Seller Dashboard"/>
-
                    { renderContent () }
-
                 </div>
             </div>
         </div>

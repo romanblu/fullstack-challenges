@@ -5,7 +5,7 @@ const ProductForm = ({
     initialData = {},
     onSubmit,
     onDiscard,
-    CategoryTree,
+    categoryTree,
     }) => {
 
         const [form, setForm] = useState({
@@ -121,7 +121,7 @@ const ProductForm = ({
                 <option value="digital">Digital</option>
             </select>
             <CategorySelector 
-                categoryTree={CategoryTree}
+                categoryTree={categoryTree}
                 selectedIds={form.categories}
                 onChange={(newIds) => setForm(prev => ({ ...prev, categories: newIds }))}
             />
