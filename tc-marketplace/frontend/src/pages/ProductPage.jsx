@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import Navbar from "../components/layout/Navbar";
-import Footer from "../components/layout/Footer";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getProductBySlug } from "../api/product";
@@ -34,9 +33,21 @@ const ProductPage = () => {
        <Navbar theme="light" />
 
     <section className="bg-slate-50 py-12">
+      {/* TODO: key features section */}
+      {/* TODO: stock indicator */}
+      {/* TODO: variants selection  */}
+      {/* TODO: specifications table */}
+      {/* TODO: customer reviews with images */}
+      {/* TODO: related products - top products from same category or close */}
+      {/* TODO: FAQ table */}
+      {/* TODO: Guarantee,certification, labels */}
+      {/* TODO: Add breadcrumb navigation  */}
+      {/* TODO: Trust badges under add to card */}
+      {/* TODO: Estimated shipping time */}
       <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
 
         {/* LEFT COLUMN — IMAGES */}
+        {/* TODOL Add support for multiple images */}
         <div className="md:col-span-2 space-y-6">
           <div className="rounded-xl overflow-hidden shadow-md">
             <img
@@ -53,6 +64,7 @@ const ProductPage = () => {
             </h1>
 
             {/* Categories */}
+            {/* TODO: make the categories clickable then route to the category section */}
             <div className="mb-4">
               <SelectedCategories selectedIds={product.categories} />
             </div>
@@ -84,17 +96,17 @@ const ProductPage = () => {
             >
               {product?.stock}
             </p>
-
+              {/* TODO: add buy now button */}
             {/* Add to Cart Button */}
             <button className="bg-green-700 text-white px-4 py-3 rounded-lg text-lg font-semibold hover:bg-green-800 transition">
               Add to Cart
             </button>
           </div>
         </div>
-
+        {/* TODO: Shipping and return policy */}
         {/* RIGHT SIDEBAR — STORE INFORMATION */}
         <div className="space-y-6">
-
+              {/* TODO: add seller logo, verified badge, possibly visit store, social icons, rating */}
           {productData?.store && (
             <div className="bg-white rounded-xl shadow p-6">
               <h3 className="text-xl font-semibold text-gray-800 mb-4">
