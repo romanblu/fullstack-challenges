@@ -35,6 +35,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/20/solid"; 
+import SelectedCategories from "./SelectedCategories";
 
 const CategorySelector = ({ categoryTree, selectedIds, onChange }) => {
 
@@ -62,7 +63,7 @@ const CategorySelector = ({ categoryTree, selectedIds, onChange }) => {
     const timeoutRef = useRef(null);
 
     useEffect(() => {
-        setFlat(flattenTree(categoryTree));
+      setFlat(flattenTree(categoryTree));
     }, [categoryTree]);
     
 /**
@@ -143,21 +144,11 @@ const CategorySelector = ({ categoryTree, selectedIds, onChange }) => {
 
   const selectedObjects = flat.filter(cat => selectedIds.some(item => item._id === cat._id));
 
+
   return (
     <div className="space-y-3">
       
-      {/* Selected chips */}
-      <div className="flex flex-wrap gap-2">
-        {selectedObjects.map((cat) => (
-          <button type="button"
-            key={cat._id}
-            onClick={() => toggleCategory(cat)}
-            className="px-3 py-1 bg-green-200 text-green-800 rounded-full hover:bg-green-300"
-          >
-            {cat.name} ✕
-          </button>
-        ))}
-      </div>
+      <SelectedCategories selectedIds={selectedObjects} onRemove={toggleCategory} editable={true}/>
 
       {/* Hover Dropdown */}
       <div

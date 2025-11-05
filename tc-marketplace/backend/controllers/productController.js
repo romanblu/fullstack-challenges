@@ -14,17 +14,17 @@ export const listProducts = async (req, res) => {
 };
 
 // @desc    Get single product
-// @route   GET /api/products (:id || :slug)
+// @route   GET /api/products/(:id || :slug)
 // @access  Public
 export const getProduct = async (req, res) => {
   const { id } = req.params
   let p = {}
 
   // find by ID or slug
-  p = await Product.findOne({ slug: id }).populate('seller', 'name')
+  p = await Product.findOne({ slug: id }).populate('seller', 'name').populate("categories", "_id name slug");
 
   if(!p && mongoose.Types.ObjectId.isValid(id)){
-    p = await Product.findById(id).populate('seller', 'name')
+    p = await Product.findById(id).populate('seller', 'name').populate("categories", "_id name slug");
   }
 
   if (!p)  {
@@ -48,7 +48,7 @@ export const getSellerProducts = async (req, res) => {
   
     const products = await Product.find({ seller: id })
       .populate("seller", "name email")   // adjust fields as needed
-      .populate("categories", "_id").lean();
+      .populate("categories", "_id name slug");
 
     res.status(200).json(products);
   
