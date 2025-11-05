@@ -21,7 +21,6 @@ const ProductForm = ({
         ...initialData    // populate for edit mode
     });
 
-  
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm((prev) => ({ ...prev, [name]: value }));
