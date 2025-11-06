@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import slugify from "slugify";
 import CategorySelector from "../ui/CategorySelector.jsx";
+import VariantEditor from "./VariantEditor.jsx";
 const ProductForm = ({
     initialData = {},
     onSubmit,
@@ -8,18 +9,39 @@ const ProductForm = ({
     categoryTree,
     }) => {
 
-        const [form, setForm] = useState({
-        name: "",
-        slug: "",
-        species: "",
-        description: "",
-        price: "",
-        quantity: "",
-        mainImage: "",
-        productType: "",
-        categories: [],
-        ...initialData    // populate for edit mode
+    const [form, setForm] = useState({
+    name: "",
+    slug: "",
+    species: "",
+    description: "",
+    price: "",
+    quantity: "",
+    mainImage: "",
+    productType: "",
+    categories: [],
+    ...initialData    // populate for edit mode
     });
+
+    const [option, setOption] = useState({
+        name: "Stage",
+        values: []
+    });
+
+    const [variants, setVariants] = useState([]);
+
+    
+    const generateVariants = () => {
+        const newVariants = option.values.map(v => ({
+            name: option.name,
+            optionValues: [v],
+            price: "",
+            compareAtPrice: "",
+            sku: "",
+            stock: 0,
+            images: []
+        }));
+        setVariants(newVariants);
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -30,10 +52,9 @@ const ProductForm = ({
         setForm({ ...form, name: e.target.value, slug: slugify(e.target.value, {lower:true}) });
     }
 
-
     const handleSubmit = (e) => {
         e.preventDefault()
-        onSubmit(form)
+        onSubmit({...form, variants, deletedVariantIds})
     } 
 
     return (
@@ -124,7 +145,13 @@ const ProductForm = ({
                 selectedIds={form.categories}
                 onChange={(newIds) => setForm(prev => ({ ...prev, categories: newIds }))}
             />
-        
+            {/* Variants */}
+            <VariantEditor
+                option={option}
+                setOption={setOption}
+                onGenerateVariants={generateVariants}
+            />
+
             <button
             type="submit"
             className="w-full bg-lime-500 hover:bg-lime-600 text-green-950 font-semibold py-2 rounded-md shadow-md"
