@@ -21,7 +21,7 @@ const AddProduct = ({ setActiveTab, categoryTree }) => {
     const onDiscard = () => { setActiveTab("products"); }
     
     return (
-    <div className="max-w-lg mx-auto bg-gray-50 p-6 rounded-2xl shadow-md">
+    <div className="max-w-[650px] mx-auto bg-gray-50 p-6 rounded-2xl shadow-md">
       <h2 className="text-2xl font-semibold mb-4 text-center">Add New Product</h2>
       <ProductForm 
         initialData = {{store: storeId}}

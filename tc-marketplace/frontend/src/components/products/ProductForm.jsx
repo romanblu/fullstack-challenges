@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import slugify from "slugify";
 import CategorySelector from "../ui/CategorySelector.jsx";
 import VariantEditor from "./VariantEditor.jsx";
+import VariantTable from "./VariantTable.jsx";
 const ProductForm = ({
     initialData = {},
     onSubmit,
@@ -54,9 +55,10 @@ const ProductForm = ({
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        onSubmit({...form, variants, deletedVariantIds})
+        console.log({...form, variants})
+        onSubmit({...form, variants})
     } 
-
+    console.log(variants)
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             <input
@@ -150,6 +152,13 @@ const ProductForm = ({
                 option={option}
                 setOption={setOption}
                 onGenerateVariants={generateVariants}
+            />
+            <VariantTable
+            variants={variants}
+            setVariants={setVariants}
+            onDeleteVariant={(index) => {
+                setVariants(prev => prev.filter((_, i) => i !== index));
+            }}
             />
 
             <button
