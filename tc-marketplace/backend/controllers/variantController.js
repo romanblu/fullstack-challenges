@@ -5,7 +5,7 @@ import Variant from "../models/Variant.js";
 // @access  Private - admin
 export const createVariant = async (req, res) => {
   try {
-    const variant = await Category.create(req.body);
+    const variant = await Variant.create(req.body);
     res.json(variant);
   } catch (err) {
     res.status(400).json({ error: err.message });

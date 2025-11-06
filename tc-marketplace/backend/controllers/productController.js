@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Product from '../models/Product.js';
+import Variant from '../models/Variant.js';
 
 // @desc    Get all products
 // @route   GET /api/products
@@ -87,17 +88,68 @@ export const getFeaturedProducts = async (req, res) => {
 // @route   POST /api/products
 // @access  Private - seller/admin
 export const createProduct = async (req, res) => {
-  const data = req.body;
+  try{
+    const {
+      name,
+      slug,
+      species,
+      description,
+      price,
+      quantity,
+      mainImage,
+      productType,
+      categories,
+      store,
+      variants,
+    } = req.body;
+    
+    if(!price || !name){
+      res.status(400)
+      throw new Error('Title and price required')
+    }
+    
+    const seller = req.user.id; // from protect middleware
+    
+    const product = new Product({
+      name,
+      slug,
+      species,
+      description,
+      price,
+      quantity,
+      mainImage,
+      seller,
+      store,
+      productType,
+      categories,
+    });
 
-  if(!data.price || !data.name){
-    res.status(400)
-    throw new Error('Title and price required')
+    product.save()
+    
+    let createdVariantIds =[]
+    
+    if (Array.isArray(variants) && variants.length > 0) {
+      for (let v of variants) {
+        const created = await Variant.create({
+          ...v,
+          product: product._id
+        });
+        createdVariantIds.push(created._id);
+      }
+    }
+
+    product.variants = createdVariantIds;
+    await product.save();
+
+    const populatedProduct = await Product.findById(product._id)
+      .populate("categories", "_id name slug")
+      .populate("variants");
+
+    res.status(201).json(populatedProduct);
+  } catch (err) {
+    console.error("Error creating product:", err);
+    res.status(500).json({ message: "Server error",err });
   }
-
-  data.seller = req.user.id; // from protect middleware
-
-  const product = await Product.create(data);
-  res.status(201).json(product);
 };
 
 
