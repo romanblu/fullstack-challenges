@@ -6,7 +6,7 @@ export default function ProductCard({ product, setSelectedProduct, setActiveTab 
     const { user } = useContext(AuthContext);
 
     const isSeller = user && product.seller._id === user.id; // check if this product belongs to logged user
-    console.log(product)
+
     const handleEditProduct = () => {
         setSelectedProduct(product);
         setActiveTab("editProduct");
