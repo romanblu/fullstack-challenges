@@ -1,4 +1,4 @@
-import Variant from "../models/Variant.js";
+import Variant from "./variant.model.js";
 
 // @desc    Create variant
 // @route   POST /api/variants

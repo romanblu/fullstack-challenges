@@ -1,5 +1,5 @@
 import express from 'express';
-import { protect, requireRole } from '../middleware/auth.js';
+import { protect, requireRole } from '../../middleware/auth.js';
 import {
   getMyStore,
   updateMyStore,
@@ -8,7 +8,7 @@ import {
   updateProduct,
   deleteProduct,
   getStore,
-} from '../controllers/storeController.js';
+} from './store.controller.js';
 
 const router = express.Router();
 

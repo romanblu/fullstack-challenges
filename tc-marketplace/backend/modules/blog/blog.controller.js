@@ -1,6 +1,6 @@
 import slugify from 'slugify';
-import BlogPost from '../models/BlogPost.js';
-import generateAutoSlug from '../utils/slugGenHelper.js';
+import BlogPost from './blog.model.js';
+import generateAutoSlug from '../../utils/slugGenHelper.js';
 
 // @desc    Get all blog posts
 // @route   GET /api/blog

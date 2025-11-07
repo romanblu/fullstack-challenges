@@ -1,7 +1,7 @@
-import Store from '../models/Store.js';
-import User from '../models/User.js';
-import { hash, compare, signToken } from '../utils/auth.js';
-import logger from '../utils/logger.js';
+import Store from '../store/store.model.js';
+import User from '../user/user.model.js';
+import { hash, compare, signToken } from '../../utils/auth.js';
+import logger from '../../utils/logger.js';
 import slugify from 'slugify';
 
 // @desc    Register new user

@@ -4,7 +4,7 @@ import {
   getVariants,
   updateVariant,
   deleteVariant
-} from "../controllers/variantController.js";
+} from "./variant.controller.js";
 
 const router = express.Router();
 

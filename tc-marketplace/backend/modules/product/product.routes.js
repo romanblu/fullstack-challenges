@@ -1,6 +1,6 @@
 import express from 'express';
-import { protect, requireRole } from '../middleware/auth.js';
-import { listProducts, getProduct, createProduct, updateProduct, deleteProduct, getFeaturedProducts, getSellerProducts } from '../controllers/productController.js';
+import { protect, requireRole } from '../../middleware/auth.js';
+import { listProducts, getProduct, createProduct, updateProduct, deleteProduct, getFeaturedProducts, getSellerProducts } from './product.contoller.js';
 
 const router = express.Router();
 router.get('/', listProducts);

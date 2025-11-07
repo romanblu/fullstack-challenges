@@ -1,6 +1,6 @@
 import express from 'express';
-import { listBlogPosts, getBlogPost, createBlogPost, updateBlogPost, deleteBlogPost, listMyBlogPosts, getFeaturedPosts } from '../controllers/blogController.js';
-import { protect, requireRole } from '../middleware/auth.js';
+import { listBlogPosts, getBlogPost, createBlogPost, updateBlogPost, deleteBlogPost, listMyBlogPosts, getFeaturedPosts } from './blog.controller.js';
+import { protect, requireRole } from '../../middleware/auth.js';
 
 const router = express.Router();
 router.get('/', listBlogPosts);

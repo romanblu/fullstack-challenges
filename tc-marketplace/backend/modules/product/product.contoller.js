@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
-import Product from '../models/Product.js';
-import Variant from '../models/Variant.js';
+import Product from './product.model.js';
+import Variant from '../variant/variant.model.js';
+import asyncHandler from '../../utils/asyncHandler.js'
 
 // @desc    Get all products
 // @route   GET /api/products
@@ -17,7 +18,7 @@ export const listProducts = async (req, res) => {
 // @desc    Get single product
 // @route   GET /api/products/(:id || :slug)
 // @access  Public
-export const getProduct = async (req, res) => {
+export const getProduct = asyncHandler(async (req, res) => {
   const { id } = req.params
   let p = {}
 
@@ -34,7 +35,7 @@ export const getProduct = async (req, res) => {
   }
   res.status(200)
   res.json(p);
-};
+});
 
 // @desc    Get all products by seller
 // @route   GET /api/products/seller/:id 
@@ -136,10 +137,10 @@ export const createProduct = async (req, res) => {
         });
         createdVariantIds.push(created._id);
       }
+      product.variants = createdVariantIds;
+      await product.save();
     }
 
-    product.variants = createdVariantIds;
-    await product.save();
 
     const populatedProduct = await Product.findById(product._id)
       .populate("categories", "_id name slug")

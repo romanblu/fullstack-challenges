@@ -3,14 +3,14 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
 
-import userRoutes from "./routes/users.js";
-import productRoutes from "./routes/products.js";
-import orderRoutes from "./routes/orders.js";
-import authRoutes from "./routes/auth.js";
-import blogRoutes from "./routes/blog.js";
-import sellerRoutes from "./routes/store.js";
-import categoryRoutes from "./routes/category.js";
-import variantRoutes from "./routes/variant.js";
+import userRoutes from "./modules/user/user.routes.js";
+import productRoutes from "./modules/product/product.routes.js";
+// import orderRoutes from "./routes/orders.js";
+import authRoutes from "./modules/auth/auth.routes.js";
+import blogRoutes from "./modules/blog/blog.routes.js";
+import sellerRoutes from "./modules/store/store.routes.js";
+import categoryRoutes from "./modules/category/category.routes.js";
+import variantRoutes from "./modules/variant/variant.routes.js";
 
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import morgan from "morgan";
@@ -38,7 +38,7 @@ const stream = {
 // Routes
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
-app.use("/api/orders", orderRoutes);
+// app.use("/api/orders", orderRoutes);
 app.use("/api/blog", blogRoutes);
 app.use("/api/auth", authRoutes)
 app.use("/api/store", sellerRoutes)
