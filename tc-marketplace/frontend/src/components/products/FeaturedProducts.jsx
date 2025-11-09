@@ -1,7 +1,7 @@
 import ProductCard from "./ProductCard";
 
-const FeaturedProducts = ({ featuredProducts }) => {
-
+const FeaturedProducts = ({ featuredProducts=[] }) => {
+  if(!Array.isArray(featuredProducts)) featuredProducts=[]
   return (
       <section className=" bg-slate-200 px-10 text-green-950 pt-8">
           <div className="container max-w-[1100px] mx-auto">
