@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import Product from './product.model.js';
-import Variant from '../variant/variant.model.js';
 import asyncHandler from '../../utils/asyncHandler.js'
 import * as productService from './product.service.js'
 import ApiError from '../../utils/ApiError.js'
@@ -25,7 +24,7 @@ export const getProduct = asyncHandler(async (req, res) => {
 // @desc    Get all products by seller
 // @route   GET /api/products/seller/:id 
 // @access  Public
-export const getSellerProducts = async (req, res) => {
+export const getSellerProducts = asyncHandler(async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     throw ApiError.badRequest(400, "Invalid seller ID")
@@ -33,25 +32,25 @@ export const getSellerProducts = async (req, res) => {
 
   const products = await productService.getSellerProducts(id)
   res.json(products);
-};
+});
 
 // @desc    Get featured products
 // @route   GET /api/product/featured
 // @access  Public
-export const getFeaturedProducts = async (req, res) => {
+export const getFeaturedProducts = asyncHandler(async (req, res) => {
   const products = productService.getFeaturedProducts()
   if (!products) { 
     throw ApiError.internal("Failed to get featured products")
   }
   
   res.json(products);  
-};
+});
 
 
 // @desc    Create product
 // @route   POST /api/products
 // @access  Private - seller/admin
-export const createProduct = async (req, res) => {
+export const createProduct = asyncHandler(async (req, res) => {
   const {
     name,
     slug,
@@ -93,13 +92,13 @@ export const createProduct = async (req, res) => {
   }
 
   res.json(product);
-};
+});
 
 
 // @desc    Update single product
 // @route   PUT /api/products/:id
 // @access  Private - seller/admin
-export const updateProduct = async (req, res) => {
+export const updateProduct = asyncHandler( async (req, res) => {
     const updated = await productService.updateProduct(req.params.id, req.body);
 
     if(!updated){
@@ -107,13 +106,13 @@ export const updateProduct = async (req, res) => {
     }
 
     res.json(updated);    
-};
+});
 
 
 // @desc    delete product
 // @route   DELETE /api/products/:id
 // @access  Private - seller/admin
-export const deleteProduct = async (req, res) => {
+export const deleteProduct = asyncHandler(async (req, res) => {
   
     // TODO: validation for seller and user 
     const p = await Product.findByIdAndDelete(req.params.id);
@@ -124,4 +123,4 @@ export const deleteProduct = async (req, res) => {
     
     res.status(204).json({message: "Deleted successfuly"})
  
-};
+});
