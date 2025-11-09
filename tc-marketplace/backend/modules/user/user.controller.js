@@ -1,74 +1,63 @@
 import User from "./user.model.js";
+import * as userService from './user.service.js'
+import asyncHandler from '../../utils/asyncHandler.js'
+import ApiError from "../../utils/ApiError.js";
 
 // @desc    Get all users
 // @route   GET /api/users
 // @access  Private - admin
-export const listUsers = async (req, res) => {
-    const users = await User.find().select('-password')
+export const listUsers = asyncHandler(async (req, res) => {
+    
+    const users = await userService.listUsers()
     res.status(200).json(users);
-}
+
+})
 
 // @desc    Get user by email
 // @route   POST /api/users
 // @access  Private - user/admin
-export const findUserByEmail = async (req, res) => {
+export const findUserByEmail = asyncHandler(async (req, res) => {
     const { email } = req.body; 
     if (!email) {
-        res.status(400)
-        throw new Error('Email is required')
+        throw ApiError.badRequest('Email is required')
     }
     // Find user by email (case-insensitive)
-    const user = await User.findOne({ email: new RegExp(`^${email}$`, 'i') }).select('-password');
+    const user = await userService.findUserByEmail(email)
 
     if (!user) {
-        res.status(404)
-        throw new Error('User not found')
+        throw ApiError.notFound('User not found')
     }
 
-    res.json(user);
-}
+    res.status(200).json(user);
+})
 
 // @desc    Update user
-// @route   PUT /api/users
+// @route   PUT /api/users/:id
 // @access  Private - user/admin
-export const updateUser = async (req, res) => {
-    const { id } = req.body
+export const updateUser = asyncHandler( async (req, res) => {
+    // TODO: add separate validation for IDs (request and params) also do not allow to update password or email
+    const { id } = req.params
+    if(req.user.id !== id ) throw ApiError.unauthorized("You are unauthorized to change this user")
 
-    const user = await User.findOne({ id })
+    const user = await userService.updateUser(id, req.user.id, req.body)
 
     if(!user) {
-        res.status(404)
-        throw new Error ('User not found')
+        throw ApiError.notFound('User not found')
     }
-
-    if(user.id.toString() !== req.user.id.toString()){
-        res.status(403)
-        throw new Error('Not authorized to delete user')
-    }    
-     
-    Object.assign(user, req.body)
+    res.status(200).json(user);
     
-    const updated = user.save()
-    res.json(updated);
-}
+})
 
-export const deleteUser = async (req, res) => {
+export const deleteUser = asyncHandler(async (req, res) => {
 
     const { id } = req.params
 
-    const user = await User.findOne({ id })
-
-    if(!user) {
-        res.status(404)
-        throw new Error ('User not found')
+    if(id !== req.user.id){
+        throw ApiError.unauthorized("You are not authorized to delete this user")
     }
 
-    if(user.id.toString() !== req.user.id.toString()){
-        res.status(403)
-        throw new Error('Not authorized to delete user')
-    }    
-     
-    await User.deleteOne(user)
-    
+    const user = userService.deleteUser(id)
+    if(!user) throw ApiError.notFound('User not found')
+        
     res.json({ message: "User deleted successfull" });
-}
+})

@@ -6,6 +6,7 @@ import { protect, requireRole } from '../../middleware/auth.js';
 const router = express.Router();
 router.post('/email/', findUserByEmail);
 router.get('/', listUsers);
-// router.put('/:id', protect, updateUser); // admin functionality
+router.put('/:id', protect, updateUser); // admin functionality
+router.delete('/:id', protect, deleteUser); // admin functionality
 
 export default router;
