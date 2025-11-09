@@ -19,15 +19,14 @@ const ProductPage = () => {
     enabled: !!slug,  // only fetch after slug exists
   }); 
 
-
   useEffect( () =>{
     if(productData){
-      setProduct(productData)
+      setProduct(productData.product)
     }
   }, [productData])
 
   if (!product) return <p className="text-center mt-10">Loading...</p>;
-
+  console.log(product.store)
   return (
     <>
        <Navbar theme="light" />
@@ -107,7 +106,7 @@ const ProductPage = () => {
         {/* RIGHT SIDEBAR — STORE INFORMATION */}
         <div className="space-y-6">
               {/* TODO: add seller logo, verified badge, possibly visit store, social icons, rating */}
-          {productData?.store && (
+          {product?.store && (
             <div className="bg-white rounded-xl shadow p-6">
               <h3 className="text-xl font-semibold text-gray-800 mb-4">
                 Store Information
@@ -115,19 +114,19 @@ const ProductPage = () => {
 
               <div className="space-y-2 text-gray-700">
                 <p>
-                  <span className="font-medium">Company Name:</span> {productData.store.name}
+                  <span className="font-medium">Company Name:</span> {product.store.name}
                 </p>
 
                 <p>
-                  <span className="font-medium">Email:</span> {productData.store.contactEmail}
+                  <span className="font-medium">Email:</span> {product.store.contactEmail}
                 </p>
 
                 <p>
-                  <span className="font-medium">Phone:</span> {productData.store.contactPhone}
+                  <span className="font-medium">Phone:</span> {product.store.contactPhone}
                 </p>
 
                 <p>
-                  <span className="font-medium">Location:</span> {productData.store.location}
+                  <span className="font-medium">Location:</span> {product.store.location}
                 </p>
               </div>
             </div>
