@@ -1,57 +1,52 @@
-import Variant from "./variant.model.js";
+import asyncHandler from '../../utils/asyncHandler.js'
+import ApiError from '../../utils/ApiError.js'
+import * as variantService from './variant.service.js'
+import * as variantValidation from './variant.validation.js'
 
 // @desc    Create variant
 // @route   POST /api/variants
 // @access  Private - admin
-export const createVariant = async (req, res) => {
-  try {
-    const variant = await Variant.create(req.body);
+export const createVariant = asyncHandler(async (req, res) => {
+  try{
+    variantValidation.createVariant(req.body)
+    const variant = await variantService.createVariant(req.body)
     res.json(variant);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+  } catch (err){
+    throw ApiError.badRequest(err.message)
   }
-};
+});
 
 // @desc    Get all variants
 // @route   GET /api/variants
 // @access  Public
-export const getVariants = async (req, res) => {
-  const variants = await Variant.find().populate("parent");
+export const getVariants = asyncHandler(async (req, res) => {
+  const variants = await variantService.getVariants();
   res.json(variants);
-};
+});
 
 // @desc    Get variant by ID
 // @route   GET /api/variants/:id
 // @access  Public
-export const getVariantById = async (req, res) => {
-    try{
-        const variant = await Variant.findById(req.params.id).populate("parent");
-        res.json(variant);
-    } catch (err) {
-        res.status(500).json({ error: err.message })
-    }
-};
+export const getVariantById = asyncHandler( async (req, res) => {
+    const variant = await variantService.getVariantById(req.params.id)
+    if(!variant) throw ApiError.notFound('Variant not found')
+    res.json(variant);
+});
 
 // @desc    Update variant
 // @route   PUT /api/variants/:id
 // @access  Private - admin
-export const updateVariant = async (req, res) => {
-  try {
-    const updated = await Variant.findByIdAndUpdate(req.params.id, req.body, { new: true });
+export const updateVariant = asyncHandler(async (req, res) => {
+    const updated = variantService.updateVariant(req.user.id, req.body)
     res.json(updated);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-};
+  
+});
 
 // @desc    Get featured products
 // @route   DELETE /api/variants/:id
 // @access  Private - admin
-export const deleteVariant = async (req, res) => {
-  try {
-    await Variant.findByIdAndDelete(req.params.id);
-    res.json({ message: "Variant deleted" });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-};
+export const deleteVariant = asyncHandler(async (req, res) => {
+  const variant = variantService.deleteVariant(req.params.id)
+  if(!variant) throw ApiError.notFound('Variant not found')
+  res.json({ message: 'Variant deleted'})
+});
