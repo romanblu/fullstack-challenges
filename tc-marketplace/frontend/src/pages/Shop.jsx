@@ -14,7 +14,7 @@ const Shop = () => {
 
     const apiUrl = import.meta.env.VITE_API_URL
 
-    const { data: categories } = useQuery({
+    const { data: categories, isLoading } = useQuery({
         queryKey: ["categories"],
         queryFn: () =>
         getCategoryTree().then((res) =>  res.data),
@@ -23,10 +23,9 @@ const Shop = () => {
 
     useEffect(() => {
         axios.get(`${apiUrl}/api/products`)
-        .then(res => setProducts(res.data))
+        .then(res => setProducts(res.data.products))
         .catch(err => console.error(err));
     },[])
-
 
     const filtered = products
         .filter((p) =>
@@ -37,7 +36,11 @@ const Shop = () => {
         if (sort === "high-low") return b.price - a.price;
         return 0;
     });
-
+    
+    if(isLoading) {
+        return <div>Loading...</div>
+    }
+    
     return (
     <div className="bg-slate-50 min-h-screen ">
         <Navbar theme="light" />
