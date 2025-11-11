@@ -14,15 +14,19 @@ export const getFeaturedProducts = async () => {
 
 
 export const createProduct = async (data) => {
-    const token = localStorage.getItem("token");
+    try{
+        const token = localStorage.getItem("token");
 
-    const res = await axios.post(`${API}/api/products`, data, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    });
-
-    return res;
+        const res = await axios.post(`${API}/api/products`, data, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        
+        return res;
+    } catch (err){
+        console.log("Error creating product", err)
+    }
 }
 
 

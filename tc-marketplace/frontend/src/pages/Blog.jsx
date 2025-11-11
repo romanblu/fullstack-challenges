@@ -11,7 +11,7 @@ const Blog = () => {
             setBlogPosts(res.data);
         }).catch(err => {
             console.log("Error fetching top blog posts:", err);
-        }   );
+        });
     }, [])
 
     return (

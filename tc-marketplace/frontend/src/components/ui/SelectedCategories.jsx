@@ -1,6 +1,7 @@
 
 
 const SelectedCategories = ({ selectedIds, onRemove={}, editable=false }) => {
+    if(!selectedIds) return <p>Loading...</p>
     const isEditable = editable && onRemove
     return (
         <div className="flex flex-wrap gap-2">

@@ -1,8 +1,7 @@
 import CategorySelector from "../ui/CategorySelector";
-import DropdownCategory from "./DropdownCategory";
+
 const FilterBar = ({ search, setSearch, sort, setSort, categories, selectedCategory, setSelectedCategory }) => {
   
-  console.log(categories)
   return (
     <div className="flex flex-col md:flex-row justify-between items-center gap-4  p-4 rounded-xl shadow-lg shadow-gray-400/30 mb-8">
       {/* Search */}
