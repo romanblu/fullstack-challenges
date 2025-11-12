@@ -5,34 +5,22 @@ import { useEffect, useState } from "react";
 import PostsSelection from "../features/blog/PostsSelection";
 import { getFeaturedPosts, getPost } from "../api/blog";
 import matter from "front-matter";
+import Loader from "../components/ui/Loader";
+import ErrorMessage from "../components/ui/ErrorMessage";
+import { useBlogPostData } from "../hooks/useBlogPost";
 
 export default function BlogPostPage() {
     const { slug } = useParams();
-    const [featuredPosts, setFeaturedPosts] = useState([])
-    const [post, setPost] = useState(null)
 
-    useEffect(() => {
-        try{
-            getPost(slug).then((res) => {
-                const {attributes, body} = matter(res.data.content)
-                setPost({ attributes, body });         
-            })
+    const {blogPost, featuredPosts ,loading, error} = useBlogPostData(slug)
 
-            getFeaturedPosts().then(res => {
-                setFeaturedPosts(res.data)
-                window.scrollTo(0, 0);
-            })
-
-        } catch(err){
-            console.error("Could not fetch blog data", err.message)
-        }
-    }, [slug])
-
+    if(loading) return <Loader />
+    if(error) return <ErrorMessage message="Could not get blog data"/>
 
     return (
         <div className="bg-slate-50">
             <Navbar theme="light" />
-            <BlogPost post={post} slug={slug}/>
+            <BlogPost post={blogPost} slug={slug}/>
             <div className="text-green-900">
                 <PostsSelection
                     posts={featuredPosts}
