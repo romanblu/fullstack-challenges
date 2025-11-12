@@ -4,37 +4,20 @@ import Features from "../components/shared/Features";
 import PlantsCategories from "../components/shared/PlantsCategories";
 import FeaturedPosts from "../features/blog/FeaturedPosts";
 import FeaturedProducts from "../features/products/FeaturedProducts";
-import { useEffect, useState } from "react";
-import { getFeaturedPosts } from "../api/blog";
-import { getFeaturedProducts } from "../api/product";
+import { useHomeData } from "../hooks/useHomeData";
+
 
 const HomePage = () => {
-  const [posts, setPosts] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchHomeData = async () => {
-      try {
-        const [postRes, productRes] = await Promise.all([
-          getFeaturedPosts(),
-          getFeaturedProducts(),
-        ]);
+  const {featuredPosts, featuredProducts, loading, error} = useHomeData()
 
-        setPosts(postRes.data);
-        setProducts(productRes.data);
-      } catch (err) {
-        console.error("Error loading homepage data:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchHomeData();
-  }, [])
 
   if (loading) {
     return <div className="text-center py-20">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-20">Error while getting homepage data</div>;
   }
 
   return (
@@ -54,8 +37,8 @@ const HomePage = () => {
         </div>
         <Features />
         <PlantsCategories />
-        <FeaturedPosts featuredPosts={posts}/>
-        <FeaturedProducts featuredProducts={products}/>
+        <FeaturedPosts featuredPosts={featuredPosts}/>
+        <FeaturedProducts featuredProducts={featuredProducts}/>
     </>
   );
 }
