@@ -1,6 +1,6 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import Banner from "../shared/Banner.jsx";
+import Banner from "../../components/ui/Banner.jsx";
 import { parseDate } from "../../utils/parseDate.js";
 
 export default function BlogPost({post }) {

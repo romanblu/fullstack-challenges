@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import slugify from "slugify";
-import CategorySelector from "../ui/CategorySelector.jsx";
+import CategorySelector from "../../components/ui/CategorySelector.jsx";
 import VariantEditor from "./VariantEditor.jsx";
 import VariantTable from "./VariantTable.jsx";
 const ProductForm = ({

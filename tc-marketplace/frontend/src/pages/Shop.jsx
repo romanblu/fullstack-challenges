@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import Navbar from "../components/layout/Navbar";
-import ProductCard from "../components/products/ProductCard";
-import FilterBar from "../components/shared/FilterBar";
+import ProductCard from "../features/products/ProductCard";
+import FilterBar from "../components/ui/FilterBar";
 import { getCategoryTree } from "../api/category"
 
 const Shop = () => {

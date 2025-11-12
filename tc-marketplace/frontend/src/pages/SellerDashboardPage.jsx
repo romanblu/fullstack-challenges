@@ -1,15 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import ActiveBar from "../components/shared/ActiveBar";
+import ActiveBar from "../components/ui/ActiveBar";
 import Navbar from "../components/layout/Navbar";
-import SellerInfoDashboard from "../components/dashboard/SellerInfoDashboard";
-import ProductsDashboard from "../components/products/ProductsDashboard";
+import SellerInfoDashboard from "../features/dashboard/SellerInfoDashboard";
+import ProductsDashboard from "../features/products/ProductsDashboard";
 import { useState } from "react";
-import OrdersDashboard from "../components/dashboard/OrdersDashboard";
-import StatisticsDashboard from "../components/dashboard/StatisticsDashboard";
-import BlogDashboard from "../components/blog/BlogDashboard";
-import BlogPostEditor from "../components/blog/BlogPostEditor";
-import AddProduct from "../components/products/AddProduct";
-import EditProduct from "../components/products/EditProduct";
+import OrdersDashboard from "../features/dashboard/OrdersDashboard";
+import StatisticsDashboard from "../features/dashboard/StatisticsDashboard";
+import BlogDashboard from "../features/blog/BlogDashboard";
+import BlogPostEditor from "../features/blog/BlogPostEditor";
+import AddProduct from "../features/products/AddProduct";
+import EditProduct from "../features/products/EditProduct";
 import { getCategoryTree } from '../api/category'
 
 const SellerDashboardPage = () => {  

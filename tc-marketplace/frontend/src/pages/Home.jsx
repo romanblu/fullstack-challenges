@@ -1,9 +1,9 @@
 import Navbar from "../components/layout/Navbar";
-import Banner from "../components/shared/Banner";
+import Banner from "../components/ui/Banner";
 import Features from "../components/shared/Features";
 import PlantsCategories from "../components/shared/PlantsCategories";
-import FeaturedPosts from "../components/blog/FeaturedPosts";
-import FeaturedProducts from "../components/products/FeaturedProducts";
+import FeaturedPosts from "../features/blog/FeaturedPosts";
+import FeaturedProducts from "../features/products/FeaturedProducts";
 import { useEffect, useState } from "react";
 import { getFeaturedPosts } from "../api/blog";
 import { getFeaturedProducts } from "../api/product";

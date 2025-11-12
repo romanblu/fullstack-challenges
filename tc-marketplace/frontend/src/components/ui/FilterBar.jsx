@@ -1,4 +1,4 @@
-import CategorySelector from "../ui/CategorySelector";
+import CategorySelector from "./CategorySelector";
 
 const FilterBar = ({ search, setSearch, sort, setSort, categories, selectedCategory, setSelectedCategory }) => {
   

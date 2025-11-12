@@ -1,8 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
-import BlogPost from "../components/blog/BlogPost";
+import BlogPost from "../features/blog/BlogPost";
 import Navbar from "../components/layout/Navbar";
 import { useEffect, useState } from "react";
-import PostsSelection from "../components/blog/PostsSelection";
+import PostsSelection from "../features/blog/PostsSelection";
 import { getFeaturedPosts, getPost } from "../api/blog";
 import matter from "front-matter";
 

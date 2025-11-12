@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import MarkdownPreview from "../shared/MarkdownPreview";
+import MarkdownPreview from "../../components/ui/MarkdownPreview";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {  createPost, updatePost } from "../../api/blog";

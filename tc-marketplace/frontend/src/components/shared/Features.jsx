@@ -1,4 +1,4 @@
-import TextCard from "./TextCard";
+import TextCard from "../ui/TextCard";
 
 const Features = () => {
     return (
