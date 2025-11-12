@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
-import BlogCard from "../components/blog/BlogCard";
+import BlogCard from "../features/blog/BlogCard";
 import Navbar from "../components/layout/Navbar";
 import { fetchTopPosts } from "../api/blog";
+import { useBlogData } from "../hooks/useBlogPosts";
+import Loader from "../components/ui/Loader";
+import ErrorMessage from "../components/ui/ErrorMessage";
 
 const Blog = () => {
-    const [blogPosts, setBlogPosts] =  useState([]);
-
-    useEffect(() => {
-        fetchTopPosts().then(res => {
-            setBlogPosts(res.data);
-        }).catch(err => {
-            console.log("Error fetching top blog posts:", err);
-        });
-    }, [])
+    const {blogPosts, loading, error} = useBlogData()
+    
+    if(loading) return <Loader />
+    if(error) return <ErrorMessage message="Error getting blog posts data"/>
 
     return (
     <section className="bg-slate-50  px-6 text-green-950 min-h-screen">
