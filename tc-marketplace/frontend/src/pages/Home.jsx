@@ -5,6 +5,8 @@ import PlantsCategories from "../components/shared/PlantsCategories";
 import FeaturedPosts from "../features/blog/FeaturedPosts";
 import FeaturedProducts from "../features/products/FeaturedProducts";
 import { useHomeData } from "../hooks/useHomeData";
+import Loader from "../components/ui/Loader"
+import ErrorMessage from "../components/ui/ErrorMessage"
 
 
 const HomePage = () => {
@@ -13,11 +15,11 @@ const HomePage = () => {
 
 
   if (loading) {
-    return <div className="text-center py-20">Loading...</div>;
+    return <Loader />
   }
 
   if (error) {
-    return <div className="text-center py-20">Error while getting homepage data</div>;
+    return <ErrorMessage />
   }
 
   return (
