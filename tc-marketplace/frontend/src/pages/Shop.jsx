@@ -1,44 +1,40 @@
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import Navbar from "../components/layout/Navbar";
 import ProductCard from "../features/products/ProductCard";
 import FilterBar from "../components/ui/FilterBar";
 import { getCategoryTree } from "../api/category"
+import { getProducts } from "../api/product";
+import Loader from "../components/ui/Loader";
+import { filterAndSortProducts } from "../utils/productUtils";
 
 const Shop = () => {
-    const [products, setProducts] = useState([])
-    const [search,setSearch] = useState("")
-    const [sort, setSort] = useState("")
-    const [selectedCategory, setSelectedCategory] = useState("");
+    const [filters, setFilters] = useState({
+        search: "",
+        sort: "",
+        categories: [],
+    });
 
-    const apiUrl = import.meta.env.VITE_API_URL
-
-    const { data: categories, isLoading } = useQuery({
+    const { data: categories, isLoadingCategories } = useQuery({
         queryKey: ["categories"],
         queryFn: () =>
         getCategoryTree().then((res) =>  res.data),
     });
 
+    const {data: products, isLoadingProducts} = useQuery({
+        queryKey: ["products"],
+        queryFn: async () =>
+        (await getProducts()).data.products
+    })
 
-    useEffect(() => {
-        axios.get(`${apiUrl}/api/products`)
-        .then(res => setProducts(res.data.products))
-        .catch(err => console.error(err));
-    },[])
+    // memoize to avoid recalculation on every render
+    const filteredProducts = useMemo(() => {
+        if(!products) return []
+        return filterAndSortProducts(products, filters)
+    })
 
-    const filtered = products
-        .filter((p) =>
-        p.name.toLowerCase().includes(search.toLowerCase())
-        )
-        .sort((a, b) => {
-        if (sort === "low-high") return a.price - b.price;
-        if (sort === "high-low") return b.price - a.price;
-        return 0;
-    });
-    
-    if(isLoading) {
-        return <div>Loading...</div>
+    if(isLoadingProducts || isLoadingCategories) {
+        return <Loader />
     }
     
     return (
@@ -49,20 +45,16 @@ const Shop = () => {
 
                 <FilterBar 
                         categories={categories}  
-                        setSelectedCategory={setSelectedCategory}
-                        selectedCategory={selectedCategory}
-                        search={search} 
-                        setSearch={setSearch} 
-                        sort={sort} 
-                        setSort={setSort} />
+                        filters={filters}
+                        setFilters={setFilters}
+                        />
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                    {filtered.map((product) => (
+                    {filteredProducts.map((product) => (
                         <ProductCard key={product._id} product={product} />
                     ))}
                 </div>
             </div>
-
     </div>
   );
 }

@@ -11,6 +11,7 @@ import BlogPostEditor from "../features/blog/BlogPostEditor";
 import AddProduct from "../features/products/AddProduct";
 import EditProduct from "../features/products/EditProduct";
 import { getCategoryTree } from '../api/category'
+import Loader from '../components/ui/Loader'
 
 const SellerDashboardPage = () => {  
     
@@ -58,9 +59,9 @@ const SellerDashboardPage = () => {
     }
 
     if(isLoading) {
-        return <div>Loading...</div>
+        return <Loader />
     }
-
+    // TODO : refactor using react router
     return (
         <div >
             <Navbar theme="light"/>
@@ -73,8 +74,6 @@ const SellerDashboardPage = () => {
             </div>
         </div>
     );
-
-
 }
 
 export default SellerDashboardPage;

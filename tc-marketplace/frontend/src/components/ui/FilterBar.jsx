@@ -1,6 +1,6 @@
 import CategorySelector from "./CategorySelector";
 
-const FilterBar = ({ search, setSearch, sort, setSort, categories, selectedCategory, setSelectedCategory }) => {
+const FilterBar = ({ categories, filters, setFilters }) => {
   
   return (
     <div className="flex flex-col md:flex-row justify-between items-center gap-4  p-4 rounded-xl shadow-lg shadow-gray-400/30 mb-8">
@@ -8,20 +8,22 @@ const FilterBar = ({ search, setSearch, sort, setSort, categories, selectedCateg
       <input
         type="text"
         placeholder="Search products..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        value={filters.search}
+        onChange={(e) => setFilters({search: e.target.value})}
         className="border border-gray-300 rounded-lg px-3 py-2 w-full md:w-1/3 focus:ring-2 focus:ring-green-400"
       />
+
       {/*  Category filter */}
       <CategorySelector
         categoryTree={categories}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
+        selectedIds={filters.categories}
+        onChange={(updatedCategories) => setFilters(prev => ({...prev, categories: updatedCategories}))}
       />
+
       {/* Sort */}
       <select
-        value={sort}
-        onChange={(e) => setSort(e.target.value)}
+        value={filters.sort}
+        onChange={(e) => setFilters({sort: e.target.value})}
         className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400"
       >
         <option value="">Sort by</option>
