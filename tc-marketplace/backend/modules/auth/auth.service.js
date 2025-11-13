@@ -3,6 +3,7 @@ import Store from '../store/store.model.js'
 import { hash, compare, signToken } from '../../utils/auth.js';
 import logger from '../../utils/logger.js';
 import { validateLogin } from './auth.validation.js';
+import slugify from "slugify";
 
 export const registerUser = async (body) => {
   const { name, email, password, role, phone } = body;

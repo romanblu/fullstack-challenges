@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import { registerUser } from "../api/auth";
@@ -32,15 +31,13 @@ const Register = () => {
         console.error("Registration failed:", err);
     }
   };
-
+  
     return (
         <section className=" bg-gradient-to-br from-green-600 via-green-800 to-green-950 text-green-50 px-4">
             <Navbar />
             <div className="flex items-center justify-center min-h-screen">
                 <div className="bg-white text-green-900 rounded-xl shadow-lg p-8 w-full max-w-md ">
                     <h1 className="text-3xl font-bold text-center mb-6">Register</h1>
-
-                    {error && <p className="text-red-600 text-sm text-center mb-4">{error}</p>}
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                     <div>
