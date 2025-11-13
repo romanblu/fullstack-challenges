@@ -7,7 +7,7 @@ import { useState } from "react";
 import OrdersDashboard from "../features/dashboard/OrdersDashboard";
 import StatisticsDashboard from "../features/dashboard/StatisticsDashboard";
 import BlogDashboard from "../features/blog/BlogDashboard";
-import BlogPostEditor from "../features/blog/BlogPostEditor";
+import BlogPostEditor from "../features/blog/BlogPostEditor/index";
 import AddProduct from "../features/products/AddProduct";
 import EditProduct from "../features/products/EditProduct";
 import { getCategoryTree } from '../api/category'
