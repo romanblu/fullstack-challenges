@@ -33,7 +33,7 @@
 */
 
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/20/solid"; 
 import SelectedCategories from "./SelectedCategories";
 
@@ -57,14 +57,11 @@ const CategorySelector = ({ categoryTree=[], selectedIds=[], onChange }) => {
         return result;
     };
 
-    const [flat, setFlat] = useState([]);
     const [expanded, setExpanded] = useState({});
     const [isOpen, setIsOpen] = useState(false);
     const timeoutRef = useRef(null);
 
-    useEffect(() => {
-      setFlat(flattenTree(categoryTree));
-    }, [categoryTree]);
+    const flat = useMemo(() => flattenTree(categoryTree), [categoryTree])
     
 /**
  * Adds or removes a category from the selected list.
@@ -113,7 +110,7 @@ const CategorySelector = ({ categoryTree=[], selectedIds=[], onChange }) => {
      */
     const renderTree = (tree, level = 0) =>
         tree.map((cat) => (
-        <div key={cat._id} className={`pl-${level * 4}`}>
+        <div key={cat._id}>
             <div className="flex items-center justify-between">
             <button type="button"
                 onClick={() => toggleCategory(cat)}
