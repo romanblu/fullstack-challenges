@@ -26,7 +26,7 @@ export const getMyStore = asyncHandler(async (req, res) => {
 })
 
 export const updateMyStore = asyncHandler(async (req, res) => {
-    const updated = await storeService.updateMyStore({owner : req.user.id}, req.body, { new: true });
+    const updated = await storeService.updateMyStore(req.user.id, req.body);
 
     if(!updated) throw ApiError.notFound()
     res.json(updated);
