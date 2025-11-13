@@ -1,9 +1,6 @@
 import { useState } from "react";
 import Navbar from "../components/layout/Navbar";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../api/auth";
-import { AuthContext } from "../context/AuthContext";
-import { useContext } from "react";
 import { useAuth } from "../hooks/useAuth";
 
 const SignIn = () => {

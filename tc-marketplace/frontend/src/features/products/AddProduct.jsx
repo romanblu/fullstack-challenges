@@ -1,21 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createProduct } from "../../api/product";
 import ProductForm from "./ProductForm";
-import { useQuery } from '@tanstack/react-query';
 
 const AddProduct = ({ setActiveTab, categoryTree }) => {
     const [message, setMessage] = useState("")
-    const storeId = JSON.parse(localStorage.getItem("user")).store
+    const [storeId, setStoreId] = useState(null)
 
-    const handleCreate = (formData) => {
-        console.log(formData)
-        createProduct(formData).then(res => {
+    useEffect(() => {
+        try{
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (user?.store) setStoreId(user.store);
+        }catch(err){
+            console.error("Store ID not found", err.message)
+        }
+    }, [])
+
+    const handleCreate = async (formData) => {
+        try{
+            const res = createProduct(formData)
             if(res.status === 201) {
                 setMessage("Product created successfully!")
                 setActiveTab("products");
             }
-        }            
-        ).catch(err => setMessage("Error creating product: " + err.message))
+
+        } catch(err) {
+            console.error(err)
+        }
     } 
 
     const onDiscard = () => { setActiveTab("products"); }
@@ -28,7 +38,6 @@ const AddProduct = ({ setActiveTab, categoryTree }) => {
         onSubmit={handleCreate}
         onDiscard={onDiscard}
         categoryTree={categoryTree}
-        onDelete={{}}
       />
         {message && <p className="text-center mt-3">{message}</p>}
     </div>

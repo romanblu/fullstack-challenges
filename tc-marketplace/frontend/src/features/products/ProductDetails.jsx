@@ -1,7 +1,5 @@
 import SelectedCategories from "../../components/ui/SelectedCategories"
 
-
-
 export const ProductDetails = ({ product }) => {
     
     return (

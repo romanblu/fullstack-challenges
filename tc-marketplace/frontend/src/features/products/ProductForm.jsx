@@ -3,6 +3,7 @@ import slugify from "slugify";
 import CategorySelector from "../../components/ui/CategorySelector.jsx";
 import VariantEditor from "./VariantEditor.jsx";
 import VariantTable from "./VariantTable.jsx";
+
 const ProductForm = ({
     initialData = {},
     onSubmit,
@@ -169,7 +170,7 @@ const ProductForm = ({
             </button>
             <button
                 onClick={onDiscard}
-                type="submit"
+                type="button"
                 className="px-4 bg-gray-300 hover:bg-gray-500 text-green-950 font-semibold py-2 rounded-md shadow-md"
                 >
                 Discard

@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { deleteProduct, updateProduct } from "../../api/product";
-import slugify from "slugify";
 import ProductForm from "./ProductForm";
 
 const EditProduct = ({ setActiveTab, setSelectedProduct, selectedProduct, categoryTree }) => {
@@ -18,7 +17,6 @@ const EditProduct = ({ setActiveTab, setSelectedProduct, selectedProduct, catego
     }
 
     const handleDiscard = () => {
-        setForm(selectedProduct);
         setActiveTab("products");
     }
 
