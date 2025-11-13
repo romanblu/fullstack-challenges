@@ -1,24 +1,32 @@
 import { Link, useNavigate } from "react-router-dom";
 import { parseDate } from "../../utils/parseDate";
-export default function BlogCard({ post, isAuthorDashboard = false, setActiveTab, setCurrentPost }) {
+
+export default function BlogCard({ 
+        post, 
+        isAuthorDashboard = false, 
+        onEditPost
+    }) {
+
+    if(!post) return null
+
+    const {title,excerpt, image, author, date, slug, published} = post
 
     const handleEditPost = () => {
-        setCurrentPost(post);
-        setActiveTab("editBlogPost");
+        if(onEditPost) onEditPost(post)
     }
 
     return (
         <div className="bg-white rounded-xl shadow hover:shadow-lg transition flex flex-col h-full">
-            <img src={post.image} alt={post.title} className="h-48 w-full object-cover rounded-t-xl" />
+            <img src={image} alt={title} className="h-48 w-full object-cover rounded-t-xl" />
             <div className="p-4 flex flex-col flex-grow">
-                <Link to={`/blog/${post.slug}`} className="text-xl font-semibold text-green-900 mb-2">{post.title}</Link>
-                <p className="text-gray-700 text-sm flex-grow">{post.excerpt}</p>
+                <Link to={`/blog/${slug}`} className="text-xl font-semibold text-green-900 mb-2">{title}</Link>
+                <p className="text-gray-700 text-sm flex-grow">{excerpt}</p>
                 <div className="mt-4 flex justify-between text-sm text-gray-500">
-                    <span>{post.author.name}</span>
-                    <span>{parseDate(post.date)}</span>
+                    <span>{author.name}</span>
+                    <span>{parseDate(date)}</span>
                 </div>
                 <Link
-                to={`/blog/${post.slug}`}
+                to={`/blog/${slug}`}
                 className="mt-4 inline-block text-green-700 hover:text-green-900 font-medium"
                 >
                 Read More →
@@ -29,7 +37,9 @@ export default function BlogCard({ post, isAuthorDashboard = false, setActiveTab
                             Edit Post
                         </button>
                         {
-                            !post.published ? <p>The post has not been published yet</p> : ''
+                            !published && (
+                                <p>Draft - Not published yet</p>
+                            )
                         }
                     </>
                 )}

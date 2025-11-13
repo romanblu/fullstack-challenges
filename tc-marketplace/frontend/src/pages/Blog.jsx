@@ -11,7 +11,7 @@ const Blog = () => {
     
     if(loading) return <Loader />
     if(error) return <ErrorMessage message="Error getting blog posts data"/>
-
+    
     return (
     <section className="bg-slate-50  px-6 text-green-950 min-h-screen">
         <Navbar theme="light" />
