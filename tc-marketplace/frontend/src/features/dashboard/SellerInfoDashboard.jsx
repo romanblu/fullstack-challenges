@@ -63,27 +63,21 @@ const SellerInfoDashboard = () => {
         
     }
 
-    const FormButton = () => {
-        return (
-            
-                isEditting ? (
-                    <div>
-                        <button type="button" onClick={handleSave} className="border bg-green-600 text-white px-3 py-1 rounded-lg hover:bg-green-700 transition duration-200 shadow-lg hover:shadow-xl">Save</button>
-                        <button type="button" onClick={handleDiscard} className="border bg-green-600 text-white px-3 py-1 rounded-lg hover:bg-green-700 transition duration-200 shadow-lg hover:shadow-xl">Discard</button>
-                    </div>
-                )
-                :
-                <button type="button" onClick={handleEditToggle} className="border bg-slate-200 border-gray-200 px-3 py-1 rounded-lg hover:bg-slate-300 hover:text-green-700 transition duration-200 shadow-lg hover:shadow-xl">Edit</button>
-            
-        )
-    }
-
     return(
         <div>
             <form className={`max-w-lg mx-auto bg-gray-50 p-6 rounded-lg shadow-md  flex flex-col gap-4 `}>
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-2xl font-bold mb-4 ">Edit Seller Profile</h2>
-                    <FormButton />
+                    {
+                        isEditting ? (
+                            <div>
+                                <button type="button" onClick={handleSave} className="border bg-green-600 text-white px-3 py-1 rounded-lg hover:bg-green-700 transition duration-200 shadow-lg hover:shadow-xl">Save</button>
+                                <button type="button" onClick={handleDiscard} className="border bg-green-600 text-white px-3 py-1 rounded-lg hover:bg-green-700 transition duration-200 shadow-lg hover:shadow-xl">Discard</button>
+                            </div>
+                        )
+                        :
+                        <button type="button" onClick={handleEditToggle} className="border bg-slate-200 border-gray-200 px-3 py-1 rounded-lg hover:bg-slate-300 hover:text-green-700 transition duration-200 shadow-lg hover:shadow-xl">Edit</button>
+                    }
                 </div>
                 <div className={`${isEditting ? '' : 'pointer-events-none opacity-70' } flex flex-col gap-4`}>
                     <div>
