@@ -15,17 +15,19 @@ const AddProduct = ({ setActiveTab, categoryTree }) => {
         }
     }, [])
 
+    // TODO: add message for success and a message for error
     const handleCreate = async (formData) => {
-        try{
-            const res = createProduct(formData)
-            if(res.status === 201) {
-                setMessage("Product created successfully!")
-                setActiveTab("products");
-            }
+        
+        const res = await createProduct(formData)
 
-        } catch(err) {
-            console.error(err)
+        if(!res.ok){
+            setMessage(res.error) 
+            return
         }
+
+        setActiveTab('products')
+        // message for success
+    
     } 
 
     const onDiscard = () => { setActiveTab("products"); }

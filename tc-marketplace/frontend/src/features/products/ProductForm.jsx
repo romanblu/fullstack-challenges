@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import slugify from "slugify";
 import CategorySelector from "../../components/ui/CategorySelector.jsx";
 import VariantEditor from "./VariantEditor.jsx";
@@ -31,7 +31,6 @@ const ProductForm = ({
 
     const [variants, setVariants] = useState([]);
 
-    
     const generateVariants = () => {
         const newVariants = option.values.map(v => ({
             name: option.name,
@@ -56,10 +55,9 @@ const ProductForm = ({
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log({...form, variants})
         onSubmit({...form, variants})
     } 
-    console.log(variants)
+
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             <input
@@ -129,6 +127,7 @@ const ProductForm = ({
             />
 
             {/* Product Type */}
+                {/* TODO: Refactor */}
             <select
                 name="productType"
                 value={form.productType}

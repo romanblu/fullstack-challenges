@@ -1,7 +1,9 @@
 import Product from './product.model.js'
 import Variant from '../variant/variant.model.js'
 import mongoose from 'mongoose';
-import { errorHandler } from '../../middleware/errorMiddleware.js'; 
+import { parseDuplicateError } from './product.utils.js';
+import ApiError from '../../utils/ApiError.js';
+
 export const listProducts = async (filters) => {
     const query = {}
 
@@ -55,35 +57,46 @@ export const getFeaturedProducts = async () => {
 
 export const createProduct = async ({body}) => {
     const { variants } = body;
-    
-    const product = new Product({
-      ...body, variants:[]
-    });
-    
-    await product.save()
-    
-    let createdVariantIds =[]
-    
-    if (Array.isArray(variants) && variants.length > 0) {
-      for (let v of variants) {
+    try{
+      const product = new Product({
+        ...body, variants:[]
+      });
+      
+      await product.save()
+      
+      let createdVariantIds =[]
+      
+      if (Array.isArray(variants) && variants.length > 0) {
+        for (let v of variants) {
+          
+          const created = await Variant.create({
+            ...v,
+            product: product._id
+          });
+          createdVariantIds.push(created._id);
+        }
         
-        const created = await Variant.create({
-          ...v,
-          product: product._id
-        });
-        createdVariantIds.push(created._id);
+        product.variants = createdVariantIds;
+        await product.save();
       }
       
-      product.variants = createdVariantIds;
-      await product.save();
+      const populatedProduct = await Product.findById(product._id)
+      .populate("categories", "_id name slug")
+      .populate("variants");
+      
+      return populatedProduct;
+    } catch (err){
+      if (err.code === 11000) {
+      const field = Object.keys(err.keyValue)[0];
+
+      // Convert duplicate key to readable error
+      throw ApiError.badRequest(
+        `${field} for ${err.keyValue[field]} already exists` 
+      );
     }
-    
-    
-    const populatedProduct = await Product.findById(product._id)
-    .populate("categories", "_id name slug")
-    .populate("variants");
-    
-    return populatedProduct;
+      throw ApiError.internal(err.message)
+    }
+
 };
 
 export const updateProduct = async (id, body) => {
