@@ -56,36 +56,45 @@ export const getFeaturedProducts = async () => {
 
 
 export const createProduct = async ({body}) => {
-    const { variants } = body;
-    try{
-      const product = new Product({
-        ...body, variants:[]
-      });
-      
-      await product.save()
-      
-      let createdVariantIds =[]
-      
-      if (Array.isArray(variants) && variants.length > 0) {
-        for (let v of variants) {
-          
-          const created = await Variant.create({
-            ...v,
-            product: product._id
-          });
-          createdVariantIds.push(created._id);
-        }
+  const { variants } = body;
+
+  // DB validations for product name and variants 
+  const exists = await Product.findOne({ slug: body.slug });
+  if (exists) throw ApiError.badRequest("Product slug already exists");
+  
+  const skus = variants.map(v => v.sku);
+  const skuExists = await Variant.findOne({ sku: { $in: skus } });
+  if (skuExists) throw ApiError.badRequest(`SKU '${skuExists.sku}' already exists`);
+
+  try{
+    const product = new Product({
+      ...body, variants:[]
+    });
+    
+    await product.save()
+    
+    let createdVariantIds =[]
+    
+    if (Array.isArray(variants) && variants.length > 0) {
+      for (let v of variants) {
         
-        product.variants = createdVariantIds;
-        await product.save();
+        const created = await Variant.create({
+          ...v,
+          product: product._id
+        });
+        createdVariantIds.push(created._id);
       }
       
-      const populatedProduct = await Product.findById(product._id)
-      .populate("categories", "_id name slug")
-      .populate("variants");
-      
-      return populatedProduct;
-    } catch (err){
+      product.variants = createdVariantIds;
+      await product.save();
+    }
+    
+    const populatedProduct = await Product.findById(product._id)
+    .populate("categories", "_id name slug")
+    .populate("variants");
+    
+    return populatedProduct;
+  } catch (err){
       if (err.code === 11000) {
       const field = Object.keys(err.keyValue)[0];
 
@@ -95,7 +104,7 @@ export const createProduct = async ({body}) => {
       );
     }
       throw ApiError.internal(err.message)
-    }
+  }
 
 };
 
@@ -104,6 +113,7 @@ export const updateProduct = async (id, body) => {
     return updated
 };
 
+// TODO: also delete variants 
 export const deleteProduct = async (id) => {
     const p = await Product.findByIdAndDelete(id);
     return p
