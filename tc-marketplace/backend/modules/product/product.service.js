@@ -1,6 +1,7 @@
 import Product from './product.model.js'
 import Variant from '../variant/variant.model.js'
 import mongoose from 'mongoose';
+import { errorHandler } from '../../middleware/errorMiddleware.js'; 
 export const listProducts = async (filters) => {
     const query = {}
 
@@ -54,36 +55,35 @@ export const getFeaturedProducts = async () => {
 
 export const createProduct = async ({body}) => {
     const { variants } = body;
-
+    
     const product = new Product({
       ...body, variants:[]
     });
-
+    
     await product.save()
     
     let createdVariantIds =[]
     
     if (Array.isArray(variants) && variants.length > 0) {
       for (let v of variants) {
-
+        
         const created = await Variant.create({
           ...v,
           product: product._id
         });
         createdVariantIds.push(created._id);
       }
-
+      
       product.variants = createdVariantIds;
       await product.save();
     }
-
-
+    
+    
     const populatedProduct = await Product.findById(product._id)
-      .populate("categories", "_id name slug")
-      .populate("variants");
-
+    .populate("categories", "_id name slug")
+    .populate("variants");
+    
     return populatedProduct;
-  
 };
 
 export const updateProduct = async (id, body) => {

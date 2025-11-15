@@ -62,13 +62,16 @@ export const createProduct = asyncHandler(async (req, res) => {
 
   const seller = req.user.id; // from protect middleware
   const store = req.user.store
-  const product = productService.createProduct({ body: {...req.body, seller, store}});
-
-  if(!product){
-    throw ApiError.internal("Error creating a product")
+  try{
+    const product = await productService.createProduct({ body: {...req.body, seller, store}});
+    if(!product){
+      throw ApiError.internal("Error creating a product")
+    }
+    
+    res.json(product);
+  } catch (err){
+    throw ApiError.internal(err.message || "Product creation failed")
   }
-
-  res.json(product);
 });
 
 
