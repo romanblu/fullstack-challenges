@@ -52,52 +52,27 @@ export const getFeaturedProducts = async () => {
 };
 
 
-export const createProduct = async (body) => {
-    const {
-      name,
-      slug,
-      species,
-      description,
-      price,
-      quantity,
-      mainImage,
-      seller,
-      productType,
-      categories,
-      store,
-      variants,
-    } = body;
-    
-   
-    
+export const createProduct = async ({body}) => {
+    const { variants } = body;
+
     const product = new Product({
-      name,
-      slug,
-      species,
-      description,
-      price,
-      quantity,
-      mainImage,
-      seller,
-      store,
-      productType,
-      categories,
-      store,
-      variants
+      ...body, variants:[]
     });
 
-    product.save()
+    await product.save()
     
     let createdVariantIds =[]
     
     if (Array.isArray(variants) && variants.length > 0) {
       for (let v of variants) {
+
         const created = await Variant.create({
           ...v,
           product: product._id
         });
         createdVariantIds.push(created._id);
       }
+
       product.variants = createdVariantIds;
       await product.save();
     }

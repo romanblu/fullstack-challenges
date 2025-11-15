@@ -53,39 +53,16 @@ export const getFeaturedProducts = asyncHandler(async (req, res) => {
 export const createProduct = asyncHandler(async (req, res) => {
   const {
     name,
-    slug,
-    species,
-    description,
     price,
-    quantity,
-    mainImage,
-    productType,
-    categories,
-    store,
-    variants,
   } = req.body;
   
   if(!price || !name){
     throw ApiError.badRequest('Title and price required')
   }
-  
+
   const seller = req.user.id; // from protect middleware
-  
-  const product = productService.createProduct({
-    name,
-    slug,
-    species,
-    description,
-    price,
-    quantity,
-    mainImage,
-    seller,
-    store,
-    productType,
-    categories,
-    store,
-    variants
-  });
+  const store = req.user.store
+  const product = productService.createProduct({ body: {...req.body, seller, store}});
 
   if(!product){
     throw ApiError.internal("Error creating a product")
