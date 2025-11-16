@@ -62,7 +62,6 @@ export const getFeaturedProducts = async () => {
     return products
 };
 
-
 export const createProduct = async (body) => {
   const  variants = body.variants || [];
 

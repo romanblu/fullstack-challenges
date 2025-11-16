@@ -44,7 +44,7 @@ export const createProduct = async (data) => {
 export const updateProduct = async (id, data) => {
     const token = localStorage.getItem("token");
 
-    const res = await axios.put(`${API}/api/products/${id}`, data, {
+    const res = await axios.patch(`${API}/api/products/${id}`, data, {
         headers: {
             Authorization: `Bearer ${token}`
         }

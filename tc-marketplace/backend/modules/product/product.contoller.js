@@ -79,13 +79,14 @@ export const createProduct = asyncHandler(async (req, res) => {
 // @route   PUT /api/products/:id
 // @access  Private - seller/admin
 export const updateProduct = asyncHandler( async (req, res) => {
-    const updated = await productService.updateProduct(req.params.id, req.body);
+  console.log(req.body)
+  const updated = await productService.updateProduct(req.params.id, req.body);
 
-    if(!updated){
-      throw ApiError.internal("Could not update product")
-    }
+  if(!updated){
+    throw ApiError.internal("Could not update product")
+  }
 
-    res.json(updated);    
+  res.json(updated);    
 });
 
 
@@ -102,5 +103,4 @@ export const deleteProduct = asyncHandler(async (req, res) => {
     }
     
     res.status(204).json({message: "Deleted successfuly"})
- 
 });

@@ -3,6 +3,7 @@ import slugify from "slugify";
 import CategorySelector from "../../components/ui/CategorySelector.jsx";
 import VariantEditor from "./VariantEditor.jsx";
 import VariantTable from "./VariantTable.jsx";
+import { diffObjects } from "../../utils/diff.js";
 
 const ProductForm = ({
     initialData = {},
@@ -38,7 +39,6 @@ const ProductForm = ({
         setVariants(initialData.variants);
 
         // Infer option name & values from existing variants
-        // Example structure: { name: "Stage", optionValues: ["TC Stage 1"] }
         if (initialData.variants.length > 0) {
             const optionName = initialData.variants[0].name;
             const optionValues = [
@@ -76,8 +76,9 @@ const ProductForm = ({
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(variants)
-        onSubmit({...form, variants})
+        const difference = diffObjects(initialData, form)
+
+        onSubmit({...difference, variants})
     } 
 
     return (
