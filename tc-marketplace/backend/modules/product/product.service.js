@@ -42,10 +42,10 @@ export const getProduct = async (id) => {
 }
 
 export const getSellerProducts = async (id) => {
-
     const products = await Product.find({ seller: id })
         .populate("seller", "name email")   // adjust fields as needed
-        .populate("categories", "_id name slug");
+        .populate("categories", "_id name slug")
+        .populate("variants");
 
     return products;  
 };

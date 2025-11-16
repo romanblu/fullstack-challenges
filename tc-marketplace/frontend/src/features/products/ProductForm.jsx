@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import slugify from "slugify";
 import CategorySelector from "../../components/ui/CategorySelector.jsx";
 import VariantEditor from "./VariantEditor.jsx";
@@ -31,6 +31,27 @@ const ProductForm = ({
 
     const [variants, setVariants] = useState([]);
 
+    useEffect(() => {
+        if (!initialData || !initialData.variants) return;
+
+        // Load variants into state
+        setVariants(initialData.variants);
+
+        // Infer option name & values from existing variants
+        // Example structure: { name: "Stage", optionValues: ["TC Stage 1"] }
+        if (initialData.variants.length > 0) {
+            const optionName = initialData.variants[0].name;
+            const optionValues = [
+                ...new Set(initialData.variants.flatMap(v => v.optionValues))
+            ];
+
+            setOption({
+                name: optionName,
+                values: optionValues
+            });
+        }
+    }, [initialData])
+
     const generateVariants = () => {
         const newVariants = option.values.map(v => ({
             name: option.name,
@@ -55,6 +76,7 @@ const ProductForm = ({
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        console.log(variants)
         onSubmit({...form, variants})
     } 
 

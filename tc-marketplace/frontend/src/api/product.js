@@ -26,10 +26,17 @@ export const createProduct = async (data) => {
             }
         });
         
-        return {ok : true, data: res.data};
+        return {
+            ok : true,
+            data: res.data
+        };
     }catch(err){
         const message = err.response?.data?.message || "Something went wrong"
-        return { ok: false, error: message }
+        return { 
+            ok: false,
+            status: err?.response?.status, 
+            error: message 
+        }
     }
 }
 
@@ -42,7 +49,7 @@ export const updateProduct = async (id, data) => {
             Authorization: `Bearer ${token}`
         }
     });
-    console.log("Update Product Response:", res);
+
     return res;
 }
 
