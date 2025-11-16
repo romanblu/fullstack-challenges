@@ -2,6 +2,7 @@ import express from 'express';
 import { protect, requireRole } from '../../middleware/auth.js';
 import { listProducts, getProduct, createProduct, updateProduct, deleteProduct, getFeaturedProducts, getSellerProducts } from './product.contoller.js';
 
+// TODO : add validation middleware for create and update 
 const router = express.Router();
 router.get('/', listProducts);
 router.get('/featured', getFeaturedProducts);

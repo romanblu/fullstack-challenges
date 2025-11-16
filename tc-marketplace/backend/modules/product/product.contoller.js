@@ -56,19 +56,22 @@ export const createProduct = asyncHandler(async (req, res) => {
     price,
   } = req.body;
   
+  // TODO: move into validation middleware - request validation
+  const skus = (req.body.variants || []).map(v => v.sku);
+  const duplicatesInPayload = skus.filter((sku, i) => skus.indexOf(sku) !== i);
+  if (duplicatesInPayload.length > 0) {
+    throw ApiError.badRequest(`Duplicate SKUs in request: ${duplicatesInPayload.join(", ")}`);
+  }
+
   if(!price || !name){
     throw ApiError.badRequest('Title and price required')
   }
 
   const seller = req.user.id; 
   const store = req.user.store
-  
-    const product = await productService.createProduct({ body: {...req.body, seller, store}});
-    if(!product){
-      throw ApiError.internal("Error creating a product")
-    }
+  const product = await productService.createProduct({...req.body, seller, store});
     
-    res.json(product);
+  res.status(201).json(product);
 });
 
 

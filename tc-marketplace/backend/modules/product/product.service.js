@@ -63,8 +63,8 @@ export const getFeaturedProducts = async () => {
 };
 
 
-export const createProduct = async ({body}) => {
-  const { variants } = body;
+export const createProduct = async (body) => {
+  const  variants = body.variants || [];
 
   // DB validations for product name and variants 
   const exists = await Product.findOne({ slug: body.slug });
@@ -74,15 +74,15 @@ export const createProduct = async ({body}) => {
   const skuExists = await Variant.findOne({ sku: { $in: skus } });
   if (skuExists) throw ApiError.badRequest(`SKU '${skuExists.sku}' already exists`);
 
+  const product = await Product.create({
+    ...body, variants:[]
+  });
+  
+  
+  let createdVariantIds =[]
+
   try{
-    const product = new Product({
-      ...body, variants:[]
-    });
-    
-    await product.save()
-    
-    let createdVariantIds =[]
-    
+
     if (Array.isArray(variants) && variants.length > 0) {
       for (let v of variants) {
         
@@ -103,7 +103,11 @@ export const createProduct = async ({body}) => {
     
     return populatedProduct;
   } catch (err){
-      if (err.code === 11000) {
+    // rollback
+    await Variant.deleteMany({_id: {$in: createdVariantIds}})
+    await Product.findByIdAndDelete(product._id)
+
+    if (err.code === 11000) {
       const field = Object.keys(err.keyValue)[0];
 
       // Convert duplicate key to readable error
@@ -111,7 +115,8 @@ export const createProduct = async ({body}) => {
         `${field} for ${err.keyValue[field]} already exists` 
       );
     }
-      throw ApiError.internal(err.message)
+    
+    throw ApiError.internal(err.message)
   }
 
 };
