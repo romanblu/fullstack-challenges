@@ -4,6 +4,10 @@ import CategorySelector from "../../components/ui/CategorySelector.jsx";
 import VariantEditor from "./VariantEditor.jsx";
 import VariantTable from "./VariantTable.jsx";
 import { diffObjects } from "../../utils/diff.js";
+import { diffVariants } from "../../utils/diffVariants.js";
+import { InputField } from "./InputField.jsx";
+import { InputFieldPrice } from "./InputFieldPrice.jsx";
+import { InputFieldNumber } from "./InputFieldNumber.jsx";
 
 const ProductForm = ({
     initialData = {},
@@ -17,8 +21,8 @@ const ProductForm = ({
     slug: "",
     species: "",
     description: "",
-    price: "",
-    quantity: "",
+    price: 0.00,
+    quantity: 1,
     mainImage: "",
     productType: "",
     categories: [],
@@ -30,13 +34,16 @@ const ProductForm = ({
         values: []
     });
 
+    // TODO: create a hook for loading form data - category tree and product type list
+
     const [variants, setVariants] = useState([]);
 
     useEffect(() => {
         if (!initialData || !initialData.variants) return;
 
+        const cloned = JSON.parse(JSON.stringify(initialData.variants))
         // Load variants into state
-        setVariants(initialData.variants);
+        setVariants(cloned);
 
         // Infer option name & values from existing variants
         if (initialData.variants.length > 0) {
@@ -56,7 +63,7 @@ const ProductForm = ({
         const newVariants = option.values.map(v => ({
             name: option.name,
             optionValues: [v],
-            price: "",
+            price: 0,
             compareAtPrice: "",
             sku: "",
             stock: 0,
@@ -77,42 +84,19 @@ const ProductForm = ({
     const handleSubmit = (e) => {
         e.preventDefault()
         const difference = diffObjects(initialData, form)
-
+        const differenceVariants = diffVariants(initialData.variants, variants)
         onSubmit({...difference, variants})
     } 
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
-            <input
-            type="text"
-            name="name"
-            placeholder="Product Name"
-            value={form.name}
-            onChange={handleNameChange}
-            required
-            className="w-full border rounded-md p-2"
-            />
-
-            <input
-            type="text"
-            name="slug"
-            placeholder="Slug (unique identifier)"
-            value={form.slug}
-            onChange={handleChange}
-            required
-            className="w-full border rounded-md p-2"
-            />
-
-            <input
-            type="text"
-            name="species"
-            placeholder="Species"
-            value={form.species}
-            onChange={handleChange}
-            required
-            className="w-full border rounded-md p-2"
-            />
-
+            <InputField label="Product Name" name="name" value={form.name} onChange={handleNameChange} required={true}/>
+           
+            <InputField label="Slug" name="slug" value={form.slug} onChange={handleChange} required={true}/>
+          
+            <InputField label="Species" name="species" value={form.species} onChange={handleChange} required={true}/>
+         
+            {/* TODO: create component for parsing HTML, add button for template generation  */}
             <textarea
             name="description"
             placeholder="Description"
@@ -120,34 +104,12 @@ const ProductForm = ({
             onChange={handleChange}
             className="w-full border rounded-md p-2"
             />
+            
+            <InputFieldPrice value={form.price} onChange={handleChange}  />
 
-            <input
-            type="number"
-            name="price"
-            placeholder="Price"
-            value={form.price}
-            onChange={handleChange}
-            required
-            className="w-full border rounded-md p-2"
-            />
-
-            <input
-            type="number"
-            name="quantity"
-            placeholder="Quantity"
-            value={form.quantity}
-            onChange={handleChange}
-            className="w-full border rounded-md p-2"
-            />
-
-            <input
-            type="text"
-            name="mainImage"
-            placeholder="Main Image URL"
-            value={form.mainImage}
-            onChange={handleChange}
-            className="w-full border rounded-md p-2"
-            />
+            <InputFieldNumber value={form.quantity} onChange={handleChange} name="quantity" label="Quantity"/>
+            
+            <InputField label="Main Image URL" name="nameImage" value={form.mainImage} onChange={handleChange} />
 
             {/* Product Type */}
                 {/* TODO: Refactor */}
