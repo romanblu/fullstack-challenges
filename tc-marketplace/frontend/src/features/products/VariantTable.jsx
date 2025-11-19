@@ -1,96 +1,72 @@
-const VariantTable = ({ variants, setVariants, onDeleteVariant }) => {
-  const updateField = (index, field, value) => {
-    setVariants(prev => {
-      const copy = [...prev];
-      copy[index][field] = value;
-      return copy;
-    });
-  };
+import { PhotoIcon } from "@heroicons/react/20/solid"; 
 
-  return (
-    <div className="border rounded-lg p-4 mt-6">
-      <h3 className="text-lg font-semibold mb-4">Variants</h3>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full text-sm border">
-          <thead className="bg-gray-100 border-b">
-            <tr>
-              <th className="p-2 text-left">Option</th>
-              <th className="p-2 text-left">Price</th>
-              <th className="p-2 text-left">Compare At</th>
-              <th className="p-2 text-left">SKU</th>
-              <th className="p-2 text-left">Stock</th>
-              <th className="p-2 text-left w-12">Delete</th>
-            </tr>
-          </thead>
+const VariantTable = ({ variants, onUpdate, onDeleteSelected }) => {
 
-          <tbody>
-            {variants.map((variant, index) => (
-              <tr key={index} className="border-b hover:bg-gray-50">
-                
-                {/* Option Value */}
-                <td className="p-2">{variant.optionValues[0]}</td>
+    const toggleSelect = (index) => {
+        const updated = [...variants];
+        updated[index].selected = !updated[index].selected;
+        onUpdate(updated);
+    };
 
-                {/* Price */}
-                <td className="p-2">
-                  <input
-                    type="number"
-                    value={variant.price}
-                    onChange={(e) => updateField(index, "price", e.target.value)}
-                    className="border p-1 rounded w-28"
-                  />
-                </td>
+    const handleChange = (index, field, value) => {
+        const updated = [...variants];
+        updated[index][field] = value;
+        onUpdate(updated);
+    };
 
-                {/* Compare at Price */}
-                <td className="p-2">
-                  <input
-                    type="number"
-                    value={variant.compareAtPrice}
-                    onChange={(e) =>
-                      updateField(index, "compareAtPrice", e.target.value)
-                    }
-                    className="border p-1 rounded w-28"
-                  />
-                </td>
+    if (variants.length === 0) return 
 
-                {/* SKU */}
-                <td className="p-2">
-                  <input
-                    type="text"
-                    value={variant.sku}
-                    onChange={(e) => updateField(index, "sku", e.target.value)}
-                    className="border p-1 rounded w-32"
-                  />
-                </td>
-
-                {/* Stock */}
-                <td className="p-2">
-                  <input
-                    type="number"
-                    value={variant.stock}
-                    onChange={(e) => updateField(index, "stock", e.target.value)}
-                    className="border p-1 rounded w-20"
-                  />
-                </td>
-
-                {/* Delete */}
-                <td className="p-2 text-center">
-                  <button
+    return (
+        <div className="border p-2 rounded mt-4">
+            <div className="flex justify-between">
+                <h3 className="font-semibold mb-2">Variants</h3>
+                <button 
                     type="button"
-                    onClick={() => onDeleteVariant(index, variant)}
-                    className="text-red-600 hover:text-red-800 font-bold"
-                  >
-                    ✕
-                  </button>
-                </td>
+                    onClick={onDeleteSelected}
+                    className="text-red-500 font-semibold"
+                >
+                    Delete Selected
+                </button>
+            </div>
 
-              </tr>
+            {variants.map((v, i) => (
+                <div key={i} className="flex gap-3 items-center mb-2 h-[60px] border-t-1 my-auto">
+                    <input 
+                        type="checkbox"
+                        checked={v.selected}
+                        onChange={() => toggleSelect(i)}
+                    />
+
+                    <PhotoIcon className="w-6 h-6 mx-[10px]"/>
+                    <div className="w-32">{v.optionValue}</div>
+
+                    <input
+                        className="border p-1 w-32"
+                        placeholder="SKU"
+                        value={v.sku}
+                        onChange={(e) => handleChange(i, "sku", e.target.value)}
+                    />
+
+                    <input
+                        className="border p-1 w-24"
+                        placeholder="Price"
+                        type="number"
+                        value={v.price}
+                        onChange={(e) => handleChange(i, "price", e.target.value)}
+                    />
+
+                    <input
+                        className="border p-1 w-20"
+                        placeholder="Stock"
+                        type="number"
+                        value={v.stock}
+                        onChange={(e) => handleChange(i, "stock", e.target.value)}
+                    />
+                </div>
             ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+        </div>
+    );
 };
 
-export default VariantTable;
+export default VariantTable

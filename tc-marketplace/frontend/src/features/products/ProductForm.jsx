@@ -3,6 +3,7 @@ import slugify from "slugify";
 import CategorySelector from "../../components/ui/CategorySelector.jsx";
 import VariantEditor from "./VariantEditor.jsx";
 import VariantTable from "./VariantTable.jsx";
+import VariantOptionEditor from "./VariantOptionEditor.jsx"
 import { diffObjects } from "../../utils/diff.js";
 import { diffVariants } from "../../utils/diffVariants.js";
 import { InputField } from "./InputField.jsx";
@@ -30,7 +31,7 @@ const ProductForm = ({
     });
 
     const [option, setOption] = useState({
-        name: "Stage",
+        name: "",
         values: []
     });
 
@@ -58,6 +59,21 @@ const ProductForm = ({
             });
         }
     }, [initialData])
+
+    useEffect(() => {
+        if (!option.values.length) return;
+
+        const newVariants = option.values.map((v, index) => ({
+            _id: variants[index]?._id || null,  // keep id if editing existing
+            optionValue: v,
+            sku: variants[index]?.sku || "",
+            price: variants[index]?.price || "",
+            stock: variants[index]?.stock || 0,
+            selected: false
+        }));
+
+        setVariants(newVariants);
+    }, [option.values]);
 
     const generateVariants = () => {
         const newVariants = option.values.map(v => ({
@@ -88,6 +104,10 @@ const ProductForm = ({
         onSubmit({...difference, variants})
     } 
 
+    const handleVariantChange = (option) => {
+        setOption(option)
+    }
+    console.log(variants)
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             <InputField label="Product Name" name="name" value={form.name} onChange={handleNameChange} required={true}/>
@@ -133,17 +153,18 @@ const ProductForm = ({
                 onChange={(newIds) => setForm(prev => ({ ...prev, categories: newIds }))}
             />
             {/* Variants */}
-            <VariantEditor
-                option={option}
-                setOption={setOption}
-                onGenerateVariants={generateVariants}
+            <VariantOptionEditor 
+                option={option} 
+                onChange={handleVariantChange}
+                onDeleteOption={() => setOption({name:"", values:[]})}
             />
-            <VariantTable
-            variants={variants}
-            setVariants={setVariants}
-            onDeleteVariant={(index) => {
-                setVariants(prev => prev.filter((_, i) => i !== index));
-            }}
+
+            <VariantTable 
+                variants={variants}
+                onUpdate={setVariants}
+                onDeleteSelected={() => {
+                    setVariants(prev => prev.filter(v => !v.selected));
+                }}
             />
 
             <button
