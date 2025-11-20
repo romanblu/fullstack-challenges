@@ -29,10 +29,11 @@ const VariantTable = ({ variants, onUpdate, onDeleteSelected, primaryOption }) =
         onUpdate(updated);
     };
 
-    const handleChange = (variantId, field, value) => {
+    const handleChange = (tempId, field, value) => {
         const updated = variants.map(v =>
-            v.id === variantId ? { ...v, [field]: value } : v
+            v.tempId === tempId ? { ...v, [field]: value } : v
         );
+        console.log(tempId, field,value)
         onUpdate(updated);
     };
 
@@ -86,7 +87,7 @@ const VariantTable = ({ variants, onUpdate, onDeleteSelected, primaryOption }) =
                                         className="border p-1 w-32 rounded"
                                         placeholder="SKU"
                                         value={v.sku}
-                                        onChange={(e) => handleChange(v.id, "sku", e.target.value)}
+                                        onChange={(e) => handleChange(v.tempId, "sku", e.target.value)}
                                     />
 
                                     <input
@@ -94,7 +95,7 @@ const VariantTable = ({ variants, onUpdate, onDeleteSelected, primaryOption }) =
                                         type="number"
                                         placeholder="Price"
                                         value={v.price}
-                                        onChange={(e) => handleChange(v.id, "price", e.target.value)}
+                                        onChange={(e) => handleChange(v.tempId, "price", e.target.value)}
                                     />
 
                                     <input
@@ -102,7 +103,7 @@ const VariantTable = ({ variants, onUpdate, onDeleteSelected, primaryOption }) =
                                         type="number"
                                         placeholder="Stock"
                                         value={v.stock}
-                                        onChange={(e) => handleChange(v.id, "stock", e.target.value)}
+                                        onChange={(e) => handleChange(v.tempId, "stock", e.target.value)}
                                     />
                                 </div>
                             ))}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import slugify from "slugify";
+import { v4 as uuid } from "uuid";
 import CategorySelector from "../../components/ui/CategorySelector.jsx";
 import VariantEditor from "./VariantEditor.jsx";
 import VariantTable from "./VariantTable.jsx";
@@ -87,6 +88,8 @@ const ProductForm = ({
 
         const updated = combos.map((combo, index) => ({
             _id: variants[index]?._id || null,
+            name: combo.join(" / "),
+            tempId: uuid(),
             optionValues: combo,
             sku: variants[index]?.sku || "",
             price: variants[index]?.price || "",
@@ -138,8 +141,10 @@ const ProductForm = ({
     const handleSubmit = (e) => {
         e.preventDefault();
         const formDifference = diffObjects(initialData, form);
-        const variantsDifference = diffVariants(initialData.variants, variants);
-        onSubmit({ ...formDifference, variantsDifference });
+        // const variantsDifference = diffVariants(initialData.variants, variants);
+        console.log("FORM DIFFERENCE ", formDifference)
+        console.log("VARIANTS ", variants)
+        onSubmit({ ...formDifference, variants });
     };
 
     return (
@@ -187,7 +192,7 @@ const ProductForm = ({
                 <VariantOptionEditor
                     key={index}
                     option={option}
-                    onChange={updated => updateOption(index, updated)}
+                    onChange={updated =>  updateOption(index, updated)}
                     onDelete={() => deleteOption(index)}
                 />
             ))}
