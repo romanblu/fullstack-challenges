@@ -55,9 +55,10 @@ export const createProduct = asyncHandler(async (req, res) => {
     name,
     price,
   } = req.body;
-  
+  console.log(req.body)
   // TODO: move into validation middleware - request validation
-  const skus = (req.body.variants || []).map(v => v.sku);
+  const skus = (req.body.variants || []).map(v => v.sku).filter(sku => typeof sku === "string" && sku.trim() !== "");
+
   const duplicatesInPayload = skus.filter((sku, i) => skus.indexOf(sku) !== i);
   if (duplicatesInPayload.length > 0) {
     throw ApiError.badRequest(`Duplicate SKUs in request: ${duplicatesInPayload.join(", ")}`);
@@ -79,7 +80,7 @@ export const createProduct = asyncHandler(async (req, res) => {
 // @route   PUT /api/products/:id
 // @access  Private - seller/admin
 export const updateProduct = asyncHandler( async (req, res) => {
-  console.log(req.body)
+
   const updated = await productService.updateProduct(req.params.id, req.body);
 
   if(!updated){

@@ -68,27 +68,33 @@ export const createProduct = async (body) => {
   // DB validations for product name and variants 
   const exists = await Product.findOne({ slug: body.slug });
   if (exists) throw ApiError.badRequest("Product slug already exists");
-  
-  const skus = variants.map(v => v.sku);
-  const skuExists = await Variant.findOne({ sku: { $in: skus } });
-  if (skuExists) throw ApiError.badRequest(`SKU '${skuExists.sku}' already exists`);
+  // extract non empty SKUs
+  const skus = variants.map(v => v.sku).filter(sku => typeof sku === "string" && sku.trim() !== "");
+  // check for duplicate SKUs
+  if(skus.length > 0){
+    const skuExists = await Variant.findOne({ sku: { $in: skus } });
+    if (skuExists) throw ApiError.badRequest(`SKU '${skuExists.sku}' already exists`);
+  }
 
   const product = await Product.create({
     ...body, variants:[]
   });
   
-  
   let createdVariantIds =[]
 
   try{
-
     if (Array.isArray(variants) && variants.length > 0) {
       for (let v of variants) {
-        
-        const created = await Variant.create({
-          ...v,
+        const data = {
+          name: v.name,
+          price: v.price,
+          stock: v.stock,
           product: product._id
-        });
+        }
+        if(typeof v.sku === "string" && v.sku.trim() !== "")
+          data.sku = v.sku
+
+        const created = await Variant.create(data);
         createdVariantIds.push(created._id);
       }
       
