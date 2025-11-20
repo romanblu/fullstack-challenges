@@ -1,26 +1,46 @@
 import { PhotoIcon } from "@heroicons/react/20/solid"; 
+import { useState } from "react";
 
 
-const VariantTable = ({ variants, onUpdate, onDeleteSelected }) => {
+const VariantTable = ({ variants, onUpdate, onDeleteSelected, primaryOption }) => {
+    const [openGroups, setOpenGroups] = useState({});
 
-    const toggleSelect = (index) => {
-        const updated = [...variants];
-        updated[index].selected = !updated[index].selected;
+    if (!variants.length) return null;
+
+    // Group variants by the primary option (example "Color")
+    const grouped = variants.reduce((acc, v) => {
+        const key = v.optionValues[0];
+        if (!acc[key]) acc[key] = [];
+        acc[key] = [...acc[key], v];
+        return acc;
+    }, {})
+    
+    const toggleGroup = (groupKey) => {
+        setOpenGroups(prev => ({
+            ...prev,
+            [groupKey]: !prev[groupKey]
+        }));
+    };
+
+    const toggleSelect = (variantId) => {
+        const updated = variants.map(v =>
+            v.id === variantId ? { ...v, selected: !v.selected } : v
+        );
         onUpdate(updated);
     };
 
-    const handleChange = (index, field, value) => {
-        const updated = [...variants];
-        updated[index][field] = value;
+    const handleChange = (variantId, field, value) => {
+        const updated = variants.map(v =>
+            v.id === variantId ? { ...v, [field]: value } : v
+        );
         onUpdate(updated);
     };
-
-    if (variants.length === 0) return 
 
     return (
-        <div className="border p-2 rounded mt-4">
-            <div className="flex justify-between">
-                <h3 className="font-semibold mb-2">Variants</h3>
+        <div className="border p-2 rounded mt-4 bg-white">
+            <div className="flex justify-between items-center mb-3">
+                <h3 className="font-semibold">Variants</h3>
+
                 <button 
                     type="button"
                     onClick={onDeleteSelected}
@@ -30,43 +50,69 @@ const VariantTable = ({ variants, onUpdate, onDeleteSelected }) => {
                 </button>
             </div>
 
-            {variants.map((v, i) => (
-                <div key={i} className="flex gap-3 items-center mb-2 h-[60px] border-t-1 my-auto">
-                    <input 
-                        type="checkbox"
-                        checked={v.selected}
-                        onChange={() => toggleSelect(i)}
-                    />
+            {Object.entries(grouped).map(([groupKey, groupItems]) => (
+                <div key={groupKey} className="border-t">
+                    {/* --------- GROUP HEADER --------- */}
+                    <div 
+                        className="flex justify-between items-center py-3 cursor-pointer"
+                        onClick={() => toggleGroup(groupKey)}
+                    >
+                        <div className="font-semibold">{primaryOption}: {groupKey}</div>
+                        <div>{openGroups[groupKey] ? "▲" : "▼"}</div>
+                    </div>
 
-                    <PhotoIcon className="w-6 h-6 mx-[10px]"/>
-                    <div className="w-32">{v.optionValue}</div>
+                    {/* --------- GROUP CONTENT --------- */}
+                    {openGroups[groupKey] && (
+                        <div className="ml-4 space-y-2 mb-4">
+                          { console.log(groupItems)}
+                            {groupItems.map((v) => (
+                                <div 
+                                    key={v.id}
+                                    className="flex gap-3 items-center border p-2 rounded"
+                                >
+                                    <input
+                                        type="checkbox"
+                                        checked={v.selected}
+                                        onChange={() => toggleSelect(v.id)}
+                                    />
 
-                    <input
-                        className="border p-1 w-32"
-                        placeholder="SKU"
-                        value={v.sku}
-                        onChange={(e) => handleChange(i, "sku", e.target.value)}
-                    />
+                                    <PhotoIcon className="w-6 h-6 text-gray-500" />
 
-                    <input
-                        className="border p-1 w-24"
-                        placeholder="Price"
-                        type="number"
-                        value={v.price}
-                        onChange={(e) => handleChange(i, "price", e.target.value)}
-                    />
+                                    {/* SHOW ALL OPTION VALUES */}
+                                    <div className="w-40 text-gray-700">
+                                        {Object.values(v.optionValues).join(" / ")}
+                                    </div>
 
-                    <input
-                        className="border p-1 w-20"
-                        placeholder="Stock"
-                        type="number"
-                        value={v.stock}
-                        onChange={(e) => handleChange(i, "stock", e.target.value)}
-                    />
+                                    <input
+                                        className="border p-1 w-32 rounded"
+                                        placeholder="SKU"
+                                        value={v.sku}
+                                        onChange={(e) => handleChange(v.id, "sku", e.target.value)}
+                                    />
+
+                                    <input
+                                        className="border p-1 w-24 rounded"
+                                        type="number"
+                                        placeholder="Price"
+                                        value={v.price}
+                                        onChange={(e) => handleChange(v.id, "price", e.target.value)}
+                                    />
+
+                                    <input
+                                        className="border p-1 w-20 rounded"
+                                        type="number"
+                                        placeholder="Stock"
+                                        value={v.stock}
+                                        onChange={(e) => handleChange(v.id, "stock", e.target.value)}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             ))}
         </div>
     );
 };
 
-export default VariantTable
+export default VariantTable;

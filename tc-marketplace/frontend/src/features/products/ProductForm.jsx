@@ -10,129 +10,155 @@ import { InputField } from "./InputField.jsx";
 import { InputFieldPrice } from "./InputFieldPrice.jsx";
 import { InputFieldNumber } from "./InputFieldNumber.jsx";
 
+const cartesian = (arrays) => {
+    if (arrays.length === 0) return [];
+    return arrays.reduce(
+        (acc, curr) => acc.flatMap(a => curr.map(b => [...a, b])),
+        [[]]
+    );
+};
+
 const ProductForm = ({
     initialData = {},
     onSubmit,
     onDiscard,
     categoryTree,
-    }) => {
+}) => {
 
     const [form, setForm] = useState({
-    name: "",
-    slug: "",
-    species: "",
-    description: "",
-    price: 0.00,
-    quantity: 1,
-    mainImage: "",
-    productType: "",
-    categories: [],
-    ...initialData    // populate for edit mode
-    });
-
-    const [option, setOption] = useState({
         name: "",
-        values: []
+        slug: "",
+        species: "",
+        description: "",
+        price: 0.00,
+        quantity: 1,
+        mainImage: "",
+        productType: "",
+        categories: [],
+        ...initialData
     });
 
-    // TODO: create a hook for loading form data - category tree and product type list
+    // MULTIPLE OPTIONS (Shopify style)
+    const [options, setOptions] = useState([
+        { name: "", values: [""] }
+    ]);
 
     const [variants, setVariants] = useState([]);
 
+    // -----------------------------------
+    // Load initial variants from backend
+    // -----------------------------------
     useEffect(() => {
-        if (!initialData || !initialData.variants) return;
+        if (!initialData?.variants) return;
 
-        const cloned = JSON.parse(JSON.stringify(initialData.variants))
-        // Load variants into state
-        setVariants(cloned);
+        setVariants(JSON.parse(JSON.stringify(initialData.variants)));
 
-        // Infer option name & values from existing variants
+        // Convert variants → options
         if (initialData.variants.length > 0) {
-            const optionName = initialData.variants[0].name;
-            const optionValues = [
-                ...new Set(initialData.variants.flatMap(v => v.optionValues))
-            ];
+            const collected = {};
 
-            setOption({
-                name: optionName,
-                values: optionValues
+            initialData.variants.forEach(v => {
+                v.optionValues.forEach((value, index) => {
+                    if (!collected[index]) collected[index] = new Set();
+                    collected[index].add(value);
+                });
             });
+
+            const restoredOptions = Object.keys(collected).map(i => ({
+                name: `Option ${Number(i) + 1}`,
+                values: Array.from(collected[i])
+            }));
+
+            setOptions(restoredOptions);
         }
-    }, [initialData])
+    }, [initialData]);
 
+    // -----------------------------------
+    // Generate variants when options change
+    // -----------------------------------
     useEffect(() => {
-        if (!option.values.length) return;
+        const cleanValues = options.map(o =>
+            o.values.filter(v => v.trim() !== "")
+        );
 
-        const newVariants = option.values.map((v, index) => ({
-            _id: variants[index]?._id || null,  // keep id if editing existing
-            optionValue: v,
+        if (cleanValues.some(v => v.length === 0)) return;
+
+        const combos = cartesian(cleanValues);
+
+        const updated = combos.map((combo, index) => ({
+            _id: variants[index]?._id || null,
+            optionValues: combo,
             sku: variants[index]?.sku || "",
             price: variants[index]?.price || "",
             stock: variants[index]?.stock || 0,
             selected: false
         }));
 
-        setVariants(newVariants);
-    }, [option.values]);
+        setVariants(updated);
 
-    const generateVariants = () => {
-        const newVariants = option.values.map(v => ({
-            name: option.name,
-            optionValues: [v],
-            price: 0,
-            compareAtPrice: "",
-            sku: "",
-            stock: 0,
-            images: []
-        }));
-        setVariants(newVariants);
+    }, [options]);
+
+    // -----------------------------------
+    // Option Manipulation
+    // -----------------------------------
+    const updateOption = (index, updated) => {
+        setOptions(prev => {
+            const copy = [...prev];
+            copy[index] = updated;
+            return copy;
+        });
     };
 
+    const addOption = () => {
+        if (options.length >= 3) return;
+        setOptions(prev => [...prev, { name: "", values: [""] }]);
+    };
+
+    const deleteOption = (index) => {
+        setOptions(prev => prev.filter((_, i) => i !== index));
+    };
+
+    // -----------------------------------
+    // Form Logic
+    // -----------------------------------
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm((prev) => ({ ...prev, [name]: value }));
-    }
+    };
 
     const handleNameChange = (e) => {
-        setForm({ ...form, name: e.target.value, slug: slugify(e.target.value, {lower:true}) });
-    }
+        setForm({
+            ...form,
+            name: e.target.value,
+            slug: slugify(e.target.value, { lower: true })
+        });
+    };
 
     const handleSubmit = (e) => {
-        e.preventDefault()
-        const difference = diffObjects(initialData, form)
-        const differenceVariants = diffVariants(initialData.variants, variants)
-        onSubmit({...difference, variants})
-    } 
+        e.preventDefault();
+        const difference = diffObjects(initialData, form);
+        const differenceVariants = diffVariants(initialData.variants, variants);
+        onSubmit({ ...difference, variants });
+    };
 
-    const handleVariantChange = (option) => {
-        setOption(option)
-    }
-    console.log(variants)
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
-            <InputField label="Product Name" name="name" value={form.name} onChange={handleNameChange} required={true}/>
-           
-            <InputField label="Slug" name="slug" value={form.slug} onChange={handleChange} required={true}/>
-          
-            <InputField label="Species" name="species" value={form.species} onChange={handleChange} required={true}/>
-         
-            {/* TODO: create component for parsing HTML, add button for template generation  */}
-            <textarea
-            name="description"
-            placeholder="Description"
-            value={form.description}
-            onChange={handleChange}
-            className="w-full border rounded-md p-2"
-            />
-            
-            <InputFieldPrice value={form.price} onChange={handleChange}  />
+            <InputField label="Product Name" name="name" value={form.name} onChange={handleNameChange} required />
+            <InputField label="Slug" name="slug" value={form.slug} onChange={handleChange} required />
+            <InputField label="Species" name="species" value={form.species} onChange={handleChange} required />
 
-            <InputFieldNumber value={form.quantity} onChange={handleChange} name="quantity" label="Quantity"/>
-            
+            <textarea
+                name="description"
+                placeholder="Description"
+                value={form.description}
+                onChange={handleChange}
+                className="w-full border rounded-md p-2"
+            />
+
+            <InputFieldPrice value={form.price} onChange={handleChange} />
+            <InputFieldNumber value={form.quantity} onChange={handleChange} name="quantity" label="Quantity" />
             <InputField label="Main Image URL" name="nameImage" value={form.mainImage} onChange={handleChange} />
 
-            {/* Product Type */}
-                {/* TODO: Refactor */}
             <select
                 name="productType"
                 value={form.productType}
@@ -147,41 +173,58 @@ const ProductForm = ({
                 <option value="kit">Kit</option>
                 <option value="digital">Digital</option>
             </select>
-            <CategorySelector 
+
+            <CategorySelector
                 categoryTree={categoryTree}
                 selectedIds={form.categories}
                 onChange={(newIds) => setForm(prev => ({ ...prev, categories: newIds }))}
             />
-            {/* Variants */}
-            <VariantOptionEditor 
-                option={option} 
-                onChange={handleVariantChange}
-                onDeleteOption={() => setOption({name:"", values:[]})}
-            />
 
-            <VariantTable 
+            {/* ---------------- OPTIONS ---------------- */}
+            {options.map((option, index) => (
+                <VariantOptionEditor
+                    key={index}
+                    option={option}
+                    onChange={updated => updateOption(index, updated)}
+                    onDelete={() => deleteOption(index)}
+                />
+            ))}
+
+            {options.length < 3 && (
+                <button
+                    type="button"
+                    onClick={addOption}
+                    className="text-blue-600 mt-2"
+                >
+                    + Add another option
+                </button>
+            )}
+
+            {/* ---------------- VARIANTS TABLE ---------------- */}
+            <VariantTable
                 variants={variants}
                 onUpdate={setVariants}
-                onDeleteSelected={() => {
-                    setVariants(prev => prev.filter(v => !v.selected));
-                }}
+                primaryOption="Size"
+                onDeleteSelected={() =>
+                    setVariants(prev => prev.filter(v => !v.selected))
+                }
             />
 
             <button
-            type="submit"
-            className="w-full bg-lime-500 hover:bg-lime-600 text-green-950 font-semibold py-2 rounded-md shadow-md"
+                type="submit"
+                className="w-full bg-lime-500 hover:bg-lime-600 text-green-950 font-semibold py-2 rounded-md shadow-md"
             >
-            Submit
+                Submit
             </button>
             <button
                 onClick={onDiscard}
                 type="button"
                 className="px-4 bg-gray-300 hover:bg-gray-500 text-green-950 font-semibold py-2 rounded-md shadow-md"
-                >
+            >
                 Discard
             </button>
         </form>
-    )
-}
+    );
+};
 
-export default ProductForm
+export default ProductForm;
