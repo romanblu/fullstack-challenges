@@ -5,7 +5,7 @@ const productSchema = new mongoose.Schema({
   slug: {type: String, required: true, unique: true},
   species: {type: String},
   description: String,
-  price: {type: Number, required: true},
+  price: {type: Number},
   quantity: {type: Number},
   categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category"}],
   mainImage: String,
@@ -28,7 +28,12 @@ const productSchema = new mongoose.Schema({
     shelfLife: String,
     certification: String
   },
-  
+  options: [
+    {
+      name: String,
+      values: [String]
+    }
+  ],
   variants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Variant" }],
 
   // out of stock, sale...
