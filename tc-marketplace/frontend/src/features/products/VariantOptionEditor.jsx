@@ -116,14 +116,16 @@ const VariantOptionEditor = ({ option, onChange, onDeleteOption }) => {
                     <h3 className="font-semibold text-md mb-2">{name}</h3>
 
                     <div className="flex flex-wrap gap-2">
-                        {values.map((value, i) => (
+                        {values.map((value, i) => value.length > 0 ? (
+                            
                             <span
                                 key={i}
                                 className="px-2 py-1 bg-gray-200 rounded-full text-sm"
                             >
                                 {value}
-                            </span>
-                        ))}
+                            </span> 
+                            
+                        ) : '')}
                     </div>
                 </div>
             )}

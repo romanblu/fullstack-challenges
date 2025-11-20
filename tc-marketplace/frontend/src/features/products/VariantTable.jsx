@@ -64,7 +64,6 @@ const VariantTable = ({ variants, onUpdate, onDeleteSelected, primaryOption }) =
                     {/* --------- GROUP CONTENT --------- */}
                     {openGroups[groupKey] && (
                         <div className="ml-4 space-y-2 mb-4">
-                          { console.log(groupItems)}
                             {groupItems.map((v) => (
                                 <div 
                                     key={v.id}
