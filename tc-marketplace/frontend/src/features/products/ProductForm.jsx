@@ -40,7 +40,7 @@ const ProductForm = ({
 
     // MULTIPLE OPTIONS (Shopify style)
     const [options, setOptions] = useState([
-        { name: "", values: [""] }
+        
     ]);
 
     const [variants, setVariants] = useState([]);
@@ -123,6 +123,7 @@ const ProductForm = ({
     // -----------------------------------
     const handleChange = (e) => {
         const { name, value } = e.target;
+        console.log(name,value)
         setForm((prev) => ({ ...prev, [name]: value }));
     };
 
@@ -136,9 +137,9 @@ const ProductForm = ({
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const difference = diffObjects(initialData, form);
-        const differenceVariants = diffVariants(initialData.variants, variants);
-        onSubmit({ ...difference, variants });
+        const formDifference = diffObjects(initialData, form);
+        const variantsDifference = diffVariants(initialData.variants, variants);
+        onSubmit({ ...formDifference, variantsDifference });
     };
 
     return (
@@ -157,7 +158,7 @@ const ProductForm = ({
 
             <InputFieldPrice value={form.price} onChange={handleChange} />
             <InputFieldNumber value={form.quantity} onChange={handleChange} name="quantity" label="Quantity" />
-            <InputField label="Main Image URL" name="nameImage" value={form.mainImage} onChange={handleChange} />
+            <InputField label="Main Image URL" name="mainImage" value={form.mainImage} onChange={handleChange} />
 
             <select
                 name="productType"
@@ -181,6 +182,7 @@ const ProductForm = ({
             />
 
             {/* ---------------- OPTIONS ---------------- */}
+
             {options.map((option, index) => (
                 <VariantOptionEditor
                     key={index}
