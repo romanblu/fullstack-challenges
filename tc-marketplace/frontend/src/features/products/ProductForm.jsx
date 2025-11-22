@@ -146,8 +146,9 @@ const ProductForm = ({
         const formDifference = diffObjects(initialData, form);
         // const variantsDifference = diffVariants(initialData.variants, variants);
         console.log("FORM DIFFERENCE ", formDifference)
-        console.log("VARIANTS ", variants)
-        onSubmit({ ...formDifference, variants });
+        console.log("VARIANTS ", form.variants)
+        console.log({ ...formDifference, variants:form.variants })
+        onSubmit({ ...formDifference, variants:form.variants });
     };
     console.log(form)
     return (
