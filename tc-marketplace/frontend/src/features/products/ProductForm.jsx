@@ -51,9 +51,11 @@ const ProductForm = ({
     useEffect(() => {
         if (!initialData?.variants) return;
 
-        setVariants(JSON.parse(JSON.stringify(initialData.variants)));
-
-        // load variants data 
+        const loadedVariants = JSON.parse(JSON.stringify(initialData.variants));
+        setForm(prev => ({
+            ...prev, 
+            variants: loadedVariants
+        }))
 
     }, [initialData]);
 
@@ -145,10 +147,16 @@ const ProductForm = ({
         e.preventDefault();
         const formDifference = diffObjects(initialData, form);
         // const variantsDifference = diffVariants(initialData.variants, variants);
-        console.log("FORM DIFFERENCE ", formDifference)
-        console.log("VARIANTS ", form.variants)
         console.log({ ...formDifference, variants:form.variants })
-        onSubmit({ ...formDifference, variants:form.variants });
+
+        // Clean last empty input used for UX and also any inputs left empty
+        const cleanOptions = form.options.map(opt => ({
+            name: opt.name.trim(),
+            values: opt.values
+                .map(v => v.trim())
+                .filter(v => v !== "")
+        }));
+        onSubmit({ ...formDifference, variants:form.variants, options: cleanOptions });
     };
     console.log(form)
     return (
