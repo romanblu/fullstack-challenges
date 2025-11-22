@@ -24,7 +24,7 @@ const VariantTable = ({ variants, onUpdate, onDeleteSelected, primaryOption }) =
 
     const toggleSelect = (variantId) => {
         const updated = variants.map(v =>
-            v.id === variantId ? { ...v, selected: !v.selected } : v
+            v.tempId === variantId ? { ...v, selected: !v.selected } : v
         );
         onUpdate(updated);
     };
@@ -67,13 +67,13 @@ const VariantTable = ({ variants, onUpdate, onDeleteSelected, primaryOption }) =
                         <div className="ml-4 space-y-2 mb-4">
                             {groupItems.map((v) => (
                                 <div 
-                                    key={v.id}
+                                    key={v.tempId}
                                     className="flex gap-3 items-center border p-2 rounded"
                                 >
                                     <input
                                         type="checkbox"
                                         checked={v.selected}
-                                        onChange={() => toggleSelect(v.id)}
+                                        onChange={() => toggleSelect(v.tempId)}
                                     />
 
                                     <PhotoIcon className="w-6 h-6 text-gray-500" />

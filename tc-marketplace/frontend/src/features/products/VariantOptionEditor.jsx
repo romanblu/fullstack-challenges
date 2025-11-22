@@ -1,18 +1,39 @@
 import { useEffect, useState } from "react";
 
-const VariantOptionEditor = ({ option, onChange, onDeleteOption }) => {
-    const [name, setName] = useState(option?.name ?? "");
-    const [values, setValues] = useState(option?.values?.length ? option.values : [""]);
+const VariantOptionEditor = ({ index, option, onChange, onDeleteOption, addOption }) => {
+    // const [name, setName] = useState(option?.name ?? "");
+    // const [values, setValues] = useState(option?.values?.length ? option.values : [""]);
     const [editing, setEditing] = useState(true);
 
-    // Notify parent when data changes
-    useEffect(() => {
-        onChange({
-            name,
-            values: values.filter(v => v.trim() !== "")
-        });
-    }, [name, values]);
+    const {name ,values } = option
 
+    const updateName = (newName) => {
+        onChange(index, { ...option, name: newName });
+    };
+
+    const updateValue = (i, newValue) => {
+        let updatedValues = [...values];
+        updatedValues[i] = newValue;
+
+        // If last item was typed into, add new empty string
+        if (i === values.length - 1 && newValue.trim() !== "") {
+            updatedValues.push("");
+        }
+
+        // Remove empty values except last
+        updatedValues = updatedValues.filter((v, idx) => 
+            v.trim() !== "" || idx === updatedValues.length - 1
+        );
+
+        onChange(index, { ...option, values: updatedValues });
+    };
+
+    const removeValue = (i) => {
+        onChange(index, {
+            ...option,
+            values: values.filter((_, idx) => idx !== i)
+        });
+    };
     // Handle typing inside values
     const handleValueChange = (index, newValue) => {
         const updated = [...values];
@@ -28,9 +49,7 @@ const VariantOptionEditor = ({ option, onChange, onDeleteOption }) => {
         setValues(cleaned);
     };
 
-    const removeValue = (index) => {
-        setValues(values.filter((_, i) => i !== index));
-    };
+    
 
     const handleDone = () => {
         // Disallow collapsing if no name
@@ -53,7 +72,7 @@ const VariantOptionEditor = ({ option, onChange, onDeleteOption }) => {
                             className="border p-2 w-full rounded"
                             placeholder="e.g. Size, Stage"
                             value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            onChange={(e) => updateName(e.target.value)}
                         />
                     </div>
 
@@ -68,7 +87,7 @@ const VariantOptionEditor = ({ option, onChange, onDeleteOption }) => {
                                         className="border p-2 rounded flex-1"
                                         placeholder="Enter value..."
                                         value={value}
-                                        onChange={(e) => handleValueChange(index, e.target.value)}
+                                        onChange={(e) => updateValue(index, e.target.value)}
                                     />
 
                                     {/* Show delete button for all but last empty input */}

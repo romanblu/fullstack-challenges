@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import slugify from "slugify";
 import { v4 as uuid } from "uuid";
 import CategorySelector from "../../components/ui/CategorySelector.jsx";
@@ -10,6 +10,8 @@ import { diffVariants } from "../../utils/diffVariants.js";
 import { InputField } from "./InputField.jsx";
 import { InputFieldPrice } from "./InputFieldPrice.jsx";
 import { InputFieldNumber } from "./InputFieldNumber.jsx";
+import OptionManager from "./OptionManager.jsx";
+import VariantManager from "./VariantManager.jsx";
 
 const cartesian = (arrays) => {
     if (arrays.length === 0) return [];
@@ -18,6 +20,7 @@ const cartesian = (arrays) => {
         [[]]
     );
 };
+
 
 const ProductForm = ({
     initialData = {},
@@ -36,16 +39,12 @@ const ProductForm = ({
         mainImage: "",
         productType: "",
         categories: [],
+        options:[],
+        variants:[],
         ...initialData
     });
 
-    // MULTIPLE OPTIONS (Shopify style)
-    const [options, setOptions] = useState([
-        
-    ]);
-
-    const [variants, setVariants] = useState([]);
-
+    
     // -----------------------------------
     // Load initial variants from backend
     // -----------------------------------
@@ -54,71 +53,76 @@ const ProductForm = ({
 
         setVariants(JSON.parse(JSON.stringify(initialData.variants)));
 
-        // Convert variants → options
-        if (initialData.variants.length > 0) {
-            const collected = {};
+        // load variants data 
 
-            initialData.variants.forEach(v => {
-                v.optionValues.forEach((value, index) => {
-                    if (!collected[index]) collected[index] = new Set();
-                    collected[index].add(value);
-                });
-            });
-
-            const restoredOptions = Object.keys(collected).map(i => ({
-                name: `Option ${Number(i) + 1}`,
-                values: Array.from(collected[i])
-            }));
-
-            setOptions(restoredOptions);
-        }
     }, [initialData]);
 
     // -----------------------------------
     // Generate variants when options change
     // -----------------------------------
     useEffect(() => {
-        const cleanValues = options.map(o =>
+
+        const cleanValues = form.options.map(o =>
             o.values.filter(v => v.trim() !== "")
         );
 
         if (cleanValues.some(v => v.length === 0)) return;
-
+        
         const combos = cartesian(cleanValues);
-
+    
         const updated = combos.map((combo, index) => ({
-            _id: variants[index]?._id || null,
+            _id: form.variants[index]?._id || null,
             name: combo.join(" / "),
             tempId: uuid(),
             optionValues: combo,
-            sku: variants[index]?.sku || "",
-            price: variants[index]?.price || "",
-            stock: variants[index]?.stock || 0,
+            sku: form.variants[index]?.sku || "",
+            price: form.variants[index]?.price || "",
+            stock: form.variants[index]?.stock || 0,
             selected: false
         }));
+        
+        setForm(prev => ({
+            ...prev,
+            variants: updated
+        }));
 
-        setVariants(updated);
-
-    }, [options]);
+    }, [form.options]);
 
     // -----------------------------------
     // Option Manipulation
     // -----------------------------------
     const updateOption = (index, updated) => {
-        setOptions(prev => {
-            const copy = [...prev];
-            copy[index] = updated;
-            return copy;
-        });
+        setForm(prev => ({
+            ...prev,
+            options: prev.options.map((o, i) => i === index ? updated : o)
+        }));
     };
 
     const addOption = () => {
-        if (options.length >= 3) return;
-        setOptions(prev => [...prev, { name: "", values: [""] }]);
+        setForm(prev => ({
+            ...prev,
+            options: [...prev.options, { name: "", values: [""] }]
+        }));
     };
 
+    const updateVariants = (newVariants) => {
+        setForm(prev => ({
+            ...prev, variants: newVariants
+        }));
+    };
+
+    const deleteSelectedVariants = () => {
+        setForm(prev => ({
+            ...prev,
+            variants: prev.variants.filter(v => !v.selected)
+        }));
+    }
+
     const deleteOption = (index) => {
-        setOptions(prev => prev.filter((_, i) => i !== index));
+        setForm(prev => ({
+            ...prev,
+            options: prev.options.filter((_, i) => i !== index)
+        }));
     };
 
     // -----------------------------------
@@ -126,7 +130,6 @@ const ProductForm = ({
     // -----------------------------------
     const handleChange = (e) => {
         const { name, value } = e.target;
-        console.log(name,value)
         setForm((prev) => ({ ...prev, [name]: value }));
     };
 
@@ -146,7 +149,7 @@ const ProductForm = ({
         console.log("VARIANTS ", variants)
         onSubmit({ ...formDifference, variants });
     };
-
+    console.log(form)
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             <InputField label="Product Name" name="name" value={form.name} onChange={handleNameChange} required />
@@ -186,35 +189,20 @@ const ProductForm = ({
                 onChange={(newIds) => setForm(prev => ({ ...prev, categories: newIds }))}
             />
 
-            {/* ---------------- OPTIONS ---------------- */}
 
-            {options.map((option, index) => (
-                <VariantOptionEditor
-                    key={index}
-                    option={option}
-                    onChange={updated =>  updateOption(index, updated)}
-                    onDelete={() => deleteOption(index)}
-                />
-            ))}
+            <OptionManager 
+                options={form.options} 
+                onChange={updateOption} 
+                onDelete={() => deleteOption(index)} 
+                addOption={addOption}
+            />
 
-            {options.length < 3 && (
-                <button
-                    type="button"
-                    onClick={addOption}
-                    className="text-blue-600 mt-2"
-                >
-                    + Add another option
-                </button>
-            )}
-
-            {/* ---------------- VARIANTS TABLE ---------------- */}
-            <VariantTable
-                variants={variants}
-                onUpdate={setVariants}
-                primaryOption="Size"
-                onDeleteSelected={() =>
-                    setVariants(prev => prev.filter(v => !v.selected))
-                }
+            <VariantManager 
+                options={form.options} 
+                variants={form.variants} 
+                onChange={updateVariants} 
+                onDeleteSelected={deleteSelectedVariants} 
+                primaryOption={form.options?.[0]?.name || "Option"}
             />
 
             <button
