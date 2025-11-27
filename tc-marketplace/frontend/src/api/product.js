@@ -50,7 +50,10 @@ export const updateProduct = async (id, data) => {
         }
     });
 
-    return res;
+    return {
+        ok: true,
+        data: res.data
+    };
 }
 
 export const deleteProduct = async (id) => {

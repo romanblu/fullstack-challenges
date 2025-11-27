@@ -8,10 +8,10 @@ const EditProduct = ({ setActiveTab, setSelectedProduct, selectedProduct, catego
 
     const handleUpdate = (form) => {
         updateProduct(selectedProduct._id, form).then(res => {
-
-            if(res.status === 201) {
+            console.log(res)
+            if(res.ok ) {
                 setMessage("Product updated successfully!")
-                setSelectedProduct(res.data);
+                setSelectedProduct(res);
                 setActiveTab("products");
             }
         }).catch(err => setMessage("Error updating product: " + err.message))
