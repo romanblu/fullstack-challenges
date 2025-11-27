@@ -6,7 +6,7 @@ const VariantSchema = new mongoose.Schema({
 
   sku: { type: String, sparse:true },
   
-  price: { type: Number, required: true },
+  price: { type: Number },
   compareAtPrice: Number,
   cost: Number,
   stock: { type: Number, default: 0 },
