@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const VariantSchema = new mongoose.Schema({
-  product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
 
   name: { type: String, required: true },
 
@@ -30,4 +29,4 @@ const VariantSchema = new mongoose.Schema({
   status: { type: String, default: "active" }
 }, { timestamps: true });
 
-export default mongoose.model("Variant", VariantSchema);
+export default VariantSchema;

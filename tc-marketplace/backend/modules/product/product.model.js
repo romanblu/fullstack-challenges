@@ -1,3 +1,4 @@
+import VariantSchema from '../variant/variant.model.js';
 
 import mongoose from 'mongoose';
 const productSchema = new mongoose.Schema({
@@ -34,7 +35,7 @@ const productSchema = new mongoose.Schema({
       values: [String]
     }
   ],
-  variants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Variant" }],
+  variants: [VariantSchema], // embedded subdocuments
 
   // out of stock, sale...
   status: { type: String, default: "available" },

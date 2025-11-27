@@ -127,8 +127,29 @@ export const createProduct = async (body) => {
 };
 
 export const updateProduct = async (id, body) => {
-    const updated = await Product.findByIdAndUpdate(id, body, { new: true });
-    return updated
+    const product = await Product.findById(id);
+    if (!product) return null;
+
+    product.title = body.title ?? product.title;
+    product.description = body.description ?? product.description;
+    product.options = body.options ?? product.options;
+    product.price = body.price ?? product.price;
+    product.quantity = body.quantity ?? product.quantity;
+    product.mainImage = body.mainImage ?? product.mainImage;
+    product.categories = body.categories ?? product.categories;
+
+    product.variants = body.variants.map(v => ({
+      _id: v._id || undefined,  // let mongoose assign ID for new ones
+      name: v.name,
+      sku: v.sku,
+      price: v.price,
+      stock: v.stock,
+      optionValues: v.optionValues
+    }));
+    console.log(product.variants)
+    await product.save();
+
+    return product;
 };
 
 // TODO: also delete variants 
