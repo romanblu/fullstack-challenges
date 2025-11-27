@@ -63,7 +63,7 @@ export const getFeaturedProducts = async () => {
 };
 
 export const createProduct = async (body) => {
-  const  variants = body.variants || [];
+  const  variants = Array.isArray(body.variants) ? body.variants : [];
 
   // DB validations for product name and variants 
   const exists = await Product.findOne({ slug: body.slug });
@@ -77,52 +77,18 @@ export const createProduct = async (body) => {
   }
 
   const product = await Product.create({
-    ...body, variants:[]
+    ...body,
+    variants: variants.map(v => ({
+      name: v.name,
+      sku: v.sku?.trim() || undefined,
+      price: Number(v.price),
+      compareAtPrice: Number(v.compareAtPrice) || undefined,
+      stock: Number(v.stock),
+      optionValues: v.optionValues || [],
+    }))
   });
-  
-  let createdVariantIds =[]
 
-  try{
-    if (Array.isArray(variants) && variants.length > 0) {
-      for (let v of variants) {
-        const data = {
-          name: v.name,
-          price: v.price,
-          stock: v.stock,
-          product: product._id
-        }
-        if(typeof v.sku === "string" && v.sku.trim() !== "")
-          data.sku = v.sku
-
-        const created = await Variant.create(data);
-        createdVariantIds.push(created._id);
-      }
-      
-      product.variants = createdVariantIds;
-      await product.save();
-    }
-    
-    const populatedProduct = await Product.findById(product._id)
-    .populate("categories", "_id name slug")
-    .populate("variants");
-    
-    return populatedProduct;
-  } catch (err){
-    // rollback
-    await Variant.deleteMany({_id: {$in: createdVariantIds}})
-    await Product.findByIdAndDelete(product._id)
-
-    if (err.code === 11000) {
-      const field = Object.keys(err.keyValue)[0];
-
-      // Convert duplicate key to readable error
-      throw ApiError.badRequest(
-        `${field} for ${err.keyValue[field]} already exists` 
-      );
-    }
-    
-    throw ApiError.internal(err.message)
-  }
+  return product
 
 };
 
