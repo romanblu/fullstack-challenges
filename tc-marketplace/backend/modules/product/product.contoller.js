@@ -80,7 +80,6 @@ export const createProduct = asyncHandler(async (req, res) => {
 // @route   PUT /api/products/:id
 // @access  Private - seller/admin
 export const updateProduct = asyncHandler( async (req, res) => {
-
   const updated = await productService.updateProduct(req.params.id, req.body);
 
   if(!updated){

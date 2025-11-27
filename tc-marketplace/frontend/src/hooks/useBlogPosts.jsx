@@ -22,6 +22,6 @@ export const useBlogData = () => {
         fetchBlogData()
 
     }, [])
-    console.log(blogPosts)
+
     return { blogPosts, loading, error}
 }

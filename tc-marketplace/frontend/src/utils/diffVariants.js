@@ -11,6 +11,8 @@ export function diffVariants(initialVariants, finalVariants) {
       toCreate.push(v);
     } else {
       const initial = initialMap.get(v._id);
+      console.log("Initial ",JSON.stringify(initial) )
+      console.log("Variant ",JSON.stringify(v) )
       if (JSON.stringify(initial) !== JSON.stringify(v)) {
         toUpdate.push(v);
       }
