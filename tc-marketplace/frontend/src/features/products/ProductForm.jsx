@@ -145,10 +145,10 @@ const ProductForm = ({
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formDifference = diffObjects(initialData, form);
-        // const variantsDifference = diffVariants(initialData.variants, variants);
-        console.log({ ...formDifference, variants:form.variants })
-
+        // const formDifference = diffObjects(initialData, form);
+        // const variantsDifference = diffVariants(initialData.variants, form.variants);
+        // console.log("FORM DIFFERENCE", formDifference)
+        // console.log("VARIANTS DIFFERENCE", variantsDifference)
         // Clean last empty input used for UX and also any inputs left empty
         const cleanOptions = form.options.map(opt => ({
             name: opt.name.trim(),
@@ -156,7 +156,7 @@ const ProductForm = ({
                 .map(v => v.trim())
                 .filter(v => v !== "")
         }));
-        onSubmit({ ...formDifference, variants:form.variants, options: cleanOptions });
+        onSubmit({ ...form, options: cleanOptions });
     };
     console.log(form)
     return (
