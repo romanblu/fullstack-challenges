@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const VariantOptionEditor = ({ index, option, onChange, onDeleteOption, addOption }) => {
+const VariantOptionEditor = ({ index, option, onChange, onDeleteOption }) => {
     // const [name, setName] = useState(option?.name ?? "");
     // const [values, setValues] = useState(option?.values?.length ? option.values : [""]);
     const [editing, setEditing] = useState(true);
@@ -33,23 +33,7 @@ const VariantOptionEditor = ({ index, option, onChange, onDeleteOption, addOptio
             ...option,
             values: values.filter((_, idx) => idx !== i)
         });
-    };
-    // Handle typing inside values
-    const handleValueChange = (index, newValue) => {
-        const updated = [...values];
-        updated[index] = newValue;
-
-        // Auto-add new row when user types into the last input
-        if (index === values.length - 1 && newValue.trim() !== "") {
-            updated.push(""); // empty new input
-        }
-
-        // Clean empty fields except last
-        const cleaned = updated.filter((v, i) => v.trim() !== "" || i === updated.length - 1);
-        setValues(cleaned);
-    };
-
-    
+    };    
 
     const handleDone = () => {
         // Disallow collapsing if no name

@@ -145,11 +145,6 @@ const ProductForm = ({
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // const formDifference = diffObjects(initialData, form);
-        // const variantsDifference = diffVariants(initialData.variants, form.variants);
-        // console.log("FORM DIFFERENCE", formDifference)
-        // console.log("VARIANTS DIFFERENCE", variantsDifference)
-        // Clean last empty input used for UX and also any inputs left empty
         const cleanOptions = form.options.map(opt => ({
             name: opt.name.trim(),
             values: opt.values

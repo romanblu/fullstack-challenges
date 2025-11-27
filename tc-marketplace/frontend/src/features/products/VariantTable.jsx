@@ -33,7 +33,7 @@ const VariantTable = ({ variants, onUpdate, onDeleteSelected, primaryOption }) =
         const updated = variants.map(v =>
             v.tempId === tempId ? { ...v, [field]: value } : v
         );
-        console.log(tempId, field,value)
+
         onUpdate(updated);
     };
 
@@ -95,7 +95,7 @@ const VariantTable = ({ variants, onUpdate, onDeleteSelected, primaryOption }) =
                                         type="number"
                                         placeholder="Price"
                                         value={v.price}
-                                        onChange={(e) => handleChange(v.tempId, "price", e.target.value)}
+                                        onChange={(e) => handleChange(v.tempId, "price", Number(e.target.value))}
                                     />
 
                                     <input
@@ -103,7 +103,7 @@ const VariantTable = ({ variants, onUpdate, onDeleteSelected, primaryOption }) =
                                         type="number"
                                         placeholder="Stock"
                                         value={v.stock}
-                                        onChange={(e) => handleChange(v.tempId, "stock", e.target.value)}
+                                        onChange={(e) => handleChange(v.tempId, "stock", Number(e.target.value))}
                                     />
                                 </div>
                             ))}

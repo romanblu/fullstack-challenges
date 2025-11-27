@@ -1,9 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
 import Navbar from "../components/layout/Navbar";
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getProductBySlug } from "../api/product";
-import SelectedCategories from '../components/ui/SelectedCategories';
 import { useProduct } from '../hooks/useProduct';
 import ErrorMessage from '../components/ui/ErrorMessage'
 import Loader from '../components/ui/Loader'
@@ -25,6 +21,7 @@ const ProductPage = () => {
       {/* TODO: key features section */}
       {/* TODO: stock indicator */}
       {/* TODO: variants selection  */}
+      {/* TODO: if variants - add price diffrenece between the least and most expensive */}
       {/* TODO: specifications table */}
       {/* TODO: customer reviews with images */}
       {/* TODO: related products - top products from same category or close */}
