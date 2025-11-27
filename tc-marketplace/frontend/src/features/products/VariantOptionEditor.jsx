@@ -1,11 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const VariantOptionEditor = ({ index, option, onChange, onDeleteOption }) => {
-    // const [name, setName] = useState(option?.name ?? "");
-    // const [values, setValues] = useState(option?.values?.length ? option.values : [""]);
-    const [editing, setEditing] = useState(true);
+
+    const [editing, setEditing] = useState(false);
 
     const {name ,values } = option
+    
+    // enter edit mode if new option and no values yet
+    if(values.length===1 && values[0]==="" && editing===false){
+        setEditing(true)
+    }
 
     const updateName = (newName) => {
         onChange(index, { ...option, name: newName });
@@ -42,7 +46,7 @@ const VariantOptionEditor = ({ index, option, onChange, onDeleteOption }) => {
     };
 
     return (
-        <div className="border rounded-md bg-white p-4 shadow-sm">
+        <div className="border rounded-md bg-white p-4 shadow-sm mb-4">
 
             {/* -------------------- EDIT MODE -------------------- */}
             {editing && (
