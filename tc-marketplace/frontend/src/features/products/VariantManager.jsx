@@ -1,7 +1,6 @@
 import VariantTable from "./VariantTable"
 
 const VariantManager = ({options, variants, onChange, onDeleteSelected}) => {
-    console.log(variants)
     
     return (
         <div>

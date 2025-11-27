@@ -2,11 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import slugify from "slugify";
 import { v4 as uuid } from "uuid";
 import CategorySelector from "../../components/ui/CategorySelector.jsx";
-import VariantEditor from "./VariantEditor.jsx";
-import VariantTable from "./VariantTable.jsx";
-import VariantOptionEditor from "./VariantOptionEditor.jsx"
-import { diffObjects } from "../../utils/diff.js";
-import { diffVariants } from "../../utils/diffVariants.js";
 import { InputField } from "./InputField.jsx";
 import { InputFieldPrice } from "./InputFieldPrice.jsx";
 import { InputFieldNumber } from "./InputFieldNumber.jsx";
@@ -153,7 +148,7 @@ const ProductForm = ({
         }));
         onSubmit({ ...form, options: cleanOptions });
     };
-    console.log(form)
+
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             <InputField label="Product Name" name="name" value={form.name} onChange={handleNameChange} required />
