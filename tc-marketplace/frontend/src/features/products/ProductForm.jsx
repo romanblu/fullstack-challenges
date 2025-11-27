@@ -7,7 +7,7 @@ import { InputFieldPrice } from "./InputFieldPrice.jsx";
 import { InputFieldNumber } from "./InputFieldNumber.jsx";
 import OptionManager from "./OptionManager.jsx";
 import VariantManager from "./VariantManager.jsx";
-
+import FormSection from "../../components/ui/FormSection.jsx";
 const cartesian = (arrays) => {
     if (arrays.length === 0) return [];
     return arrays.reduce(
@@ -150,59 +150,71 @@ const ProductForm = ({
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
-            <InputField label="Product Name" name="name" value={form.name} onChange={handleNameChange} required />
-            <InputField label="Slug" name="slug" value={form.slug} onChange={handleChange} required />
-            <InputField label="Species" name="species" value={form.species} onChange={handleChange} required />
+        <form onSubmit={handleSubmit} className="space-y-4 flex flex-col gap-4">
+            <FormSection>
+                <InputField label="Product Name" name="name" value={form.name} onChange={handleNameChange} required />
+                <InputField label="Slug" name="slug" value={form.slug} onChange={handleChange} required />
+                <InputField label="Species" name="species" value={form.species} onChange={handleChange} required />
+            </FormSection>
 
-            <textarea
-                name="description"
-                placeholder="Description"
-                value={form.description}
-                onChange={handleChange}
-                className="w-full border rounded-md p-2"
-            />
+            <FormSection>
+                <textarea
+                    name="description"
+                    placeholder="Description"
+                    value={form.description}
+                    onChange={handleChange}
+                    className="w-full border rounded-md p-2"
+                    />
+            </FormSection>
 
-            <InputFieldPrice value={form.price} onChange={handleChange} />
-            <InputFieldNumber value={form.quantity} onChange={handleChange} name="quantity" label="Quantity" />
-            <InputField label="Main Image URL" name="mainImage" value={form.mainImage} onChange={handleChange} />
+            <FormSection>
+                <InputFieldPrice value={form.price} onChange={handleChange} />
+            </FormSection>
 
-            <select
-                name="productType"
-                value={form.productType}
-                onChange={handleChange}
-                required
-                className="w-full border rounded-md p-2"
-            >
-                <option value="">Select Product Type</option>
-                <option value="plant">Plant</option>
-                <option value="consumable">Consumable</option>
-                <option value="equipment">Equipment</option>
-                <option value="kit">Kit</option>
-                <option value="digital">Digital</option>
-            </select>
+            <FormSection>
+                <InputFieldNumber value={form.quantity} onChange={handleChange} name="quantity" label="Quantity" />
+                <select
+                    name="productType"
+                    value={form.productType}
+                    onChange={handleChange}
+                    required
+                    className="w-full border rounded-md p-2"
+                >
+                    <option value="">Select Product Type</option>
+                    <option value="plant">Plant</option>
+                    <option value="consumable">Consumable</option>
+                    <option value="equipment">Equipment</option>
+                    <option value="kit">Kit</option>
+                    <option value="digital">Digital</option>
+                </select>
+            </FormSection>
 
-            <CategorySelector
-                categoryTree={categoryTree}
-                selectedIds={form.categories}
-                onChange={(newIds) => setForm(prev => ({ ...prev, categories: newIds }))}
-            />
+            <FormSection>
+                <InputField label="Main Image URL" name="mainImage" value={form.mainImage} onChange={handleChange} />
+            </FormSection>
+            <FormSection>
+                <CategorySelector
+                    categoryTree={categoryTree}
+                    selectedIds={form.categories}
+                    onChange={(newIds) => setForm(prev => ({ ...prev, categories: newIds }))}
+                    />
+            </FormSection>
 
-
-            <OptionManager 
-                options={form.options} 
-                onChange={updateOption} 
-                onDelete={() => deleteOption(index)} 
-                addOption={addOption}
-            />
-
-            <VariantManager 
-                options={form.options} 
-                variants={form.variants} 
-                onChange={updateVariants} 
-                onDeleteSelected={deleteSelectedVariants} 
-                primaryOption={form.options?.[0]?.name || "Option"}
-            />
+            <FormSection>
+                <OptionManager 
+                    options={form.options} 
+                    onChange={updateOption} 
+                    onDelete={() => deleteOption(index)} 
+                    addOption={addOption}
+                    />
+                <VariantManager 
+                    options={form.options} 
+                    variants={form.variants} 
+                    onChange={updateVariants} 
+                    onDeleteSelected={deleteSelectedVariants} 
+                    primaryOption={form.options?.[0]?.name || "Option"}
+                    />
+            </FormSection>
 
             <button
                 type="submit"
