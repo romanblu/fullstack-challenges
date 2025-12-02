@@ -8,6 +8,7 @@ import { InputFieldNumber } from "./InputFieldNumber.jsx";
 import OptionManager from "./OptionManager.jsx";
 import VariantManager from "./VariantManager.jsx";
 import FormSection from "../../components/ui/FormSection.jsx";
+import DescriptionEditor from "./htmlEditor/DescriptionEditor.jsx";
 const cartesian = (arrays) => {
     if (arrays.length === 0) return [];
     return arrays.reduce(
@@ -149,22 +150,22 @@ const ProductForm = ({
         onSubmit({ ...form, options: cleanOptions });
     };
 
+    const handleDescriptionChange = (html) => {
+        console.log("Called", html);
+        // setForm(prev => ({
+        //     ...prev,
+        //     description: html
+        // }));
+    }
+
     return (
         <form onSubmit={handleSubmit} className="space-y-4 flex flex-col gap-4">
             <FormSection>
-                <InputField label="Product Name" name="name" value={form.name} onChange={handleNameChange} required />
+                <InputField label="Product Title" name="name" value={form.name} onChange={handleNameChange} required />
                 <InputField label="Slug" name="slug" value={form.slug} onChange={handleChange} required />
+                <label>Description</label>
+                <DescriptionEditor onChange={handleDescriptionChange}/>
                 <InputField label="Species" name="species" value={form.species} onChange={handleChange} required />
-            </FormSection>
-
-            <FormSection>
-                <textarea
-                    name="description"
-                    placeholder="Description"
-                    value={form.description}
-                    onChange={handleChange}
-                    className="w-full border rounded-md p-2"
-                    />
             </FormSection>
 
             <FormSection>
