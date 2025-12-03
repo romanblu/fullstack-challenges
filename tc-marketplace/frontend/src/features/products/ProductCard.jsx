@@ -22,7 +22,7 @@ export default function ProductCard({ product, setSelectedProduct, setActiveTab 
                 />
             </Link>
             <Link to={`/product/${product.slug}`} className="text-lg font-semibold text-green-900 px-2">{product.name}</Link>
-            <p className="text-sm text-gray-600 mb-2 px-2">{product.description}</p>
+            <p className="text-sm text-gray-600 mb-2 px-2">{product.excerpt}</p>
             <span className="text-orange-800 font-light text-sm px-2">{product.quantity < 15 ? `only ${product.quantity} left` : ''}</span>
             <div className="flex justify-between items-center">
                 <span className="text-green-700 font-bold px-2">{`$ ${product.price}`}</span>

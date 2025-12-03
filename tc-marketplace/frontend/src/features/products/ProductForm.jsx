@@ -40,6 +40,7 @@ const ProductForm = ({
         ...initialData
     });
 
+    const [editor, setEditor] = useState(null);
     
     // -----------------------------------
     // Load initial variants from backend
@@ -141,30 +142,24 @@ const ProductForm = ({
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const description = editor.getHTML() || ""
         const cleanOptions = form.options.map(opt => ({
             name: opt.name.trim(),
             values: opt.values
                 .map(v => v.trim())
                 .filter(v => v !== "")
         }));
-        onSubmit({ ...form, options: cleanOptions });
+        onSubmit({ ...form, options: cleanOptions, description });
     };
-
-    const handleDescriptionChange = (html) => {
-        console.log("Called", html);
-        // setForm(prev => ({
-        //     ...prev,
-        //     description: html
-        // }));
-    }
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4 flex flex-col gap-4">
             <FormSection>
                 <InputField label="Product Title" name="name" value={form.name} onChange={handleNameChange} required />
                 <InputField label="Slug" name="slug" value={form.slug} onChange={handleChange} required />
+                <InputField label="Excerpt" name="excerpt" value={form.excerpt} onChange={handleChange} />
                 <label>Description</label>
-                <DescriptionEditor onChange={handleDescriptionChange}/>
+                <DescriptionEditor onReady={setEditor}/>
                 <InputField label="Species" name="species" value={form.species} onChange={handleChange} required />
             </FormSection>
 

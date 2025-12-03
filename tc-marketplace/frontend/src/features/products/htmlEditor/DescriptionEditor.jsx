@@ -11,7 +11,7 @@ import MenuBar from './MenuBar.jsx'
 
 import { useEffect, useState } from 'react';
 
-export default function DescriptionEditor({ value, onChange }) {
+export default function DescriptionEditor({ value, onReady }) {
     const [_, forceUpdate] = useState(0);
 
     const editor = useEditor({
@@ -51,6 +51,8 @@ export default function DescriptionEditor({ value, onChange }) {
         }
     });
 
+
+
     // Re-render whenever editor selection or state changes
     useEffect(() => {
         if (!editor) return;
@@ -60,9 +62,14 @@ export default function DescriptionEditor({ value, onChange }) {
         editor.on('selectionUpdate', transactionListener);
 
         return () => {
-        editor.off('transaction', transactionListener);
-        editor.off('selectionUpdate', transactionListener);
+            editor.off('transaction', transactionListener);
+            editor.off('selectionUpdate', transactionListener);
         };
+    }, [editor]);
+
+    // pass editor to parent when ready - expose html data
+    useEffect(() => {
+        if (editor && onReady) onReady(editor);
     }, [editor]);
 
     if(!editor) return null
