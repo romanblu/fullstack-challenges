@@ -1,5 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import ImageItem from "./ImageItem";
 
 export default function SortableItem({ item, id }) {
   const { setNodeRef, attributes, listeners, transform, transition } =
@@ -16,9 +17,11 @@ export default function SortableItem({ item, id }) {
       style={style}
       {...attributes}
       {...listeners}
-      className="relative w-full h-32 overflow-hidden rounded border cursor-move"
+      className="relative w-full h-32 overflow-hidden rounded  cursor-move"
     >
-      <img src={item.previewUrl} className="object-cover w-full h-full" />
+      {/* <img src={item.previewUrl} className="object-cover w-full h-full" /> */}
+        <ImageItem image={item} />
+        
     </div>
   );
 }
