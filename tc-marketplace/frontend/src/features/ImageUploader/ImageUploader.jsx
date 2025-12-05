@@ -23,7 +23,7 @@ export default function ImageUploader() {
     return (
         <div>
             <ImageDropzone onFilesAdded={handleFilesAdded}/>
-            <ImageGrid images={images}/>
+            <ImageGrid images={images} setImages={setImages}/>
         </div>
     )
 }
