@@ -9,6 +9,8 @@ import OptionManager from "./OptionManager.jsx";
 import VariantManager from "./VariantManager.jsx";
 import FormSection from "../../components/ui/FormSection.jsx";
 import DescriptionEditor from "./htmlEditor/DescriptionEditor.jsx";
+import ImageUploader from "../ImageUploader/ImageUploader.jsx";
+
 const cartesian = (arrays) => {
     if (arrays.length === 0) return [];
     return arrays.reduce(
@@ -41,7 +43,6 @@ const ProductForm = ({
     });
 
     const [editor, setEditor] = useState(null);
-    
     // -----------------------------------
     // Load initial variants from backend
     // -----------------------------------
@@ -140,6 +141,7 @@ const ProductForm = ({
         });
     };
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const description = editor.getHTML() || ""
@@ -186,7 +188,8 @@ const ProductForm = ({
             </FormSection>
 
             <FormSection>
-                <InputField label="Main Image URL" name="mainImage" value={form.mainImage} onChange={handleChange} />
+                <ImageUploader />
+                
             </FormSection>
             <FormSection>
                 <CategorySelector
