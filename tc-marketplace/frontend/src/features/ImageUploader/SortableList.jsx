@@ -13,7 +13,7 @@ import {
 import SortableItem from "./SortableItem";
 
 export default function SortableList({ items, onChange, onDelete }) {
-  // Needed for drag activation
+
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
   );
@@ -27,7 +27,7 @@ export default function SortableList({ items, onChange, onDelete }) {
     const newIndex = items.findIndex((i) => i.id === over.id);
 
     const reordered = arrayMove(items, oldIndex, newIndex);
-    onChange(reordered); // return reordered list to parent
+    onChange(reordered); 
   };
 
   return (
@@ -37,7 +37,7 @@ export default function SortableList({ items, onChange, onDelete }) {
       onDragEnd={handleDragEnd}
     >
       <SortableContext
-        items={items.map((i) => i.id)} // dnd-kit requires ID array
+        items={items.map((i) => i.id)} 
         strategy={rectSortingStrategy}
       >
         <div className="grid grid-cols-3 gap-3">

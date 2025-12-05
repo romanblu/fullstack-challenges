@@ -15,15 +15,26 @@ export default function ImageUploader() {
 
         setImages(prev => [...prev, ...previewObjects]);
         
+    };
+    console.log(images)
+
+    const handleUpload = () => {
         for (let file of newFiles) {
             // await uploadImageToBackend(file);
         }
-    };
-    console.log(images)
+    }
+
+    const handleDeleteImage = (imageToDelete) => {
+        setImages(prevImages => prevImages.filter(img => img.id !== imageToDelete.id));
+    }
+
     return (
         <div>
             <ImageDropzone onFilesAdded={handleFilesAdded}/>
-            <ImageGrid images={images} setImages={setImages}/>
+            <ImageGrid images={images} setImages={setImages} onDelete={handleDeleteImage}/>
+            <button onClick={handleUpload} className="bg-lime-500 hover:bg-lime-600 text-green-950 font-semibold py-2 rounded-md shadow-md mt-4 px-2">
+                Upload Images
+            </button>
         </div>
     )
 }
