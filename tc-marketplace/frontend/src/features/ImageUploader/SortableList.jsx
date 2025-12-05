@@ -12,7 +12,7 @@ import {
 } from "@dnd-kit/sortable";
 import SortableItem from "./SortableItem";
 
-export default function SortableList({ items, onChange }) {
+export default function SortableList({ items, onChange, onDelete }) {
   // Needed for drag activation
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
@@ -42,7 +42,7 @@ export default function SortableList({ items, onChange }) {
       >
         <div className="grid grid-cols-3 gap-3">
           {items.map((item) => (
-            <SortableItem key={item.id} item={item} id={item.id} />
+            <SortableItem key={item.id} item={item} id={item.id} onDelete={onDelete} />
           ))}
         </div>
       </SortableContext>
