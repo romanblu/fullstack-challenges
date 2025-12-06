@@ -45,7 +45,7 @@ app.use("/api/auth", authRoutes)
 app.use("/api/store", sellerRoutes)
 app.use("/api/categories", categoryRoutes);
 app.use("/api/variants", variantRoutes);
-app.use("/api/files", uploadRoutes);
+app.use("/api", uploadRoutes);
 app.use(notFound)
 
 app.use(errorHandler)
