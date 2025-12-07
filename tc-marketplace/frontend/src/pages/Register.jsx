@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
-import { registerUser } from "../api/auth";
+import { registerUser } from "../services/auth";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../features/auth/validation/registerSchema.js";

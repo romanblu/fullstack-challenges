@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { deleteProduct, updateProduct } from "../../api/product";
+import { deleteProduct, updateProduct } from "../../services/product";
 import ProductForm from "./ProductForm";
 
 const EditProduct = ({ setActiveTab, setSelectedProduct, selectedProduct, categoryTree }) => {

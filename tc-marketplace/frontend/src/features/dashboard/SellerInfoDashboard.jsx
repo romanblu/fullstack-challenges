@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getMyStore, updateStoreInfo } from "../../api/store";
+import { getMyStore, updateStoreInfo } from "../../services/store";
 import slugify from "slugify";
 const SellerInfoDashboard = () => {
 

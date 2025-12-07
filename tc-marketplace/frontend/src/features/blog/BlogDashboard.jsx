@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchMyPosts } from "../../api/blog";
+import { fetchMyPosts } from "../../services/blog";
 import BlogCard from "./BlogCard";
 import Loader from "../../components/ui/Loader";
 import ErrorMessage from '../../components/ui/ErrorMessage'

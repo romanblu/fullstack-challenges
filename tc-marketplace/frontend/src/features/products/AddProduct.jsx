@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createProduct } from "../../api/product";
+import { createProduct } from "../../services/product";
 import ProductForm from "./ProductForm";
 
 const AddProduct = ({ setActiveTab, categoryTree }) => {

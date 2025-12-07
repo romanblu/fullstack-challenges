@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import matter from "front-matter";
-import { getFeaturedPosts, getPost } from "../api/blog"
+import { getFeaturedPosts, getPost } from "../services/blog"
 
 export const useBlogPostData = (slug) => {
     const [blogPost, setBlogPost] = useState(null)

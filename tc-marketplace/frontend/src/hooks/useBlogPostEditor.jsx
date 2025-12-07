@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import matter from "front-matter";
-import { createPost, updatePost } from "../api/blog";
+import { createPost, updatePost } from "../services/blog";
 
 export function useBlogPostEditor (blogPostDraft) {
     const [meta, setMeta] = useState({

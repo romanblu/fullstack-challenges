@@ -3,7 +3,7 @@ import BlogPost from "../features/blog/BlogPost";
 import Navbar from "../components/layout/Navbar";
 import { useEffect, useState } from "react";
 import PostsSelection from "../features/blog/PostsSelection";
-import { getFeaturedPosts, getPost } from "../api/blog";
+import { getFeaturedPosts, getPost } from "../services/blog";
 import matter from "front-matter";
 import Loader from "../components/ui/Loader";
 import ErrorMessage from "../components/ui/ErrorMessage";

@@ -10,7 +10,7 @@ import BlogDashboard from "../features/blog/BlogDashboard";
 import BlogPostEditor from "../features/blog/BlogPostEditor/index";
 import AddProduct from "../features/products/AddProduct";
 import EditProduct from "../features/products/EditProduct";
-import { getCategoryTree } from '../api/category'
+import { getCategoryTree } from '../services/category'
 import Loader from '../components/ui/Loader'
 
 const SellerDashboardPage = () => {  

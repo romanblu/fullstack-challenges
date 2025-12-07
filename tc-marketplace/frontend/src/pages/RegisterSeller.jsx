@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Navbar from "../components/layout/Navbar"
 import { useNavigate } from "react-router-dom";
-import { registerUser } from "../api/auth";
+import { registerUser } from "../services/auth";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSellerSchema } from "../features/auth/validation/registerSellerSchema.js";

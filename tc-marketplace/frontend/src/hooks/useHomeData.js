@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { getFeaturedPosts } from "../api/blog"
-import { getFeaturedProducts } from "../api/product"
+import { getFeaturedPosts } from "../services/blog"
+import { getFeaturedProducts } from "../services/product"
 
 
 export const useHomeData = () => {

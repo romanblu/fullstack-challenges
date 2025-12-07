@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getMyProducts } from "../../api/product";
+import { getMyProducts } from "../../services/product";
 import ProductCard from "./ProductCard";
 
 const ProductsDashboard = ({ setActiveTab, setSelectedProduct }) => {

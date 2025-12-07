@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import BlogCard from "../features/blog/BlogCard";
 import Navbar from "../components/layout/Navbar";
-import { fetchTopPosts } from "../api/blog";
+import { fetchTopPosts } from "../services/blog";
 import { useBlogData } from "../hooks/useBlogPosts";
 import Loader from "../components/ui/Loader";
 import ErrorMessage from "../components/ui/ErrorMessage";

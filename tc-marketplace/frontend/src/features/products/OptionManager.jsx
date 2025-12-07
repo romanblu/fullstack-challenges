@@ -1,11 +1,7 @@
-import { useEffect } from "react";
 import VariantOptionEditor from "./VariantOptionEditor"
 
 const OptionManager = ({ options, onChange, onDelete, addOption}) => {
     
-    useEffect(() => {
-        console.log("OptionManager options changed:", options);
-    }, [options]);
     return (
         <div>
             {options.map((option, index) => (

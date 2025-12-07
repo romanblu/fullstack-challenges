@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { fetchTopPosts } from "../api/blog"
+import { fetchTopPosts } from "../services/blog"
 
 export const useBlogData = () => {
     const [blogPosts, setBlogPosts] = useState([])

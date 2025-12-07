@@ -3,8 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import Navbar from "../components/layout/Navbar";
 import ProductCard from "../features/products/ProductCard";
 import FilterBar from "../components/ui/FilterBar";
-import { getCategoryTree } from "../api/category"
-import { getProducts } from "../api/product";
+import { getCategoryTree } from "../services/category"
+import { getProducts } from "../services/product";
 import Loader from "../components/ui/Loader";
 import { filterAndSortProducts } from "../utils/productUtils";
 
