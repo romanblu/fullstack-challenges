@@ -1,5 +1,9 @@
+import axios from "axios";
+
+const API = import.meta.env.VITE_API_URL;
+
 export async function uploadSingleImage (file, options = {}) {
-    const { productId, slug, storeId } = options;
+    const { productId, storeId } = options;
 
     if (!file) throw new Error("uploadSingleImage: file is required");
 
@@ -9,32 +13,25 @@ export async function uploadSingleImage (file, options = {}) {
     // used for organizing the files in S3 buckets
     if (storeId) formData.append("storeId", storeId);
     if (productId) formData.append("productId", productId);
-    if (slug) formData.append("slug", slug);
 
-    const res = await fetch("/api/upload/single", {
-        method: "POST",
-        body: formData
-        // NOTE: do NOT manually set Content-Type, browser will do it
+    const res = await axios.post(`${API}/api/upload`, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
     });
 
-    if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
+    if (!res.data.success) {
+        
         throw new Error(err.message || "Image upload failed");
     }
 
-    const data = await res.json();
-
-    /** Expected backend response:
-     *  {
-     *      success: true,
-     *      key: "store_123/products/slug/abc.jpg",
-     *      url: "https://bucket.s3.amazonaws.com/store_123/products/slug/abc.jpg"
-     *  }
-     */
+    
 
     return {
-        key: data.key,
-        url: data.url
+        key: res.data.key,
+        url: res.data.url,
+        success: res.data.success
     };
 
 }
