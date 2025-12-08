@@ -1,5 +1,6 @@
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { uploadSingleImageToS3 } from "./upload.service.js";
+import asyncHandler from "../../utils/asyncHandler.js";
 
 export const uploadSuccess = (req, res) => {
     const files = req.files.map(f => ({
@@ -10,18 +11,18 @@ export const uploadSuccess = (req, res) => {
     res.json({ files });
 };
 
-export async function uploadSingle(req, res) {
+export const uploadSingle = asyncHandler(async(req, res) =>{
   try {
-    const { storeId, productSlug } = req.body;
+    const { storeId, productId } = req.body;
     
-    if(storeId == null || productSlug == null) {
+    if(storeId == null || productId == null) {
       return res.status(400).json({
         success: false,
-        message: "storeId and product-slug are required in the request body",
+        message: "storeId and productId are required in the request body",
       });
     }
 
-    const folderPath = `stores/${storeId}/products/${productSlug}`;
+    const folderPath = `stores/${storeId}/products/${productId}`;
 
     const result = await uploadSingleImageToS3(req.file, folderPath);
 
@@ -39,9 +40,9 @@ export async function uploadSingle(req, res) {
       error: error.message,
     });
   }
-}
+})
 
-export const deleteFile = async (req, res) => {
+export const deleteFile = asyncHandler(async (req, res) => {
     try {
         const { key } = req.body;
 
@@ -57,4 +58,4 @@ export const deleteFile = async (req, res) => {
         console.log(err);
         res.status(500).json({ error: "Failed to delete" });
     }
-};
+})
