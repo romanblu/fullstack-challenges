@@ -3,7 +3,7 @@ import axios from "axios";
 const API = import.meta.env.VITE_API_URL;
 
 export async function uploadSingleImage (file, options = {}) {
-    const { productId, storeId } = options;
+    const { productId, storeId, sessionId } = options;
 
     if (!file) throw new Error("uploadSingleImage: file is required");
 
@@ -13,6 +13,7 @@ export async function uploadSingleImage (file, options = {}) {
     // used for organizing the files in S3 buckets
     if (storeId) formData.append("storeId", storeId);
     if (productId) formData.append("productId", productId);
+    if (sessionId) formData.append("sessionId", sessionId);
 
     const res = await axios.post(`${API}/api/upload`, formData, {
         headers: {

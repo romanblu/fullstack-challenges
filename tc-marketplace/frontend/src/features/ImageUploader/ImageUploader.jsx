@@ -4,9 +4,10 @@ import ImageGrid from "../ImageUploader/ImageGrid.jsx";
 import { uploadSingleImage } from "../../services/upload.js";
 import { useAuth } from "../../context/useAuth.js";
 
-export default function ImageUploader() {
+export default function ImageUploader({ productId, sessionId }) {
     const [images, setImages] = useState([]);
     const { user } = useAuth();
+    
 
     const updateImage = (id, updates) => {
         setImages(prev =>
@@ -18,7 +19,7 @@ export default function ImageUploader() {
 
     const handleFilesAdded = async (newFiles) => {
         const previewObjects = newFiles.map(file => ({
-            id: crypto.randomUUID(),    // temporary ID
+            id: crypto.randomUUID(), 
             file,
             previewUrl: URL.createObjectURL(file),
             uploadStatus: 'idle',
@@ -27,22 +28,21 @@ export default function ImageUploader() {
         }));
 
         setImages(prev => [...prev, ...previewObjects]);
-        
     };
-
-    const tempProductIdRef = useRef(crypto.randomUUID());
 
     const handleUpload = async () => {
         for (let img of images) {
             if (img.uploadStatus === 'uploaded') continue; // skip already uploaded images
-            console.log("Temp product ID:", tempProductIdRef)
+
             try {
                 updateImage(img.id, { uploadStatus: "uploading" });
                 const res = await uploadSingleImage(img.file, {
                     storeId: user.store,
-                    productId: tempProductIdRef.current
+                    productId: productId ,
+                    sessionId: sessionId.current
                 });
 
+                
                 if(res.success) {
                     updateImage(img.id, { 
                         uploadStatus: 'uploaded',

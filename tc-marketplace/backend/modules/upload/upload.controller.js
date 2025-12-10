@@ -13,16 +13,16 @@ export const uploadSuccess = (req, res) => {
 
 export const uploadSingle = asyncHandler(async(req, res) =>{
   try {
-    const { storeId, productId } = req.body;
-    
-    if(storeId == null || productId == null) {
+    const { storeId } = req.body;
+
+    if(storeId == null ) {
       return res.status(400).json({
         success: false,
-        message: "storeId and productId are required in the request body",
+        message: "storeId is required in the request body",
       });
     }
 
-    const folderPath = `stores/${storeId}/products/${productId}`;
+    const folderPath = `stores/${storeId}/uploads`;
 
     const result = await uploadSingleImageToS3(req.file, folderPath);
 

@@ -43,6 +43,9 @@ const ProductForm = ({
     });
 
     const [editor, setEditor] = useState(null);
+
+    const sessionId = useRef(crypto.randomUUID());
+
     // -----------------------------------
     // Load initial variants from backend
     // -----------------------------------
@@ -188,7 +191,7 @@ const ProductForm = ({
             </FormSection>
 
             <FormSection>
-                <ImageUploader />
+                <ImageUploader productId={initialData._id} sessionId={sessionId}/>
                 
             </FormSection>
             <FormSection>
