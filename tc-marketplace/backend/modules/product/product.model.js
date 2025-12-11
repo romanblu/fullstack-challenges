@@ -11,7 +11,9 @@ const productSchema = new mongoose.Schema({
   quantity: {type: Number},
   categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category"}],
   mainImage: String,
-  images: [String],
+  images: [{
+    type: mongoose.Schema.Types.ObjectId, ref: "ProductImage"
+  }],
   seller: {type: mongoose.Schema.Types.ObjectId, ref: "User"}, // TODO: create SuperUser model for seller and admin 
   store: {type: mongoose.Schema.Types.ObjectId, ref: "Store"}, // holds all aditional details about the seller 
 

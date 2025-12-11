@@ -43,6 +43,7 @@ const ProductForm = ({
     });
 
     const [editor, setEditor] = useState(null);
+    const [images, setImages] = useState([]);
 
     const sessionId = useRef(crypto.randomUUID());
 
@@ -154,6 +155,7 @@ const ProductForm = ({
                 .map(v => v.trim())
                 .filter(v => v !== "")
         }));
+        console.log(images)
         onSubmit({ ...form, options: cleanOptions, description });
     };
 
@@ -191,7 +193,7 @@ const ProductForm = ({
             </FormSection>
 
             <FormSection>
-                <ImageUploader productId={initialData._id} sessionId={sessionId}/>
+                <ImageUploader productId={initialData._id} sessionId={sessionId} onReady={setImages}/>
                 
             </FormSection>
             <FormSection>

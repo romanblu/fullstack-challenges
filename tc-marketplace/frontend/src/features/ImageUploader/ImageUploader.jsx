@@ -3,11 +3,17 @@ import ImageDropzone from "../ImageUploader/ImageDropzone.jsx";
 import ImageGrid from "../ImageUploader/ImageGrid.jsx";
 import { uploadSingleImage } from "../../services/upload.js";
 import { useAuth } from "../../context/useAuth.js";
+import { useEffect } from "react";
 
-export default function ImageUploader({ productId, sessionId }) {
+export default function ImageUploader({ productId, sessionId, onReady }) {
     const [images, setImages] = useState([]);
     const { user } = useAuth();
     
+    useEffect(() => {
+        if(onReady) {
+            onReady(images);
+        }
+    }, [images]);
 
     const updateImage = (id, updates) => {
         setImages(prev =>
