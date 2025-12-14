@@ -5,7 +5,7 @@ import { uploadSingleImage } from "../../services/upload.js";
 import { useAuth } from "../../context/useAuth.js";
 import { useEffect } from "react";
 
-export default function ImageUploader({ productId, sessionId, onReady }) {
+export default function ImageUploader({ storeId, productId, sessionId, onReady }) {
     const [images, setImages] = useState([]);
     const { user } = useAuth();
     
@@ -13,7 +13,7 @@ export default function ImageUploader({ productId, sessionId, onReady }) {
         if(onReady) {
             onReady(images);
         }
-    }, [images]);
+    }, [images, onReady]);
 
     const updateImage = (id, updates) => {
         setImages(prev =>
@@ -24,14 +24,24 @@ export default function ImageUploader({ productId, sessionId, onReady }) {
     };
 
     const handleFilesAdded = async (newFiles) => {
-        const previewObjects = newFiles.map(file => ({
-            id: crypto.randomUUID(), 
-            file,
-            previewUrl: URL.createObjectURL(file),
-            uploadStatus: 'idle',
-            uploadedUrl: null,
-            uploadedKey: null
-        }));
+        const previewObjects = newFiles.map(file => {
+            const base = {
+                id: crypto.randomUUID(), 
+                file,
+                storeId: storeId,
+                previewUrl: URL.createObjectURL(file),
+                uploadStatus: 'idle',
+                url: null,
+                key: null
+            }
+
+            if (productId) {
+                base.productId = productId;
+            } else {
+                base.sessionId = sessionId.current;
+            }
+            return base
+        });
 
         setImages(prev => [...prev, ...previewObjects]);
     };
@@ -40,11 +50,12 @@ export default function ImageUploader({ productId, sessionId, onReady }) {
         for (let img of images) {
             if (img.uploadStatus === 'uploaded') continue; // skip already uploaded images
 
+            updateImage(img.id, { uploadStatus: "uploading" });
+
             try {
-                updateImage(img.id, { uploadStatus: "uploading" });
                 const res = await uploadSingleImage(img.file, {
                     storeId: user.store,
-                    productId: productId ,
+                    productId,
                     sessionId: sessionId.current
                 });
 
@@ -52,8 +63,8 @@ export default function ImageUploader({ productId, sessionId, onReady }) {
                 if(res.success) {
                     updateImage(img.id, { 
                         uploadStatus: 'uploaded',
-                        uploadedKey: res.key,
-                        uploadedUrl: res.url
+                        key: res.key,
+                        url: res.url
                     })
                 }
 
@@ -63,7 +74,7 @@ export default function ImageUploader({ productId, sessionId, onReady }) {
             }
         }
     }
-    console.log("Images: ",images)
+    
     const handleDeleteImage = (imageToDelete) => {
         setImages(prevImages => prevImages.filter(img => img.id !== imageToDelete.id));
     }
