@@ -1,5 +1,5 @@
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
-import { uploadSingleImageToS3 } from "./upload.service.js";
+import { uploadProductImage } from "./upload.service.js";
 import asyncHandler from "../../utils/asyncHandler.js";
 
 export const uploadSuccess = (req, res) => {
@@ -13,7 +13,7 @@ export const uploadSuccess = (req, res) => {
 
 export const uploadSingle = asyncHandler(async(req, res) =>{
   try {
-    const { storeId } = req.body;
+    const { storeId, productId, sessionId } = req.body;
 
     if(storeId == null ) {
       return res.status(400).json({
@@ -22,14 +22,32 @@ export const uploadSingle = asyncHandler(async(req, res) =>{
       });
     }
 
-    const folderPath = `stores/${storeId}/uploads`;
+    if (!productId && !sessionId) {
+      return res.status(400).json({
+        success: false,
+        message: "productId or sessionId required",
+      });
+    }
 
-    const result = await uploadSingleImageToS3(req.file, folderPath);
+    if (productId && sessionId) {
+      return res.status(400).json({
+        success: false,
+        message: "Provide only one of productId or sessionId",
+      });
+    }
+
+    const image = await uploadProductImage({
+      file: req.file,
+      storeId,
+      productId,
+      sessionId
+
+    });
 
     return res.status(200).json({
       success: true,
-      url: result.url,
-      key: result.key,
+      url: image.url,
+      key: image.key,
     });
 
   } catch (error) {

@@ -2,7 +2,7 @@ import { PutObjectCommand, GetObjectCommand  } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { s3 } from './upload.utils.js';
 import dotenv from "dotenv";
-
+import ProductImage from "../product/image.model.js";
 dotenv.config();
 
 export async function uploadSingleImageToS3(file, folderPath) {
@@ -34,4 +34,25 @@ export async function uploadSingleImageToS3(file, folderPath) {
     key,
     url
   };
+}
+
+
+export async function uploadProductImage({file, storeId, productId, sessionId}) {
+  if(!file) throw new Error("File required");
+
+  const folderPath = productId
+  ? `stores/${storeId}/products/${productId}`
+  : `stores/${storeId}/temp/${sessionId}`;
+
+  const { key, url } = await uploadSingleImageToS3(file, folderPath);
+
+  const image = ProductImage.create({
+    storeId,
+    productId: productId || null,
+    sessionId: sessionId || null,
+    key,
+    url
+  })
+
+  return image
 }
