@@ -3,7 +3,7 @@ import axios from "axios";
 const API = import.meta.env.VITE_API_URL;
 
 export async function uploadSingleImage (file, options = {}) {
-    const { productId, storeId, sessionId } = options;
+    const { productId, storeId, sessionId, order } = options;
 
     if (!file) throw new Error("uploadSingleImage: file is required");
 
@@ -14,6 +14,7 @@ export async function uploadSingleImage (file, options = {}) {
     if (storeId) formData.append("storeId", storeId);
     if (productId) formData.append("productId", productId);
     if (sessionId) formData.append("sessionId", sessionId);
+    if (order) formData.append("order", order);
 
     const res = await axios.post(`${API}/api/upload`, formData, {
         headers: {

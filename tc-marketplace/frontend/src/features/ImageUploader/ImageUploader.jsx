@@ -24,7 +24,9 @@ export default function ImageUploader({ storeId, productId, sessionId, onReady }
     };
 
     const handleFilesAdded = async (newFiles) => {
-        const previewObjects = newFiles.map(file => {
+        const startOrder = images.length
+
+        const previewObjects = newFiles.map((file, index )=> {
             const base = {
                 id: crypto.randomUUID(), 
                 file,
@@ -32,7 +34,8 @@ export default function ImageUploader({ storeId, productId, sessionId, onReady }
                 previewUrl: URL.createObjectURL(file),
                 uploadStatus: 'idle',
                 url: null,
-                key: null
+                key: null,
+                order: startOrder + index,
             }
 
             if (productId) {
@@ -53,11 +56,17 @@ export default function ImageUploader({ storeId, productId, sessionId, onReady }
             updateImage(img.id, { uploadStatus: "uploading" });
 
             try {
-                const res = await uploadSingleImage(img.file, {
+                const base = {
                     storeId: user.store,
-                    productId,
-                    sessionId: sessionId.current
-                });
+                    order:  img.order
+                }
+                if(productId) {
+                    base.productId = productId;
+                } else {
+                    base.sessionId = sessionId.current;
+                }
+
+                const res = await uploadSingleImage(img.file, base);
 
                 
                 if(res.success) {
