@@ -37,7 +37,7 @@ export async function uploadSingleImageToS3(file, folderPath) {
 }
 
 
-export async function uploadProductImage({file, storeId, productId, sessionId}) {
+export async function uploadProductImage({file, storeId, productId, sessionId, order}) {
   if(!file) throw new Error("File required");
 
   const folderPath = productId
@@ -51,8 +51,17 @@ export async function uploadProductImage({file, storeId, productId, sessionId}) 
     productId: productId || null,
     sessionId: sessionId || null,
     key,
-    url
+    url,
+    order
   })
 
   return image
+}
+
+export async function moveImageInS3(oldKey, newKey) {
+
+}
+
+export async function deteleImageFromS3 (key) {
+  
 }

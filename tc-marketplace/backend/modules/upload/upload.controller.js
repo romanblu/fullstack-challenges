@@ -13,7 +13,7 @@ export const uploadSuccess = (req, res) => {
 
 export const uploadSingle = asyncHandler(async(req, res) =>{
   try {
-    const { storeId, productId, sessionId } = req.body;
+    const { storeId, productId, sessionId, order } = req.body;
 
     if(storeId == null ) {
       return res.status(400).json({
@@ -40,7 +40,8 @@ export const uploadSingle = asyncHandler(async(req, res) =>{
       file: req.file,
       storeId,
       productId,
-      sessionId
+      sessionId,
+      order
 
     });
 
