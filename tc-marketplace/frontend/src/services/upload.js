@@ -51,20 +51,20 @@ async function getPresignedUrl({ storeId, productId, sessionId, fileName, fileTy
             fileType
         }, 
     })
-    const {url, key} = response.data;
-
-    return { url, key}
+    const {uploadUrl,publicUrl, key} = response.data;
+    console.log(uploadUrl,publicUrl, key);
+    return { uploadUrl, publicUrl, key}
 }
 
 export async function uploadFile({ file, storeId, productId, sessionId }) {
 
-    const { url, key } = await getPresignedUrl({ storeId, productId, sessionId, fileName: file.name, fileType: file.type });
+    const { uploadUrl, publicUrl, key } = await getPresignedUrl({ storeId, productId, sessionId, fileName: file.name, fileType: file.type });
 
-    const response = await axios.put(url, file,{
+    const response = await axios.put(uploadUrl, file,{
         headers: {
             "Content-Type": file.type,  
         },
     })
 
-    return { success: response.status === 200 }    
+    return { success: response.status === 200 , uploadUrl, publicUrl, key}    
 }

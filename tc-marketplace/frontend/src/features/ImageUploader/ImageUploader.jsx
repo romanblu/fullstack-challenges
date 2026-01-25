@@ -73,7 +73,7 @@ export default function ImageUploader({ storeId, productId, sessionId, onReady }
                     updateImage(img.id, { 
                         uploadStatus: 'uploaded',
                         key: res.key,
-                        url: res.url
+                        url: res.publicUrl
                     })
              }
 

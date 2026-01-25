@@ -86,7 +86,7 @@ export const getPresignedUrlUpload = asyncHandler(async (req, res) => {
     return res.status(400).json({ success: false, message: "storeId + productId/sessionId required" });
   }
 
-  const { url, key } = await getUploadUrl({ storeId, productId, sessionId, fileName, fileType });
+  const { uploadUrl, publicUrl, key } = await getUploadUrl({ storeId, productId, sessionId, fileName, fileType });
 
-  res.json({ success: true, url, key });
+  res.json({ success: true, uploadUrl, publicUrl, key });
 })

@@ -80,7 +80,9 @@ export async function getUploadUrl( {storeId, productId, sessionId, fileName, fi
     ContentType: fileType,
   });
 
-  const url = await getSignedUrl(s3, command, { expiresIn: 60 });
+  const uploadUrl = await getSignedUrl(s3, command, { expiresIn: 60 });
 
-  return { url, key}
+  const publicUrl = `https://${process.env.CLOUDFRONT_DOMAIN}/${key}`;
+
+  return { uploadUrl, publicUrl, key}
 }
