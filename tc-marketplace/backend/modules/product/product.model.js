@@ -1,6 +1,27 @@
 import VariantSchema from '../variant/variant.model.js';
 
 import mongoose from 'mongoose';
+
+const ProductImageSchema = new mongoose.Schema({
+  key: {
+    type: String,
+    required: true
+  },
+  url: {
+    type: String,
+    required: true
+  },
+  alt: {
+    type: String,
+    default: ""
+  },
+  uploadedAt: {
+    type: Date,
+    default: Date.now
+  }
+}, { _id: false });
+
+
 const productSchema = new mongoose.Schema({
   name: {type: String, required: true},
   slug: {type: String, required: true, unique: true},
@@ -10,10 +31,9 @@ const productSchema = new mongoose.Schema({
   price: {type: Number},
   quantity: {type: Number},
   categories: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category"}],
-  mainImage: String,
-  images: [{
-    type: mongoose.Schema.Types.ObjectId, ref: "ProductImage"
-  }],
+  images: {
+    type: [ProductImageSchema], default: []
+  },
   seller: {type: mongoose.Schema.Types.ObjectId, ref: "User"}, // TODO: create SuperUser model for seller and admin 
   store: {type: mongoose.Schema.Types.ObjectId, ref: "Store"}, // holds all aditional details about the seller 
 
@@ -47,6 +67,5 @@ const productSchema = new mongoose.Schema({
   featured: { type: Boolean, default: false },
   createdAt: {type: Date, default: Date.now},
 });
-
 
 export default mongoose.model('Product', productSchema);
