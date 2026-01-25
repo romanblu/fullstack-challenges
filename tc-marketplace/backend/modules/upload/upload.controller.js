@@ -1,5 +1,5 @@
 import { DeleteObjectCommand } from "@aws-sdk/client-s3";
-import { uploadProductImage } from "./upload.service.js";
+import { uploadProductImage, getUploadUrl } from "./upload.service.js";
 import asyncHandler from "../../utils/asyncHandler.js";
 
 export const uploadSuccess = (req, res) => {
@@ -77,4 +77,16 @@ export const deleteFile = asyncHandler(async (req, res) => {
         console.log(err);
         res.status(500).json({ error: "Failed to delete" });
     }
+})
+
+export const getPresignedUrlUpload = asyncHandler(async (req, res) => {
+  const { storeId, productId, sessionId, fileName, fileType } = req.query; 
+
+  if (!storeId || (!productId && !sessionId)) {
+    return res.status(400).json({ success: false, message: "storeId + productId/sessionId required" });
+  }
+
+  const { url, key } = await getUploadUrl({ storeId, productId, sessionId, fileName, fileType });
+
+  res.json({ success: true, url, key });
 })
