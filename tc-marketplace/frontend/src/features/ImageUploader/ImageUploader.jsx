@@ -1,7 +1,7 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import ImageDropzone from "../ImageUploader/ImageDropzone.jsx";
 import ImageGrid from "../ImageUploader/ImageGrid.jsx";
-import { uploadSingleImage } from "../../services/upload.js";
+import { uploadFile } from "../../services/upload.js";
 import { useAuth } from "../../context/useAuth.js";
 import { useEffect } from "react";
 
@@ -50,6 +50,7 @@ export default function ImageUploader({ storeId, productId, sessionId, onReady }
     };
 
     const handleUpload = async () => {
+        
         for (let img of images) {
             if (img.uploadStatus === 'uploaded') continue; // skip already uploaded images
 
@@ -60,22 +61,21 @@ export default function ImageUploader({ storeId, productId, sessionId, onReady }
                     storeId: user.store,
                     order:  img.order
                 }
-                if(productId) {
+             if(productId) {
                     base.productId = productId;
                 } else {
                     base.sessionId = sessionId.current;
                 }
 
-                const res = await uploadSingleImage(img.file, base);
+                const res = await uploadFile({file: img.file, storeId, productId, sessionId: sessionId.current});
 
-                
                 if(res.success) {
                     updateImage(img.id, { 
                         uploadStatus: 'uploaded',
                         key: res.key,
                         url: res.url
                     })
-                }
+             }
 
             } catch (err) {
                 updateImage(img.id, { uploadStatus: 'error' });

@@ -37,3 +37,34 @@ export async function uploadSingleImage (file, options = {}) {
     };
 
 }
+
+async function getPresignedUrl({ storeId, productId, sessionId, fileName, fileType }) {
+    const response = await axios.get(`${API}/api/upload/presigned-url`, {
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+        params:{
+            storeId,
+            productId,
+            sessionId,
+            fileName,
+            fileType
+        }, 
+    })
+    const {url, key} = response.data;
+
+    return { url, key}
+}
+
+export async function uploadFile({ file, storeId, productId, sessionId }) {
+
+    const { url, key } = await getPresignedUrl({ storeId, productId, sessionId, fileName: file.name, fileType: file.type });
+
+    const response = await axios.put(url, file,{
+        headers: {
+            "Content-Type": file.type,  
+        },
+    })
+
+    return { success: response.status === 200 }    
+}
