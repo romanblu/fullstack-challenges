@@ -88,6 +88,8 @@ export const createProduct = async (body) => {
     }))
   });
 
+  
+
   return product
 
 };

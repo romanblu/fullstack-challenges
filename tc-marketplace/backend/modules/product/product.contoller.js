@@ -55,7 +55,7 @@ export const createProduct = asyncHandler(async (req, res) => {
     name,
     price,
   } = req.body;
-  console.log(req.body)
+
   // TODO: move into validation middleware - request validation
   const skus = (req.body.variants || []).map(v => v.sku).filter(sku => typeof sku === "string" && sku.trim() !== "");
 
