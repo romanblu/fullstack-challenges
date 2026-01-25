@@ -16,7 +16,7 @@ export const listProducts = async (filters) => {
     if (filters?.seller) {
         query.seller = filters.seller;
     }
-    const products = await Product.find(query).limit(100).populate('seller', 'name');
+    const products = await Product.find(query).limit(100).populate('seller', 'name').select({images: {$slice: 1}});
     return products
 }
 
