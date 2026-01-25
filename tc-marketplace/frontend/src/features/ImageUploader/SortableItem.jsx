@@ -2,7 +2,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import ImageItem from "./ImageItem";
 
-export default function SortableItem({ item, id, onDelete }) {
+export default function SortableItem({ item, id, onDelete, index }) {
   const { setNodeRef, attributes, listeners, transform, transition } =
     useSortable({ id });
 
@@ -10,6 +10,7 @@ export default function SortableItem({ item, id, onDelete }) {
     transform: CSS.Transform.toString(transform),
     transition,
   };
+  const isMain = index === 0;
 
   return (
     <div
@@ -19,8 +20,13 @@ export default function SortableItem({ item, id, onDelete }) {
       {...listeners}
       className="relative w-full h-32 overflow-hidden rounded  cursor-move"
     >
-      {/* <img src={item.previewUrl} className="object-cover w-full h-full" /> */}
+      {isMain && (
+        <div className="absolute top-1 left-1 bg-lime-500 z-10 pl-1 pr-1 rounded opacity-80">
+          MAIN IMAGE
+        </div>
+      )}
         <ImageItem image={item} onDelete={onDelete}/>
+       
         
     </div>
   );

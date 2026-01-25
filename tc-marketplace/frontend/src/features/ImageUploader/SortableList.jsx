@@ -41,8 +41,8 @@ export default function SortableList({ items, onChange, onDelete }) {
         strategy={rectSortingStrategy}
       >
         <div className="grid grid-cols-3 gap-3">
-          {items.map((item) => (
-            <SortableItem key={item.id} item={item} id={item.id} onDelete={onDelete} />
+          {items.map((item, index) => (
+            <SortableItem key={item.id} index={index} item={item} id={item.id} onDelete={onDelete} />
           ))}
         </div>
       </SortableContext>
