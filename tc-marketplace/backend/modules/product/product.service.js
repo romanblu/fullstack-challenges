@@ -3,6 +3,7 @@ import Variant from '../variant/variant.model.js'
 import mongoose from 'mongoose';
 import { parseDuplicateError } from './product.utils.js';
 import ApiError from '../../utils/ApiError.js';
+import { moveImages } from '../upload/upload.service.js';
 
 export const listProducts = async (filters) => {
     const query = {}
@@ -86,9 +87,13 @@ export const createProduct = async (body) => {
       stock: Number(v.stock),
       optionValues: v.optionValues || [],
     }))
+
   });
 
-  
+  const productId = product._id.toString();
+
+  // move images from temp folder to productId folder
+  moveImages(body?.images, productId);
 
   return product
 

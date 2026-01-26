@@ -12,7 +12,7 @@ import sellerRoutes from "./modules/store/store.routes.js";
 import categoryRoutes from "./modules/category/category.routes.js";
 import variantRoutes from "./modules/variant/variant.routes.js";
 import uploadRoutes from "./modules/upload/upload.routes.js";
-
+import { testS3 } from "./modules/upload/upload.utils.js";
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import morgan from "morgan";
 import logger from "./utils/logger.js";
@@ -35,6 +35,8 @@ const stream = {
 };
 
 // app.use(morgan('combined', { stream }));
+
+//testS3();
 
 // Routes
 app.use("/api/users", userRoutes);

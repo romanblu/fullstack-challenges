@@ -1,4 +1,4 @@
-import { PutObjectCommand, GetObjectCommand  } from "@aws-sdk/client-s3";
+import { PutObjectCommand, GetObjectCommand,CopyObjectCommand, DeleteObjectCommand  } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { s3 } from './upload.utils.js';
 import dotenv from "dotenv";
@@ -86,3 +86,46 @@ export async function getUploadUrl( {storeId, productId, sessionId, fileName, fi
 
   return { uploadUrl, publicUrl, key}
 }
+
+export const moveImages = async (images, productId) => {
+  if (!images || images.length === 0) return;
+
+  const movedImages = []
+
+  for (const img of images){
+    try{
+      // copy to the right key
+      const parts = img.key.split('/');
+      const fileName = parts[parts.length -1];
+
+      const newKey = `stores/${img.storeId}/products/${productId}/${fileName}`;
+
+      await s3.send(new CopyObjectCommand({
+        Bucket: process.env.AWS_S3_BUCKET,
+        CopySource: process.env.AWS_S3_BUCKET + '/' + img.key,
+        Key: newKey
+      }));
+
+      // delete old key
+      await s3.send(
+        new DeleteObjectCommand({
+          Bucket: process.env.AWS_S3_BUCKET,
+          Key: img.key
+        })
+      );
+
+      movedImages.push({
+        oldKey: img.key,
+        newKey: newKey
+      })
+
+      console.log("Moved:", img.key, "→", newKey);
+
+
+    } catch (error){
+      console.error("Error moving image in S3:", error);
+    }
+  }
+
+}
+
