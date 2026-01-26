@@ -27,9 +27,10 @@ export default function ImageUploader({ storeId, productId, sessionId, onReady }
         const startOrder = images.length
 
         const previewObjects = newFiles.map((file, index )=> {
+
             const base = {
                 id: crypto.randomUUID(), 
-                file,
+                file: {name: file.name, type: file.type, size: file.size},
                 storeId: storeId,
                 previewUrl: URL.createObjectURL(file),
                 uploadStatus: 'idle',
