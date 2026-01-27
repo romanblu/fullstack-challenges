@@ -30,7 +30,7 @@ export default function ImageUploader({ storeId, productId, sessionId, onReady }
 
             const base = {
                 id: crypto.randomUUID(), 
-                file: {name: file.name, type: file.type, size: file.size},
+                file: file,
                 storeId: storeId,
                 previewUrl: URL.createObjectURL(file),
                 uploadStatus: 'idle',
