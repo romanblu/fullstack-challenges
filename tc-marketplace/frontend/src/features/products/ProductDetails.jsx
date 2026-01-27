@@ -1,12 +1,12 @@
 import SelectedCategories from "../../components/ui/SelectedCategories"
 
 export const ProductDetails = ({ product }) => {
-    
-    return (
+
+  return (
         <div className="md:col-span-2 space-y-6">
           <div className="rounded-xl overflow-hidden shadow-md">
             <img
-              src={product?.mainImage}
+              src={product?.images[0].url}
               alt={product?.name}
               className="w-full h-[420px] object-cover"
             />

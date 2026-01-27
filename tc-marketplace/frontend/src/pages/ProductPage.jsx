@@ -4,12 +4,15 @@ import { useProduct } from '../hooks/useProduct';
 import ErrorMessage from '../components/ui/ErrorMessage'
 import Loader from '../components/ui/Loader'
 import { ProductDetails } from '../features/products/ProductDetails';
-import { SellerDetails } from '../features/products/SellerDetails';
+import { SellerDetails } from './ProductPage/SellerDetails';
+import ProductGallery from "./ProductPage/ProductGallery";
+import { ProductTabs } from "./ProductPage/ProductTabs";
+import { BuyBox } from "./ProductPage/BuyBox";
 
 const ProductPage = () => { 
   const { slug } = useParams()
   const { data: product, isLoading, error } = useProduct(slug);    
-
+  console.log(product)
   if(isLoading) return <Loader />
   if(error) return <ErrorMessage message="Failed to get product data"/>
 
@@ -34,11 +37,20 @@ const ProductPage = () => {
 
         {/* LEFT COLUMN — IMAGES */}
         {/* TODOL Add support for multiple images */}
-        <ProductDetails product={product}/>
+       
+       
+        {/* <ProductDetails product={product}/> */}
+        <div className="md:col-span-2">
+          <ProductGallery images={product?.images || []}/>
+          <ProductTabs product={product} />
+        </div>
+       
         {/* TODO: Shipping and return policy */}
         {/* RIGHT SIDEBAR — STORE INFORMATION */}
         <div className="space-y-6">
               {/* TODO: add seller logo, verified badge, possibly visit store, social icons, rating */}
+          <BuyBox product={product} />
+
           {product?.store && (
             <SellerDetails store={product.store} />
           )}
