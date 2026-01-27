@@ -12,6 +12,7 @@ import sellerRoutes from "./modules/store/store.routes.js";
 import categoryRoutes from "./modules/category/category.routes.js";
 import variantRoutes from "./modules/variant/variant.routes.js";
 import uploadRoutes from "./modules/upload/upload.routes.js";
+import cartRoutes from "./modules/cart/cart.routes.js";
 import { testS3 } from "./modules/upload/upload.utils.js";
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import morgan from "morgan";
@@ -48,6 +49,7 @@ app.use("/api/store", sellerRoutes)
 app.use("/api/categories", categoryRoutes);
 app.use("/api/variants", variantRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/api/cart", cartRoutes);
 app.use(notFound)
 
 app.use(errorHandler)
