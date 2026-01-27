@@ -1,7 +1,7 @@
 import Product from './product.model.js'
 import Variant from '../variant/variant.model.js'
 import mongoose from 'mongoose';
-import { parseDuplicateError } from './product.utils.js';
+import { moveImagesMeta, parseDuplicateError } from './product.utils.js';
 import ApiError from '../../utils/ApiError.js';
 import { moveImages } from '../upload/upload.service.js';
 
@@ -93,7 +93,13 @@ export const createProduct = async (body) => {
   const productId = product._id.toString();
 
   // move images from temp folder to productId folder
-  moveImages(body?.images, productId);
+  const result = await moveImages(body?.images, productId);
+
+  if (result?.success) {
+    const movedImages = result.movedImages;
+    product.images = movedImages
+    await product.save();
+  }
 
   return product
 
