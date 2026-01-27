@@ -10,6 +10,7 @@ import VariantManager from "./VariantManager.jsx";
 import FormSection from "../../components/ui/FormSection.jsx";
 import DescriptionEditor from "./htmlEditor/DescriptionEditor.jsx";
 import ImageUploader from "../ImageUploader/ImageUploader.jsx";
+import { useAuth } from "../../context/useAuth.js";
 
 const cartesian = (arrays) => {
     if (arrays.length === 0) return [];
@@ -34,7 +35,7 @@ const ProductForm = ({
         description: "",
         price: 0.00,
         quantity: 1,
-        mainImage: "",
+        images : [],
         productType: "",
         categories: [],
         options:[],
@@ -44,6 +45,9 @@ const ProductForm = ({
 
     const [editor, setEditor] = useState(null);
     const [images, setImages] = useState([]);
+    
+    const { user } = useAuth();
+    const storeId = user.store
 
     const sessionId = useRef(crypto.randomUUID());
 
@@ -155,8 +159,8 @@ const ProductForm = ({
                 .map(v => v.trim())
                 .filter(v => v !== "")
         }));
-        console.log(images)
-        onSubmit({ ...form, options: cleanOptions, description });
+
+        onSubmit({ ...form, images, options: cleanOptions, description });
     };
 
     return (
@@ -193,7 +197,7 @@ const ProductForm = ({
             </FormSection>
 
             <FormSection>
-                <ImageUploader productId={initialData._id} sessionId={sessionId} onReady={setImages}/>
+                <ImageUploader storeId={storeId} productId={initialData._id} sessionId={sessionId} onReady={setImages}/>
                 
             </FormSection>
             <FormSection>
