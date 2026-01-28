@@ -115,11 +115,14 @@ export const moveImages = async (images, productId) => {
       );
 
       movedImages.push({
-        oldKey: img.key,
-        newKey: newKey
+        ...img,
+        key: newKey,
+        sessionId: null,
+        productId: productId,
+        url: `https://${process.env.CLOUDFRONT_DOMAIN}/${newKey}`,
       })
 
-      console.log("Moved:", img.key, "→", newKey);
+      console.log("Moved:", movedImages[movedImages.length -1]);
 
 
     } catch (error){
@@ -127,5 +130,6 @@ export const moveImages = async (images, productId) => {
     }
   }
 
-}
+  return {movedImages, success: true};
 
+}

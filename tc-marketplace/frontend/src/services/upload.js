@@ -52,7 +52,7 @@ async function getPresignedUrl({ storeId, productId, sessionId, fileName, fileTy
         }, 
     })
     const {uploadUrl,publicUrl, key} = response.data;
-    console.log(uploadUrl,publicUrl, key);
+
     return { uploadUrl, publicUrl, key}
 }
 
