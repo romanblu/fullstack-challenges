@@ -1,8 +1,9 @@
-import ApiError from "../../utils/ApiError";
+import ApiError from "../../utils/ApiError.js"
 import Product from "../product/product.model.js";
 import Cart from "./cart.model.js";
 
-export async function addCartItem(userId, productId, variantId=null, quantity=1) {
+export async function addCartItem({sessionId, productId, variantId=null, quantity=1}) {
+    console.log("Adding to cart:", productId)
     if(!productId || quantity < 1) {
         throw ApiError.badRequest("Product ID and valid quantity are required");
     }
@@ -11,7 +12,7 @@ export async function addCartItem(userId, productId, variantId=null, quantity=1)
     if(!product) {
         throw ApiError.notFound("Product not found");
     }
-
+    
     if(product.status !== "available") {
         throw ApiError.badRequest("This product is not available");
     }
@@ -42,8 +43,9 @@ export async function addCartItem(userId, productId, variantId=null, quantity=1)
     }
 
     //get cart or create new
-    const cart = await Cart.findOne({ userId }) || 
-            await Cart.create({ userId, items: [] })
+    console.log("Finding cart for session:", sessionId)
+    const cart = await Cart.findOne({ sessionId }) || 
+            await Cart.create({ sessionId, items: [] })
 
     //check if item already in cart
     const existingItem = cart.items.find(item =>
@@ -58,7 +60,7 @@ export async function addCartItem(userId, productId, variantId=null, quantity=1)
         existingItem.quantity += quantity;
     } else {
         cart.items.push({
-            proiductId,
+            productId,
             variantId,
             name: variantName || product.name,
             price,
@@ -76,14 +78,14 @@ export async function addCartItem(userId, productId, variantId=null, quantity=1)
 }
 
 
-export async function updateCart(userId, items) {
+export async function updateCart(sessionId, items) {
 
 }
 
-export async function deleteCartItem(userId, cartItemId) {
+export async function deleteCartItem(sessionId, cartItemId) {
 
 }
 
-export async function cartCheckout(userId) {
+export async function cartCheckout(sessionId) {
 
 }
