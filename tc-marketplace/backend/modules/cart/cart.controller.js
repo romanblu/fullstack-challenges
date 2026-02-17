@@ -33,7 +33,7 @@ export const updateCartItem = asyncHandler(async (req, res) => {
     if (quantity === undefined) {
         throw ApiError.badRequest("Quantity is required");
     }
-    console.log("ITEM ID PARAMS", itemId)
+
     const cart = await cartService.updateCartItem({ 
         sessionId: req.cartSessionId,
         itemId,
@@ -49,7 +49,19 @@ export const updateCartItem = asyncHandler(async (req, res) => {
 })
 
 export const deleteCartItem = asyncHandler(async (req, res) => {
+    const { itemId } = req.params;
 
+    const cart = await cartService.deleteCartItem({
+        userId: req.user?._id || null,
+        sessionId: req.cartSessionId,
+        itemId
+    });
+
+    res.status(200).json({
+        success: true,
+        message: "Item removed from cart",
+        data: cart
+    });
 })
 
 export const cartCheckout = asyncHandler(async (req, res) => {

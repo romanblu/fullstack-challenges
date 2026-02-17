@@ -134,8 +134,35 @@ export async function updateCartItem({sessionId, itemId, quantity}) {
 
 }
 
-export async function deleteCartItem(sessionId, cartItemId) {
+export async function deleteCartItem({itemId, sessionId}) {
+    if (!itemId) {
+        throw ApiError.badRequest("Cart item ID is required");
+    }
 
+    
+    const cart = await Cart.findOne({sessionId});
+
+    if (!cart) {
+        throw ApiError.notFound("Cart not found");
+    }
+
+    const item = cart.items.id(itemId);
+    if (!item) {
+        throw ApiError.notFound("Cart item not found");
+    }
+
+    cart.items.pull({ _id: itemId });
+
+
+    if (cart.items.length === 0) {
+        await Cart.deleteOne({ _id: cart._id });
+        return { items: [] };
+    }
+
+    cart.updatedAt = new Date();
+    await cart.save();
+
+    return cart;
 }
 
 export async function cartCheckout(sessionId) {
