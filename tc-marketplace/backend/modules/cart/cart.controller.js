@@ -26,7 +26,25 @@ export const addCartItem = asyncHandler(async (req, res) => {
     })
 })
 
-export const updateCart = asyncHandler(async (req, res) => {
+export const updateCartItem = asyncHandler(async (req, res) => {
+    const { itemId } = req.params;
+    const { quantity } = req.body;
+
+    if (quantity === undefined) {
+        throw ApiError.badRequest("Quantity is required");
+    }
+    console.log("ITEM ID PARAMS", itemId)
+    const cart = await cartService.updateCartItem({ 
+        sessionId: req.cartSessionId,
+        itemId,
+        quantity
+    })
+
+    res.status(200).json({
+        success: true,
+        message: "Cart updated",
+        data: cart
+    });
 
 })
 

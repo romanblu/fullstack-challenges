@@ -78,7 +78,59 @@ export async function addCartItem({sessionId, productId, variantId=null, quantit
 }
 
 
-export async function updateCart(sessionId, items) {
+export async function updateCartItem({sessionId, itemId, quantity}) {
+    if (!itemId) {
+        throw ApiError.badRequest("Cart item ID is required");
+    }
+
+    const cart = await Cart.findOne({ sessionId })
+
+    if (!cart) {
+        throw ApiError.notFound("Cart not found");
+    }
+
+    const item = cart.items.id(itemId);
+    if (!item) {
+        throw ApiError.notFound("Cart item not found");
+    }
+
+    if (quantity < 1) {
+        item.remove();
+        cart.updatedAt = new Date();
+        await cart.save();
+        return cart;
+    }
+
+    const product = await Product.findById(item.productId);
+    if (!product) {
+        throw ApiError.notFound("Product not found");
+    }
+
+    let stock;
+
+    if (item.variantId) {
+        const variant = product.variants.id(item.variantId);
+        if (!variant) {
+        throw ApiError.notFound("Product variant not found");
+        }
+        if (variant.status !== "active") {
+        throw ApiError.badRequest("Variant not available");
+        }
+        stock = variant.stock || 0;
+    } else {
+        stock = product.quantity || 0;
+    }
+
+    if (quantity > stock) {
+        throw ApiError.badRequest("Requested quantity exceeds available stock");
+    }
+
+    item.quantity = quantity;
+    cart.updatedAt = new Date();
+
+    await cart.save();
+    return cart;
+
 
 }
 
