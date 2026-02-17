@@ -1,6 +1,7 @@
 import ApiError from "../../utils/ApiError.js"
 import Product from "../product/product.model.js";
 import Cart from "./cart.model.js";
+import Order from "../order/order.model.js";
 
 export async function addCartItem({sessionId, productId, variantId=null, quantity=1}) {
     console.log("Adding to cart:", productId)
@@ -165,6 +166,66 @@ export async function deleteCartItem({itemId, sessionId}) {
     return cart;
 }
 
-export async function cartCheckout(sessionId) {
+export async function cartCheckout({sessionId}) {
+    const cart = await Cart.findOne({sessionId});
+    if (!cart || cart.items.length === 0) {
+        throw ApiError.badRequest("Cart is empty");
+    }
 
+    let subtotal = 0;
+    const orderItems = [];
+
+    for (const item of cart.items) {
+
+        const product = await Product.findById(item.productId);
+        
+        if (!product) throw ApiError.notFound("Product not found");
+
+        let stock;
+        let price;
+
+        if (item.variantId) {
+
+            const variant = product.variants.id(item.variantId);
+
+            if (!variant || variant.status !== "active") {
+                throw ApiError.badRequest("Variant unavailable");
+            }
+
+            stock = variant.stock;
+            price = variant.price || product.price;
+
+        } else {
+            stock = product.quantity;
+            price = product.price;
+        }
+
+        if (item.quantity > stock) {
+            throw ApiError.badRequest("Insufficient stock");
+        }
+
+        subtotal += price * item.quantity;
+
+        orderItems.push({
+            productId: item.productId,
+            variantId: item.variantId,
+            name: item.name,
+            price,
+            quantity: item.quantity,
+            image: item.image,
+            storeId: item.storeId
+        });
+    }
+
+    const order = await Order.create({
+        sessionId: sessionId,
+        items: orderItems,
+        subtotal,
+        total: subtotal,
+        status: "pending"
+    });
+
+    await Cart.deleteOne({ _id: cart._id });
+
+    return order;
 }

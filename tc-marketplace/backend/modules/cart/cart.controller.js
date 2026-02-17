@@ -65,5 +65,13 @@ export const deleteCartItem = asyncHandler(async (req, res) => {
 })
 
 export const cartCheckout = asyncHandler(async (req, res) => {
+    const order = await cartService.cartCheckout({
+        sessionId: req.cartSessionId
+    });
 
+    res.status(200).json({
+        success: true,
+        message: "Checkout created",
+        data: order
+    });
 })
