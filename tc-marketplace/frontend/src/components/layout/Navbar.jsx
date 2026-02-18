@@ -3,6 +3,8 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { CartContext } from "../../context/CartContext";
+import { ShoppingCart } from "lucide-react";
 
 const Navbar = ({ theme = "green" }) => {
   const [menuOpen, setMenuOpen] = useState(false);  
@@ -12,6 +14,9 @@ const Navbar = ({ theme = "green" }) => {
   const toggleMenu = () => setMenuOpen(prev => !prev) 
 
   const isLight = theme === "light";
+
+  const { cartCount } = useContext(CartContext);
+
 
   const navItems = [
     { name: "Home", to: "/" },
@@ -54,6 +59,22 @@ const Navbar = ({ theme = "green" }) => {
           Dashboard
         </Link>
     )
+  }
+
+  const CartButton = () => {
+    return ( 
+      <Link to="/cart" className="relative">
+        <ShoppingCart
+          className={`${isLight ? "text-green-800" : "text-green-100"}`}
+        />
+
+        {cartCount > 0 && (
+          <span className="absolute -top-2 -right-2 bg-lime-500 text-green-950 text-xs px-1.5 rounded-full">
+            {cartCount}
+          </span>
+        )}
+      </Link>
+      )
   }
 
   return (
@@ -109,6 +130,7 @@ const Navbar = ({ theme = "green" }) => {
               {item.name}
             </Link>
         ))}
+        {CartButton()}
         {user ?  <Link to="/logout" className="block hover:text-green-300 transition">Logout</Link>
         :<Link to="/signin" className="block hover:text-green-300 transition">Login</Link>}
         {user ? '' :<Link to="register" className="block hover:text-green-300 transition">Register</Link>}
