@@ -17,7 +17,6 @@ const Navbar = ({ theme = "green" }) => {
 
   const { cartCount } = useContext(CartContext);
 
-
   const navItems = [
     { name: "Home", to: "/" },
     { name: "Shop", to: "/shop" },
@@ -100,6 +99,7 @@ const Navbar = ({ theme = "green" }) => {
             
         </div>
         <div className="hidden sm:flex space-x-4 items-center">
+          <CartButton />
             {
               user ? user.role === 'seller' ? <DashboardButton /> :  <p> Hello {user.name}</p> :   <Login />
             }
@@ -130,7 +130,6 @@ const Navbar = ({ theme = "green" }) => {
               {item.name}
             </Link>
         ))}
-        {CartButton()}
         {user ?  <Link to="/logout" className="block hover:text-green-300 transition">Logout</Link>
         :<Link to="/signin" className="block hover:text-green-300 transition">Login</Link>}
         {user ? '' :<Link to="register" className="block hover:text-green-300 transition">Register</Link>}

@@ -16,3 +16,8 @@ export const addToCart = async ({
 
   return response.data.data;
 };
+
+export const getCart = async () => {
+  const response = await apiClient.get(`${API}/api/cart`);
+  return response.data.data;
+};

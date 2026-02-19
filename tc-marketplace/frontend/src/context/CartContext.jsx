@@ -1,16 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { addToCart as addToCartAPI } from "../services/cart";
+import { addToCart as addToCartAPI, getCart } from "../services/cart";
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState(null);
 
     const fetchCart = async () => {
-    const res = await fetch("/api/cart", {
-        credentials: "include"
-        });
-        const data = await res.json();
-        setCart(data.data);
+        const cart = await getCart();
+        setCart(cart);
     };
 
     
@@ -29,8 +26,7 @@ export const CartProvider = ({ children }) => {
     };
 
     
-    const cartCount = cart?.items?.reduce(
-        (sum, item) => sum + item.quantity, 0) || 0;
+    const cartCount = cart?.items?.length
 
     return (
         <CartContext.Provider value={{ cart, setCart, cartCount, fetchCart, addToCart }}>
