@@ -1,3 +1,5 @@
+import AddToCartButton from "../../features/cart/AddToCartButton";
+
 export function BuyBox({ product }) {
   const inStock = product.quantity > 0;
 
@@ -32,12 +34,7 @@ export function BuyBox({ product }) {
         </div>
       )}
 
-      <button
-        disabled={!inStock}
-        className="max-w-[150px] w-full bg-emerald-600 hover:bg-green-700 text-white py-2 rounded-xl font-medium transition disabled:opacity-50"
-      >
-        Add to Cart
-      </button>
+      <AddToCartButton productId={product._id} variantId={product.variants?.[0]?._id} />
 
       {/* Trust badges */}
       <div className="text-sm text-gray-500 space-y-1">
