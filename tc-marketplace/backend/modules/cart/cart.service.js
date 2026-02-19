@@ -3,6 +3,11 @@ import Product from "../product/product.model.js";
 import Cart from "./cart.model.js";
 import Order from "../order/order.model.js";
 
+export async function getCart({sessionId}) {
+    let cart = await Cart.findOne({ sessionId });
+    return cart || { items: [] };
+}
+
 export async function addCartItem({sessionId, productId, variantId=null, quantity=1}) {
     console.log("Adding to cart:", productId)
     if(!productId || quantity < 1) {

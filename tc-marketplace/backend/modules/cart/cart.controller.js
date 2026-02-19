@@ -1,6 +1,17 @@
 import asyncHandler from '../../utils/asyncHandler.js'
 import * as cartService from './cart.service.js'
 
+export const getCart = asyncHandler(async (req, res) => {
+    const cart = await cartService.getCart({
+        sessionId: req.cartSessionId
+    })
+    
+    res.status(200).json({
+        success: true,
+        data: cart
+    })
+})
+
 export const addCartItem = asyncHandler(async (req, res) => {
     const {productId,
         variantId,
