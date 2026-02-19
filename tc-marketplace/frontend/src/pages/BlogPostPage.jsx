@@ -12,10 +12,18 @@ import { useBlogPostData } from "../hooks/useBlogPost";
 export default function BlogPostPage() {
     const { slug } = useParams();
 
+    useEffect(() => {
+        window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+        })
+    },[slug])
+    
     const {blogPost, featuredPosts ,loading, error} = useBlogPostData(slug)
 
     if(loading) return <Loader />
     if(error) return <ErrorMessage message="Could not get blog data"/>
+
 
     return (
         <div className="bg-slate-50">

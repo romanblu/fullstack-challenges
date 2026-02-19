@@ -28,7 +28,7 @@ export const useBlogPostData = (slug) => {
 
         fetchBlogData()
 
-    }, [])
+    }, [slug])
 
     return { blogPost, featuredPosts, loading, error}
 }
