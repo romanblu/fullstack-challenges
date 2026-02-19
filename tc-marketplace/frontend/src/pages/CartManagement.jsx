@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import CartItemList from "../features/cart/CartItemList";
 import CartSummary from "../features/cart/CartSummary";
+import { useNavigate } from "react-router-dom";
 
 export default function CartManagement() {
     const { cart, fetchCart } = useContext(CartContext);
@@ -13,7 +14,6 @@ export default function CartManagement() {
         fetchCart();
     }, []);
 
-    console.log("CART", cart)
 
     if (cart === null) {
         return (

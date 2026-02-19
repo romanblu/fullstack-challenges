@@ -17,6 +17,7 @@ import CartManagement from './pages/CartManagement'
 import { BrowserRouter as Router, Routes, Route, BrowserRouter } from "react-router-dom";
 import RegisterSeller from './pages/RegisterSeller'
 import SellerDashboardPage from './pages/SellerDashboardPage'
+import CheckoutPage from './pages/CheckoutPage'
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
           <Route path="/blog/:slug" element={<BlogPostPage />} />   
           <Route path="/dashboard" element={<SellerDashboardPage />} />
           <Route path="/cart" element={<CartManagement />} />
+          <Route path="/cart/checkout" element={<CheckoutPage />} />
           {/* <Route path="/admin/dashboard" element={<AdminDashboardPage />} />      */}
         </Routes>
         { <Footer />}

@@ -21,3 +21,8 @@ export const getCart = async () => {
   const response = await apiClient.get(`${API}/api/cart`);
   return response.data.data;
 };
+
+export const checkoutCart = async () => {
+  const res = await apiClient.post("/cart/checkout");
+  return res.data.data;
+};
