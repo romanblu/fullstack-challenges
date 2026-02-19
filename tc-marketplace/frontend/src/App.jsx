@@ -13,6 +13,7 @@ import Contact from './pages/Contact'
 import Blog from './pages/Blog'
 import BlogPostPage from './pages/BlogPostPage'
 import FeaturedPosts from './features/blog/FeaturedPosts'
+import CartManagement from './pages/CartManagement'
 import { BrowserRouter as Router, Routes, Route, BrowserRouter } from "react-router-dom";
 import RegisterSeller from './pages/RegisterSeller'
 import SellerDashboardPage from './pages/SellerDashboardPage'
@@ -34,6 +35,7 @@ function App() {
           <Route path="/register-seller" element={<RegisterSeller />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />   
           <Route path="/dashboard" element={<SellerDashboardPage />} />
+          <Route path="/cart" element={<CartManagement />} />
           {/* <Route path="/admin/dashboard" element={<AdminDashboardPage />} />      */}
         </Routes>
         { <Footer />}
