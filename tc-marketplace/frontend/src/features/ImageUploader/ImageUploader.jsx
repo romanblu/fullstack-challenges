@@ -22,7 +22,7 @@ export default function ImageUploader({ storeId, productId, sessionId, onReady }
             )
         );
     };
-
+    
     const handleFilesAdded = async (newFiles) => {
         const startOrder = images.length
 
