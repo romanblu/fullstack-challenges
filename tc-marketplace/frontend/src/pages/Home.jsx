@@ -12,7 +12,7 @@ import ErrorMessage from "../components/ui/ErrorMessage"
 const HomePage = () => {
 
   const {featuredPosts, featuredProducts, loading, error} = useHomeData()
-
+  console.log("featured products on homepage: ", featuredProducts)
 
   if (loading) {
     return <Loader />

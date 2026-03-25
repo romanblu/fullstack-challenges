@@ -12,13 +12,13 @@ export default function ProductCard({ product, setSelectedProduct, setActiveTab 
         setSelectedProduct(product);
         setActiveTab("editProduct");
     }
-
+    console.log("product in card: ", product)
     return (
         <div className="bg-green-50 rounded-xl shadow hover:shadow-lg transition flex flex-col h-full justify-between">
             <Link to={`/product/${product.slug}`}>
                 <img
-                    src={product.images[0]?.url}
-                    alt={product.name}
+                    src={product?.images[0]?.url}
+                    alt={product?.name}
                     className="rounded-sm w-full h-56 object-cover mb-3"
                 />
             </Link>

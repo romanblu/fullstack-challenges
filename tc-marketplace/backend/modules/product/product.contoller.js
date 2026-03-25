@@ -38,11 +38,11 @@ export const getSellerProducts = asyncHandler(async (req, res) => {
 // @route   GET /api/product/featured
 // @access  Public
 export const getFeaturedProducts = asyncHandler(async (req, res) => {
-  const products = productService.getFeaturedProducts()
+  const products = await productService.getFeaturedProducts()
   if (!products) { 
     throw ApiError.internal("Failed to get featured products")
   }
-  
+
   res.json(products);  
 });
 

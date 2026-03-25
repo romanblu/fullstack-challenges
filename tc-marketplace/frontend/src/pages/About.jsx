@@ -31,7 +31,7 @@ const About = () => {
         <div className="bg-green-50 py-16">
             <div className="container mx-auto max-w-[1100px] px-6 grid md:grid-cols-2 gap-8 items-center">
             <img
-                src="/assets/lab-plants.jpg"
+                src="https://tc-marketplace-static-images.s3.us-east-1.amazonaws.com/20260122_170041.webp"
                 alt="Tissue culture lab"
                 className="rounded-xl shadow-lg object-cover w-full h-80"
             />
@@ -63,7 +63,7 @@ const About = () => {
             plant materials, and contribute to sustainable biodiversity.
             </p>
             <img
-            src="/assets/world-map-green.png"
+            src="https://tc-marketplace-static-images.s3.us-east-1.amazonaws.com/20260122_0918402.webp"
             alt="Global network of labs"
             className="rounded-xl shadow-lg mx-auto w-full max-w-3xl"
             />
@@ -79,9 +79,9 @@ const About = () => {
                 transparent provenance for all plant materials.
             </p>
             <div className="flex justify-center space-x-10">
-                <img src="/assets/certificate-icon.png" alt="Certificate" className="w-16" />
-                <img src="/assets/lab-icon.png" alt="Lab" className="w-16" />
-                <img src="/assets/leaf-icon.png" alt="Sustainability" className="w-16" />
+                <img src="\assets\icons\certificate.png" alt="Certificate" className="w-16" />
+                <img src="\assets\icons\research.png" alt="Lab" className="w-16" />
+                <img src="\assets\icons\vegan.png" alt="Sustainability" className="w-16" />
             </div>
             </div>
         </div>

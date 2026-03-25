@@ -57,7 +57,7 @@ export const getFeaturedProducts = async () => {
       featured: true
     }).sort({ createdAt: -1})
     .limit(8)
-    .select("name price slug image description seller")
+    .select("name price slug images description seller")
     .populate('seller', 'name');
 
     return products
