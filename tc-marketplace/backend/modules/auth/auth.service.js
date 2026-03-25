@@ -30,12 +30,12 @@ export const registerUser = async (body) => {
   const user = await User.create({ name, email, password: hashedPw, role, phone });
   
   if( role === 'seller' ){
-      const { storeName, contactEmail, contactPhone, location, description, category, profilePicture } = body;
+      const { name, contactEmail, contactPhone, location, description, category, profilePicture } = body;
       
       
       const store = await Store.create({
-          name: storeName,
-          slug: slugify(storeName),
+          name: name,
+          slug: slugify(name),
           owner: user._id,
           contactEmail: contactEmail,
           contactPhone: contactPhone,
