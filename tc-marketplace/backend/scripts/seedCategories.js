@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import Category from "../models/Category.js";
+import Category from "../modules/category/category.model.js";
 import fs from "fs";
 
 
