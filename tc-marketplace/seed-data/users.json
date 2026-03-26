@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Tiss Culturist",
+    "email": "seller@email.com",
+    "password": "$2b$10$um4XY3GcWkRs4I7zz0vMyuzSwqJ2BeiWQKniCOdeykPaM6Nc7NM22",
+    "phone": "123456789",
+    "role": "seller",
+    "createdAt": "2025-10-27T15:26:07.199Z",
+    "store": "68ff8f0f0cc1600b94d9193a",
+    "_id": "68ff8f0f0cc1600b94d91938"
+  }
+]

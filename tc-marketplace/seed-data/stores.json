@@ -1,0 +1,14 @@
+[
+  {
+    "name": "TC Supplier Marketplace",
+    "slug": "tc-supplier-marketplace",
+    "owner": "68ff8f0f0cc1600b94d91938",
+    "contactEmail": "seller-contact@email.com",
+    "contactPhone": "123123123123",
+    "location": "New York",
+    "tags": [],
+    "verified": false,
+    "createdAt": "2025-10-27T15:26:07.212Z",
+    "_id": "68ff8f0f0cc1600b94d9193a"
+  }
+]
