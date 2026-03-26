@@ -94,6 +94,7 @@ export const moveImages = async (images, productId) => {
 
   for (const img of images){
     try{
+      if(!img.file) continue; // image from url, no need to move
       // copy to the right key
       const parts = img.key.split('/');
       const fileName = parts[parts.length -1];

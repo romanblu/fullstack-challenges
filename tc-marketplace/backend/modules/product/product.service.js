@@ -92,14 +92,22 @@ export const createProduct = async (body) => {
 
   const productId = product._id.toString();
 
-  // move images from temp folder to productId folder
-  const result = await moveImages(body?.images, productId);
+  const urlImages = (body.images || []).filter(img => !img.file);
+  const localImages = (body.images || []).filter(img => img.file);
+  let movedImages = []
 
-  if (result?.success) {
-    const movedImages = result.movedImages;
-    product.images = movedImages
-    await product.save();
+  if (localImages.length > 0 && process.env.AWS_S3_BUCKET) {
+    const result = await moveImages(localImages, productId);
+    if (result?.success) {
+      movedImages = result.movedImages;
+    }
   }
+
+  // move images from temp folder to productId folder
+  
+  product.images = [...urlImages, ...movedImages]
+  await product.save();
+
 
   return product
 
