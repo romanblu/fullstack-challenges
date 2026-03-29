@@ -85,7 +85,7 @@ const SellerInfoDashboard = () => {
                         <input
                             name="name"
                             placeholder="Store Name"
-                            value={form.name}
+                            value={form?.name}
                             onChange={handleNameChange}
                             className="border rounded p-2 w-full"
                             />
@@ -96,7 +96,7 @@ const SellerInfoDashboard = () => {
                         <input
                         name="slug"
                         placeholder="Store URL Slug"
-                        value={form.slug}
+                        value={form?.slug}
                         onChange={handleChange}
                         className="border rounded p-2 w-full"
                         />
@@ -107,7 +107,7 @@ const SellerInfoDashboard = () => {
                         <input
                             name="contactPhone"
                             placeholder="Contact Phone"
-                            value={form.contactPhone}
+                            value={form?.contactPhone}
                             onChange={handleChange}
                             className="border rounded p-2 w-full"
                             />
@@ -117,7 +117,7 @@ const SellerInfoDashboard = () => {
                         <input
                             name="contactEmail"
                             placeholder="Contact Email"
-                            value={form.contactEmail}
+                            value={form?.contactEmail}
                             onChange={handleChange}
                             className="border rounded p-2 w-full"
                             />
@@ -137,7 +137,7 @@ const SellerInfoDashboard = () => {
                         <input
                             name="location"
                             placeholder="Location"
-                            value={form.location}
+                            value={form?.location}
                             onChange={handleChange}
                             className="border rounded p-2 w-full"
                             />
@@ -148,7 +148,7 @@ const SellerInfoDashboard = () => {
                         <textarea
                             name="description"
                             placeholder="Description"
-                            value={form.description}
+                            value={form?.description}
                             onChange={handleChange}
                             className="border rounded p-2 w-full"
                             />
