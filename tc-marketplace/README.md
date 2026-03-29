@@ -14,39 +14,80 @@
 - **Contributing:**: Notes for contributors
 
 **Features**
-- **User management:**: Registration, login, roles (buyer, seller), update user details, update seller/store 
-- **Products:**: Product CRUD, images S3 and CloudFront integration, product variants
-- **Stores / sellers:**: Store profiles and listing by sellers
-- **Categories & inventory:**: Category management and inventory model support
-- **Cart & orders:**: Shopping cart API endpoints and order model 
-- **Blog:**: Simple blog module for content pages using markdown
-- **Upload:**: Image upload utilities and S3 helpers
+
+### User Management
+- **Registration and Login**: Users can register as buyers or sellers, with JWT-based authentication.
+- **Role-based Access**: Supports buyer and seller roles with protected routes.
+- **Profile Management**: Update user details and seller/store information.
+- **User Administration**: List users, find by email, update, and delete users (admin functionality).
+
+### Product Management
+- **CRUD Operations**: Create, read, update, and delete products (seller-only for creation/update).
+- **Image Integration**: Upload and manage product images using AWS S3 and CloudFront.
+- **Product Variants**: Support for product variants (e.g., different sizes, colors).
+- **Featured Products**: Retrieve featured products for homepage display.
+- **Seller Products**: Get products listed by a specific seller.
+
+### Store/Seller Management
+- **Store Profiles**: Sellers can create and manage their store profiles with details like name, contact info, location, and description.
+- **Store Listings**: Public access to view store information.
+- **Product Management**: Sellers can view and manage their own products through the store interface.
+
+### Categories
+- **Category CRUD**: Create, update, delete, and list categories.
+- **Category Tree**: Hierarchical category structure for better organization.
+
+### Shopping Cart
+- **Cart Operations**: Add, update, and remove items from the cart.
+- **Session Management**: Cart persistence using sessions.
+- **Checkout**: Complete checkout process for orders.
+
+### Blog/Content
+- **Blog Posts**: Create, read, update, and delete blog posts (seller-only for management).
+- **Markdown Support**: Blog content using markdown for rich text.
+- **Featured Posts**: Highlight featured blog posts.
+- **Personal Posts**: Sellers can view their own blog posts.
+
+### File Upload
+- **Image Upload**: Utilities for uploading images to AWS S3.
+- **Presigned URLs**: Secure upload mechanism using CloudFront presigned URLs, S3 buckets are private.
+
+### Variants
+- **Variant Management**: CRUD operations for product variants.
+
+### Additional Modules
+- **Inventory**: Model support for inventory management (implementation in progress).
+- **Orders**: Order model for tracking purchases (API endpoints to be added).
+- **Payment**: Placeholder for payment processing integration.
 
 **Architecture**
 - **Backend:**: [backend](backend/) — Express API, MongoDB models, modular routes located in `modules/`.
 - **Frontend:**: [frontend](frontend/) — React app (Vite) in `src/` with services that call the API.
-- **Fake data:**: [fake-data](../fake-data) — sample product folders used for import or testing.
 
 **Backend (quickstart)**
-- **Main files:**: [backend/server.js](backend/server.js), [backend/package.json](backend/package.json)
 - **Install:**:
 
 	1. `cd backend`
 	2. `npm install`
-
-- **Environment variables:**: Create a `.env` file (example values) with at least:
+	3. Edit .env file
+- **Environment variables:**: Create a `.env` file (example values) :
+	You can skip AWS S3 and upload images with URL instead
 
 	- `MONGO_URI` : MongoDB connection string
 	- `JWT_SECRET` : Secret for signing JWTs
-	- `JWT_EXPIRES_IN` : (optional) token expiry, e.g. `7d`
+	- `JWT_EXPIRES_IN` : token expiry, e.g `7d`
 	- `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` : AWS credentials for S3 uploads
 	- `AWS_REGION` : AWS region for the S3 bucket
 	- `AWS_S3_BUCKET` : S3 bucket name used by upload utilities
 	- `PORT` : (optional) server port, defaults to `5000`
 
-- **Run (development):**: `npm run dev` (uses `nodemon`)
-- **Run (production):**: `npm start`
+	4. Run script to load category tree data
 - **Seed categories:**: `npm run seed:categories` (script: [backend/scripts/seedCategories.js](backend/scripts/seedCategories.js))
+	5. Populate the database with users, products, stores and blog posts. 
+- **Seed data:**: `npm run seed:data` (script: [backend/scripts/seedData.js](backend/scripts/seedData.js))
+
+- **Run (development):**: `npm run dev` (uses `nodemon`)
+
 
 **Frontend (quickstart)**
 - **Main files:**: [frontend/package.json](frontend/package.json), [frontend/src](frontend/src)
@@ -55,7 +96,7 @@
 	1. `cd frontend`
 	2. `npm install`
 
-- **Environment variables:**: Frontend expects a Vite env var to point to the API:
+- **Environment variables:**: Frontend expects a Vite .env var to point to the API:
 
 	- `VITE_API_URL` : base API URL (e.g. `http://localhost:5000/api`)
 
@@ -63,8 +104,8 @@
 - **Build:**: `npm run build`
 
 **Fake data & seeds**
-- **Location:**: [../fake-data/plants-products](../fake-data/plants-products)
-- **Usage:**: The folder contains sample product folders (each with `product.txt` or `product-details.txt`) that can be used when importing or testing product creation.
+	- Before running make sure you load seed data, from /backend run : `npm run seed:data` , `npm run seed:categories`
+	
 
 **Notable modules & files**
 - **Auth:**: `modules/auth` — registration, login, JWT utils ([backend/utils/auth.js](backend/utils/auth.js)).
@@ -80,4 +121,5 @@
 - **Bugs & features:**: Open an issue with reproduction steps and desired behavior.
 - **Local dev flow:**: Run the backend and frontend concurrently (two terminals). Seed categories before creating category-dependent resources.
 
+**Screenshots and gifs** 
 
