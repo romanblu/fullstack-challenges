@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useContext } from "react";
@@ -11,6 +11,8 @@ const Navbar = ({ theme = "green" }) => {
     
   const { user, setUser, logout } = useContext(AuthContext)
   
+  const navigate = useNavigate();
+
   const toggleMenu = () => setMenuOpen(prev => !prev) 
 
   const isLight = theme === "light";
@@ -28,6 +30,7 @@ const Navbar = ({ theme = "green" }) => {
   const handleLogout = async (e) => {
     e.preventDefault()
     logout()
+    navigate("/")
   }
 
   const Logout = () =>{
