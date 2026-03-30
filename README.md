@@ -1,27 +1,5 @@
-# fullstack-challenges
 
-## TC-Marketplace 
-*Multi-vendor MERN marketplace for plant and tissue culture products with integrated blog system*
-
-The application is built using a modern full-stack architecture:
-Frontend:
-- Built with React (Vite) and TailwindCSS
-- Mobile responsive
-- Strong professional design and functionality
-Backend:
-- Node.js + Express API handling authentication, product management, and business logic
-Database:
-- MongoDB for flexible schema design (products, users, categories)
-Authentication:
-- JWT-based authentication with role-based access control
-File Uploads:
-- Add images from URL, good in case you don't want to configure AWS S3
-- AWS S3 and CloudFront integration for secure storage and fast serving
-Dev Features:
-- Seed scripts for categories, products and blog posts
-- Modular architecture for easy feature expansion
-- API-driven design for future mobile or SaaS extensions
-
+# TC Marketplace
 
 **Overview**
 - **Project:**: A full-stack marketplace prototype focused on plant genetics through tissue culture, enabling the sale of explants and related materials. It also includes an articles section on plant acclimatization and lab materials, allowing contributors to share and demonstrate their expertise. The system features a Node/Express backend (API + admin tools) and a React + Vite frontend (consumer and admin interfaces), MongoDB for the database, AWS S3 and CloudFront for image upload and serving.
@@ -145,3 +123,38 @@ Dev Features:
 
 **Screenshots and gifs** 
 
+Home Page
+![Home Page](docs/images/homepage-screenshot.jpeg) 
+
+Store Page
+![Store Page ](docs/images/store-page.jpeg)
+
+Product Page
+![Product Page](docs/images/product-page.jpeg)
+
+Seller dashboard - Add product form
+![New Product Page](docs/images/seller-new-product-page.jpeg)
+
+Adding a product with images upload
+![Blog Page](docs/gifs/add-product.gif)
+
+Blog 
+![Blog Page](docs/images/blog-page.jpeg)
+
+Blog Post
+![Blog Post Page](docs/images/blog-post-page.jpeg)
+
+About Page
+![About Page](docs/images/about-page.jpeg)
+
+Contact Page
+![Contact Page](docs/images/contact-page.jpeg)
+
+Login
+![Login Page](docs/images/login-page.jpeg)
+
+Buyer registration
+![Register Page](docs/images/registration-page.jpeg)
+
+Seller Registration
+![Register seller Page](docs/images/seller-registration-page.jpeg)
