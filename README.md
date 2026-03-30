@@ -124,37 +124,37 @@
 **Screenshots and gifs** 
 
 Home Page
-![Home Page](docs/images/homepage-screenshot.jpeg) 
+![Home Page](tc-marketplace/docs/images/homepage-screenshot.jpeg) 
 
 Store Page
-![Store Page ](docs/images/store-page.jpeg)
+![Store Page ](tc-marketplace/docs/images/store-page.jpeg)
 
 Product Page
-![Product Page](docs/images/product-page.jpeg)
+![Product Page](tc-marketplace/docs/images/product-page.jpeg)
 
 Seller dashboard - Add product form
-![New Product Page](docs/images/seller-new-product-page.jpeg)
+![New Product Page](tc-marketplace/docs/images/seller-new-product-page.jpeg)
 
 Adding a product with images upload
-![Blog Page](docs/gifs/add-product.gif)
+![Blog Page](tc-marketplace/docs/gifs/add-product.gif)
 
 Blog 
-![Blog Page](docs/images/blog-page.jpeg)
+![Blog Page](tc-marketplace/docs/images/blog-page.jpeg)
 
 Blog Post
-![Blog Post Page](docs/images/blog-post-page.jpeg)
+![Blog Post Page](tc-marketplace/docs/images/blog-post-page.jpeg)
 
 About Page
-![About Page](docs/images/about-page.jpeg)
+![About Page](tc-marketplace/docs/images/about-page.jpeg)
 
 Contact Page
-![Contact Page](docs/images/contact-page.jpeg)
+![Contact Page](tc-marketplace/docs/images/contact-page.jpeg)
 
 Login
-![Login Page](docs/images/login-page.jpeg)
+![Login Page](tc-marketplace/docs/images/login-page.jpeg)
 
 Buyer registration
-![Register Page](docs/images/registration-page.jpeg)
+![Register Page](tc-marketplace/docs/images/registration-page.jpeg)
 
 Seller Registration
-![Register seller Page](docs/images/seller-registration-page.jpeg)
+![Register seller Page](tc-marketplace/docs/images/seller-registration-page.jpeg)
