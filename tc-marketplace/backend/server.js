@@ -24,7 +24,10 @@ connectDB();
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:5173', 
+    origin: [
+      'http://localhost:5173',  // dev
+      "http://tc-marketplace-react-frontend.s3-website-us-east-1.amazonaws.com/" // production
+    ], 
     credentials: true,
 }));
 
