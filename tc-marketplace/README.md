@@ -105,6 +105,11 @@ Live website : http://tc-marketplace-react-frontend.s3-website-us-east-1.amazona
 - **Run (dev):**: `npm run dev`
 - **Build:**: `npm run build`
 
+**Deployment on AWS**
+- See [AWS Deployment Guide](docs/aws-deployment.md) for detailed step-by-step instructions.
+
+
+
 **Fake data & seeds**
 	- Before running make sure you load seed data, from /backend run : `npm run seed:data` , `npm run seed:categories`
 	

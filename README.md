@@ -108,6 +108,9 @@ Live website : http://tc-marketplace-react-frontend.s3-website-us-east-1.amazona
 **Fake data & seeds**
     - Before running make sure you load seed data, from /backend run : `npm run seed:data` , `npm run seed:categories`
     
+**Deployment on AWS**
+- See [AWS Deployment Guide](/tc-marketplace/docs/aws-deployment.md) for detailed step-by-step instructions.
+
 
 **Notable modules & files**
 - **Auth:**: `modules/auth` — registration, login, JWT utils ([backend/utils/auth.js](backend/utils/auth.js)).
