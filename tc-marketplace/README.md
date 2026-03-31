@@ -2,18 +2,18 @@
 # TC Marketplace
 
 **Overview**
-- **Project:**: A full-stack marketplace prototype focused on plant genetics through tissue culture, enabling the sale of explants and related materials. It also includes an articles section on plant acclimatization and lab materials, allowing contributors to share and demonstrate their expertise. The system features a Node/Express backend (API + admin tools) and a React + Vite frontend (consumer and admin interfaces), MongoDB for the database, AWS S3 and CloudFront for image upload and serving.
+- **Project:** A full-stack marketplace prototype focused on plant genetics through tissue culture, enabling the sale of explants and related materials. It also includes an articles section on plant acclimatization and lab materials, allowing contributors to share and demonstrate their expertise. The system features a Node/Express backend (API + admin tools) and a React + Vite frontend (consumer and admin interfaces), MongoDB for the database, AWS S3 and CloudFront for image upload and serving.
 
 Live website : http://tc-marketplace-react-frontend.s3-website-us-east-1.amazonaws.com/
 
 **Table of contents**
-- **Overview:**: Quick summary of the project
-- **Features:**: What the project implements
-- **Architecture:**: Folder-level layout and responsibilities
-- **Backend:**: How to run and env vars
-- **Frontend:**: How to run and env vars
-- **Fake data & seeds:**: Where sample data lives and seed commands
-- **Contributing:**: Notes for contributors
+- **Overview:** Quick summary of the project
+- **Features:** What the project implements
+- **Architecture:** Folder-level layout and responsibilities
+- **Backend:** How to run and env vars
+- **Frontend:** How to run and env vars
+- **Fake data & seeds:** Where sample data lives and seed commands
+- **Contributing:** Notes for contributors
 
 **Features**
 
@@ -51,28 +51,28 @@ Live website : http://tc-marketplace-react-frontend.s3-website-us-east-1.amazona
 - **Personal Posts**: Sellers can view their own blog posts.
 
 ### File Upload
-- **Image Upload**: Utilities for uploading images to AWS S3.
-- **Presigned URLs**: Secure upload mechanism using CloudFront presigned URLs, S3 buckets are private.
+- **Image Upload** Utilities for uploading images to AWS S3.
+- **Presigned URLs** Secure upload mechanism using CloudFront presigned URLs, S3 buckets are private.
 
 ### Variants
-- **Variant Management**: CRUD operations for product variants.
+- **Variant Management** CRUD operations for product variants.
 
 ### Additional Modules
-- **Inventory**: Model support for inventory management (implementation in progress).
-- **Orders**: Order model for tracking purchases (API endpoints to be added).
-- **Payment**: Placeholder for payment processing integration.
+- **Inventory** Model support for inventory management (implementation in progress).
+- **Orders** Order model for tracking purchases (API endpoints to be added).
+- **Payment** Placeholder for payment processing integration.
 
 **Architecture**
-- **Backend:**: [backend](backend/) — Express API, MongoDB models, modular routes located in `modules/`.
-- **Frontend:**: [frontend](frontend/) — React app (Vite) in `src/` with services that call the API.
+- **Backend:** [backend](backend/) — Express API, MongoDB models, modular routes located in `modules/`.
+- **Frontend:** [frontend](frontend/) — React app (Vite) in `src/` with services that call the API.
 
 **Backend (quickstart)**
-- **Install:**:
+- **Install:**
 
 	1. `cd backend`
 	2. `npm install`
 	3. Edit .env file
-- **Environment variables:**: Create a `.env` file (example values) :
+- **Environment variables:** Create a `.env` file (example values) :
 	You can skip AWS S3 and upload images with URL instead
 
 	- `MONGO_URI` : MongoDB connection string
@@ -84,26 +84,26 @@ Live website : http://tc-marketplace-react-frontend.s3-website-us-east-1.amazona
 	- `PORT` : (optional) server port, defaults to `5000`
 
 	4. Run script to load category tree data
-- **Seed categories:**: `npm run seed:categories` (script: [backend/scripts/seedCategories.js](backend/scripts/seedCategories.js))
+- **Seed categories:** `npm run seed:categories` (script: [backend/scripts/seedCategories.js](backend/scripts/seedCategories.js))
 	5. Populate the database with users, products, stores and blog posts. 
-- **Seed data:**: `npm run seed:data` (script: [backend/scripts/seedData.js](backend/scripts/seedData.js))
+- **Seed data:** `npm run seed:data` (script: [backend/scripts/seedData.js](backend/scripts/seedData.js))
 
-- **Run (development):**: `npm run dev` (uses `nodemon`)
+- **Run (development):** `npm run dev` (uses `nodemon`)
 
 
 **Frontend (quickstart)**
-- **Main files:**: [frontend/package.json](frontend/package.json), [frontend/src](frontend/src)
-- **Install:**:
+- **Main files:** [frontend/package.json](frontend/package.json), [frontend/src](frontend/src)
+- **Install:**
 
 	1. `cd frontend`
 	2. `npm install`
 
-- **Environment variables:**: Frontend expects a Vite .env var to point to the API:
+- **Environment variables:** Frontend expects a Vite .env var to point to the API:
 
 	- `VITE_API_URL` : base API URL (e.g. `http://localhost:5000/api`)
 
-- **Run (dev):**: `npm run dev`
-- **Build:**: `npm run build`
+- **Run (dev):** `npm run dev`
+- **Build:** `npm run build`
 
 **Deployment on AWS**
 - See [AWS Deployment Guide](docs/aws-deployment.md) for detailed step-by-step instructions.
@@ -115,18 +115,18 @@ Live website : http://tc-marketplace-react-frontend.s3-website-us-east-1.amazona
 	
 
 **Notable modules & files**
-- **Auth:**: `modules/auth` — registration, login, JWT utils ([backend/utils/auth.js](backend/utils/auth.js)).
-- **Upload:**: `modules/upload` — S3 client and helpers; see [backend/modules/upload/upload.utils.js](backend/modules/upload/upload.utils.js) for required AWS env vars.
-- **Database connection:**: [backend/config/db.js](backend/config/db.js) uses `MONGO_URI`.
+- **Auth:** `modules/auth` — registration, login, JWT utils ([backend/utils/auth.js](backend/utils/auth.js)).
+- **Upload:** `modules/upload` — S3 client and helpers; see [backend/modules/upload/upload.utils.js](backend/modules/upload/upload.utils.js) for required AWS env vars.
+- **Database connection:** [backend/config/db.js](backend/config/db.js) uses `MONGO_URI`.
 
 **Developer notes**
-- **API base path:**: Backend routes are mounted under `/api/*` (see `server.js`).
-- **Logging:**: Winston logger is used under `utils/logger.js` and Morgan is available for request logs.
-- **Auth:**: JWT tokens are signed with `JWT_SECRET` and consumed by middleware in `middleware/auth.js`.
+- **API base path:** Backend routes are mounted under `/api/*` (see `server.js`).
+- **Logging:** Winston logger is used under `utils/logger.js` and Morgan is available for request logs.
+- **Auth:** JWT tokens are signed with `JWT_SECRET` and consumed by middleware in `middleware/auth.js`.
 
 **Contributing**
-- **Bugs & features:**: Open an issue with reproduction steps and desired behavior.
-- **Local dev flow:**: Run the backend and frontend concurrently (two terminals). Seed categories before creating category-dependent resources.
+- **Bugs & features:** Open an issue with reproduction steps and desired behavior.
+- **Local dev flow:** Run the backend and frontend concurrently (two terminals). Seed categories before creating category-dependent resources.
 
 **Screenshots and gifs** 
 
