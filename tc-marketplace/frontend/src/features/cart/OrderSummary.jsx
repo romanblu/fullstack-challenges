@@ -1,7 +1,7 @@
 import React from "react";
 
 const OrderSummary = ({ cart }) => {
-  if (!cart || !cart.items || cart.items.length === 0) {
+  if (!cart || !cart?.items || cart?.items?.length === 0) {
     return (
       <div className="border rounded-xl p-6 shadow-sm">
         <p className="text-center text-gray-500">Your cart is empty</p>
@@ -26,19 +26,19 @@ const OrderSummary = ({ cart }) => {
       <div className="space-y-3">
         {cart.items.map((item) => (
           <div
-            key={`${item.productId}-${item.variantId || ""}`}
+            key={`${item?.productId}-${item?.variantId || ""}`}
             className="flex items-center justify-between"
           >
             <div className="flex items-center gap-3">
               <img
-                src={item.image}
-                alt={item.name}
+                src={item?.image}
+                alt={item?.name}
                 className="w-14 h-14 object-cover rounded-lg"
               />
               <div>
-                <p className="font-medium">{item.name}</p>
+                <p className="font-medium">{item?.name}</p>
                 {item.variantName && (
-                  <p className="text-sm text-gray-500">{item.variantName}</p>
+                  <p className="text-sm text-gray-500">{item?.variantName}</p>
                 )}
                 <p className="text-sm text-gray-500">
                   Qty: {item.quantity}

@@ -22,7 +22,7 @@ export default function BlogCard({
                 <Link to={`/blog/${slug}`} className="text-xl font-semibold text-green-900 mb-2">{title}</Link>
                 <p className="text-gray-700 text-sm flex-grow">{excerpt}</p>
                 <div className="mt-4 flex justify-between text-sm text-gray-500">
-                    <span>{author.name}</span>
+                    <span>{author?.name}</span>
                     <span>{parseDate(date)}</span>
                 </div>
                 <Link

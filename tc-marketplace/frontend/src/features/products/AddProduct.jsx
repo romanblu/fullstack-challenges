@@ -9,9 +9,9 @@ const AddProduct = ({ setActiveTab, categoryTree }) => {
     useEffect(() => {
         try{
             const user = JSON.parse(localStorage.getItem("user"));
-            if (user?.store) setStoreId(user.store);
+            if (user?.store) setStoreId(user?.store);
         }catch(err){
-            console.error("Store ID not found", err.message)
+            console.error("Store ID not found", err?.message)
         }
     }, [])
 
@@ -21,7 +21,7 @@ const AddProduct = ({ setActiveTab, categoryTree }) => {
         const res = await createProduct(formData)
 
         if(!res.ok){
-            setMessage(res.error) 
+            setMessage(res?.error) 
             return
         }
 

@@ -7,14 +7,14 @@ const EditProduct = ({ setActiveTab, setSelectedProduct, selectedProduct, catego
     const [message, setMessage] = useState("")
 
     const handleUpdate = (form) => {
-        updateProduct(selectedProduct._id, form).then(res => {
+        updateProduct(selectedProduct?._id, form).then(res => {
             console.log(res)
             if(res.ok ) {
                 setMessage("Product updated successfully!")
                 setSelectedProduct(res);
                 setActiveTab("products");
             }
-        }).catch(err => setMessage("Error updating product: " + err.message))
+        }).catch(err => setMessage("Error updating product: " + err?.message))
     }
 
     const handleDiscard = () => {
@@ -25,7 +25,7 @@ const EditProduct = ({ setActiveTab, setSelectedProduct, selectedProduct, catego
         deleteProduct(selectedProduct._id).then(() => {
             setMessage("Product deleted successfully!");
             setActiveTab("products");
-        }).catch(err => setMessage("Error deleting product: " + err.message))
+        }).catch(err => setMessage("Error deleting product: " + err?.message))
     }
 
     return (

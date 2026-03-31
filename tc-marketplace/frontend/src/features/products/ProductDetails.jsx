@@ -21,13 +21,13 @@ export const ProductDetails = ({ product }) => {
             {/* Categories */}
             {/* TODO: make the categories clickable then route to the category section */}
             <div className="mb-4">
-              <SelectedCategories selectedIds={product.categories} />
+              <SelectedCategories selectedIds={product?.categories} />
             </div>
 
             {/* Species */}
             {product?.species && (
               <p className="text-gray-700 font-medium mb-1">
-                Species: <span className="font-normal">{product.species}</span>
+                Species: <span className="font-normal">{product?.species}</span>
               </p>
             )}
 

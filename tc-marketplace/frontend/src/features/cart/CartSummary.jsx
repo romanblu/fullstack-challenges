@@ -11,7 +11,7 @@ const CartSummary = ({ cart }) => {
   );
 
   const handleCheckout = () => {
-    if (!cart || cart.items.length === 0) return;
+    if (!cart || cart?.items?.length === 0) return;
     navigate("/cart/checkout");
   };
 

@@ -47,7 +47,7 @@ const BlogDashboard = ({ setActiveTab, setCurrentPost }) => {
                     <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6  ">
                         {
                             blogPosts.length !== 0 && blogPosts.map((post) => (
-                                <BlogCard key={post._id} post={post} isAuthorDashboard={true} onEditPost={(post) => {setActiveTab("editBlogPost"); setCurrentPost(post)}}/>
+                                <BlogCard key={post?._id} post={post} isAuthorDashboard={true} onEditPost={(post) => {setActiveTab("editBlogPost"); setCurrentPost(post)}}/>
                             ))
                         } 
                     </div>

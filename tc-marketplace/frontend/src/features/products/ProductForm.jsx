@@ -47,7 +47,7 @@ const ProductForm = ({
     const [images, setImages] = useState([]);
     
     const { user } = useAuth();
-    const storeId = user.store
+    const storeId = user?.store
 
     const sessionId = useRef(crypto.randomUUID());
 
@@ -166,23 +166,23 @@ const ProductForm = ({
     return (
         <form onSubmit={handleSubmit} className="space-y-4 flex flex-col gap-4">
             <FormSection>
-                <InputField label="Product Title" name="name" value={form.name} onChange={handleNameChange} required />
-                <InputField label="Slug" name="slug" value={form.slug} onChange={handleChange} required />
-                <InputField label="Excerpt" name="excerpt" value={form.excerpt} onChange={handleChange} />
+                <InputField label="Product Title" name="name" value={form?.name} onChange={handleNameChange} required />
+                <InputField label="Slug" name="slug" value={form?.slug} onChange={handleChange} required />
+                <InputField label="Excerpt" name="excerpt" value={form?.excerpt} onChange={handleChange} />
                 <label>Description</label>
                 <DescriptionEditor onReady={setEditor}/>
                 <InputField label="Species" name="species" value={form.species} onChange={handleChange} required />
             </FormSection>
 
             <FormSection>
-                <InputFieldPrice value={form.price} onChange={handleChange} />
+                <InputFieldPrice value={form?.price} onChange={handleChange} />
             </FormSection>
 
             <FormSection>
-                <InputFieldNumber value={form.quantity} onChange={handleChange} name="quantity" label="Quantity" />
+                <InputFieldNumber value={form?.quantity} onChange={handleChange} name="quantity" label="Quantity" />
                 <select
                     name="productType"
-                    value={form.productType}
+                    value={form?.productType}
                     onChange={handleChange}
                     required
                     className="w-full border rounded-md p-2"
@@ -197,13 +197,13 @@ const ProductForm = ({
             </FormSection>
 
             <FormSection>
-                <ImageUploader storeId={storeId} productId={initialData._id} sessionId={sessionId} onReady={setImages}/>
+                <ImageUploader storeId={storeId} productId={initialData?._id} sessionId={sessionId} onReady={setImages}/>
                 
             </FormSection>
             <FormSection>
                 <CategorySelector
                     categoryTree={categoryTree}
-                    selectedIds={form.categories}
+                    selectedIds={form?.categories}
                     onChange={(newIds) => setForm(prev => ({ ...prev, categories: newIds }))}
                     />
             </FormSection>
@@ -216,11 +216,11 @@ const ProductForm = ({
                     addOption={addOption}
                     />
                 <VariantManager 
-                    options={form.options} 
-                    variants={form.variants} 
+                    options={form?.options} 
+                    variants={form?.variants} 
                     onChange={updateVariants} 
                     onDeleteSelected={deleteSelectedVariants} 
-                    primaryOption={form.options?.[0]?.name || "Option"}
+                    primaryOption={form?.options?.[0]?.name || "Option"}
                     />
             </FormSection>
 
