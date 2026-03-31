@@ -16,7 +16,7 @@
 | Custom TCP | 5000 | 0.0.0.0/0 | API |
 1. Launch and wait 
 2. Create elastic IP and attach to the EC2 instance (so the IP wont change on instance restart)
-3. SSH into the instance:    ssh -i "backend-key.pem" [ubuntu@ec2-[ public IP  ].compute-1.amazonaws.com](mailto:ubuntu@ec2-13-221-76-123.compute-1.amazonaws.com)
+3. SSH into the instance:    ssh -i "backend-key.pem" [ubuntu@ec2-[ public IP  ].compute-1.amazonaws.com]
 4. update and install node.js
 
 ```bash
@@ -137,7 +137,7 @@ server {
     app.use(cors({
         origin: [
           'http://localhost:5173',  // dev
-          "http://tc-marketplace-react-frontend.s3-website-us-east-1.amazonaws.com/" // production
+          "http://[YOUR BUCKET]-website-us-east-1.amazonaws.com/" // production
         ], 
         credentials: true,
     }));
