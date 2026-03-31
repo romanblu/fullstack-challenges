@@ -4,6 +4,8 @@
 **Overview**
 - **Project:**: A full-stack marketplace prototype focused on plant genetics through tissue culture, enabling the sale of explants and related materials. It also includes an articles section on plant acclimatization and lab materials, allowing contributors to share and demonstrate their expertise. The system features a Node/Express backend (API + admin tools) and a React + Vite frontend (consumer and admin interfaces), MongoDB for the database, AWS S3 and CloudFront for image upload and serving.
 
+Live website : http://tc-marketplace-react-frontend.s3-website-us-east-1.amazonaws.com/
+
 **Table of contents**
 - **Overview:**: Quick summary of the project
 - **Features:**: What the project implements
